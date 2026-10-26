@@ -1,8 +1,8 @@
 # Brief de proyecto — Lenguajes Digitales 5
-### Plataforma de mascotas — Colombia
+### Balto · Plataforma de mascotas — Colombia
 
 **Autores:** Samuel Parada y Andrés Claros
-**Versión:** 4 — reenfoque de producto a partir del análisis competitivo de MIIA y de los resultados de la encuesta
+**Versión:** 5 — alcance alineado con los casos de uso de diseño (`design/flujos/`, flujos A a O), que son la versión final de la aplicación. Versión anterior: 4, reenfoque a partir del análisis competitivo de MIIA y de la encuesta.
 
 ---
 
@@ -18,7 +18,7 @@ Esa brecha —entre la información que existe y la que el dueño realmente tien
 
 Esa es la pregunta que hoy no tiene respuesta, y es la que conecta el problema con lo que vamos a construir.
 
-Los temas de identificación y logística (viajes, hoteles, autorización de procedimientos) quedan como un problema secundario a explorar más adelante.
+La identificación se resuelve con la cédula animal Balto (sección 6). La logística (viajes, hoteles, autorización de procedimientos) queda como un problema secundario a explorar más adelante.
 
 ---
 
@@ -28,7 +28,7 @@ Que cada mascota tenga un perfil digital único, que le pertenece a su dueño, s
 
 En el uso diario, esto se ve así: el dueño registra cada evento apenas ocurre —una vacuna recién puesta, el resultado de un examen, un cambio de alimentación, una observación de comportamiento— con el soporte correspondiente (foto del carnet, del examen o de la fórmula) y unos pocos campos asociados; es el propio dueño quien registra el resultado de cada consulta veterinaria, con lo que el veterinario no necesita cuenta ni acceso de edición. Del otro lado, cuando la información se necesita, el dueño abre el perfil de su mascota desde el celular y encuentra primero una vista rápida de lo que más se pregunta —identificación, alergias, medicación vigente, últimas vacunas, peso— y, un nivel más abajo, el detalle completo si hace falta profundizar. Mostrar esa información a alguien más —un veterinario nuevo, un cuidador, el personal de una guardería— no exige que esa persona tenga cuenta ni use la misma aplicación.
 
-Ese perfil es el punto de partida, no el techo. La ambición del producto es que sea el lugar donde se resuelve todo lo relacionado con el cuidado de la mascota —lo clínico, lo preventivo y lo cotidiano—; la hoja de ruta de la sección 6 define en qué orden se llega ahí. Pero el alcance por sí solo no es lo que diferencia este producto: el mercado ya tiene alternativas amplias y el análisis de la sección 3 muestra que ampliar la lista de funcionalidades no es lo que les falta. Lo que define el producto son dos compromisos que hoy nadie está cumpliendo:
+Ese perfil es el punto de partida, no el techo. El producto es el lugar donde se resuelve todo lo relacionado con el cuidado de la mascota —lo clínico, lo preventivo y lo cotidiano—, y la sección 6 detalla qué incluye. Pero el alcance por sí solo no es lo que diferencia este producto: el mercado ya tiene alternativas amplias y el análisis de la sección 3 muestra que ampliar la lista de funcionalidades no es lo que les falta. Lo que define el producto son dos compromisos que hoy nadie está cumpliendo:
 
 - **Empezar a usarlo no cuesta nada ni exige comprar ningún dispositivo.** El valor se prueba antes de pagar y sin hardware de por medio.
 - **La información registrada no se pierde.** No es una garantía técnica de fondo: es la funcionalidad principal. Un producto que promete que la información siempre está disponible y la pierde, falla en su razón de ser — y es exactamente la objeción que Valentina pone antes de registrarse.
@@ -68,7 +68,7 @@ Y demuestra **dónde está el hueco**: la app tiene 2.2 de 5 en la App Store de 
 
 **Qué se deduce de esto.** En este mercado no gana quien tenga más funcionalidades, sino quien logre que el dueño entre sin fricción y confíe en que su información sigue ahí. De ahí salen tres decisiones que atraviesan todo el brief:
 
-1. **Sin hardware de por medio.** No vendemos ni emitimos dispositivo. El identificador es un dato que el dueño escribe (sección 6), no un objeto que debe comprar y activar — precisamente el punto donde muere la conversión del competidor. Esto confirma la decisión ya tomada de dejar la emisión de identificador propio fuera de alcance.
+1. **Sin hardware de por medio.** Nada exige comprar ni activar un dispositivo, que es precisamente el punto donde muere la conversión del competidor. La identificación es la cédula animal Balto: un número digital que la app emite al crear el perfil (sección 6). La placa grabada con ese número es opcional, y la app funciona igual sin ella.
 2. **La permanencia del dato como funcionalidad.** Es la objeción que la buyer persona formula antes de registrarse, y el competidor demuestra que es un riesgo real y no una preocupación hipotética.
 3. **Rigor verificable.** El competidor incorporó a su aplicación un módulo de "análisis bioenergético", una práctica sin respaldo científico, dentro de un producto de salud animal [9]. En un mercado regido por la Ley 576 [6], sostener el producto únicamente sobre información trazable y aportada por profesionales es un diferencial de credibilidad disponible.
 
@@ -77,6 +77,10 @@ Y demuestra **dónde está el hueco**: la app tiene 2.2 de 5 en la App Store de 
 **De dónde sale el ingreso.** El producto se ofrece como una única versión, pagada por el dueño mediante suscripción: perfil completo por mascota, historial con archivos adjuntos, múltiples mascotas, generación de reportes para compartir y alertas de vacunas y controles. No hay una versión gratuita limitada ni un segundo nivel de pago — todo dueño que se registra accede desde el inicio a la misma funcionalidad completa, lo que simplifica la decisión de compra y evita fragmentar la base de datos entre usuarios con información parcial y usuarios con información completa.
 
 Lo único que cambia respecto de la versión anterior de este brief es **el momento del cobro**: el registro y el uso completo arrancan sin pago, durante un periodo de prueba, y la suscripción se activa después. Esto no contradice el modelo de un solo nivel —todos los usuarios tienen la misma funcionalidad completa desde el primer día, que es justamente el punto— pero elimina la barrera que hunde al competidor: nadie tiene que pagar para averiguar si el producto le sirve.
+
+El pago de la suscripción se hace con tarjeta o PSE. Si la suscripción no está activa (porque terminó la prueba o el dueño la canceló), la cuenta pasa a **modo consulta**: el dueño puede ver y exportar todo lo que registró, pero no puede agregar registros nuevos. Así se cumple la promesa de que la información no se pierde aunque el dueño deje de pagar. *Por definir: precio de la suscripción y duración del periodo de prueba.*
+
+**Tienda.** La app incluye una tienda de alimento y vacunas para la mascota. Recomienda productos según el plan de alimentación y las vacunas próximas a vencer. El alimento se entrega a domicilio en Bogotá, y las vacunas se compran con la aplicación incluida en una veterinaria aliada. Es una fuente de ingreso adicional a la suscripción. *Por definir: modelo de ingreso de la tienda (margen o comisión) y acuerdos con las veterinarias aliadas.*
 
 **Cómo escala.** Con una base de dueños activos, el modelo se extiende a las veterinarias, mediante un plan por clínica para recibir y actualizar perfiles con autorización del dueño: menos tiempo de consulta gastado en reconstruir antecedentes y más retención de clientes. Las aseguradoras entran solo después y con un rol acotado y explícito: verificar información al momento de suscribir una póliza o de sustentar una reclamación, siempre con datos que el dueño autoriza. No hacen parte del alcance inicial del producto.
 
@@ -114,7 +118,7 @@ Refuerza la decisión del dueño —le da sentido a compartir el perfil y hace q
 
 ## 6. Qué vamos a hacer
 
-Vamos a construir una plataforma digital (web/app móvil) centrada en una capacidad núcleo: el **perfil completo de la mascota**, donde se guarda y muestra toda su información —historial médico, alimentación, comportamiento, identificación, entre otros—, con fácil acceso para quien la necesite en el momento (el dueño, un veterinario, un cuidador). La ambición declarada en la sección 2 es que la plataforma termine resolviendo todo el cuidado de la mascota; lo que sigue separa lo que se construye y valida este semestre de lo que queda como hoja de ruta, para que el alcance sea verificable y no una promesa.
+Vamos a construir **Balto**, una aplicación web móvil centrada en una capacidad núcleo: el **perfil completo de la mascota**, donde se guarda y muestra toda su información —historial médico, alimentación, comportamiento, identificación, entre otros—, con fácil acceso para quien la necesite en el momento (el dueño, un veterinario, un cuidador). Alrededor del perfil, la aplicación cubre el resto del cuidado: medicamentos, alimentación, hábitos, alertas, veterinarias y compras. El alcance de esta sección corresponde a los casos de uso de diseño (`design/flujos/`, flujos A a O), que son la versión final de la aplicación.
 
 **Principios que rigen cualquier cosa que se construya**, derivados del análisis de la sección 3:
 
@@ -122,32 +126,40 @@ Vamos a construir una plataforma digital (web/app móvil) centrada en una capaci
 - Ningún formulario obliga a declarar información que no aplica.
 - El producto se usa completo antes de pagar y sin comprar nada.
 - Nada que se registre se pierde, y el dueño puede llevarse su información cuando quiera.
+- Cuando la app lee o sugiere un dato (un documento, una porción, un alimento), el dueño revisa y confirma antes de guardar, y las indicaciones clínicas remiten siempre al veterinario.
 
-### Núcleo del MVP
+### Alcance de la aplicación
 
-Lo que hay que construir y probar este semestre para validar la hipótesis se concreta en cinco mecanismos:
+Cada bloque corresponde a un flujo de `design/flujos/`.
 
-- **Perfil con línea de tiempo:** vacunas, desparasitaciones, consultas, exámenes, tratamientos, peso, alimentación y comportamiento, cada uno con su soporte adjunto (foto del carnet, PDF del examen, fórmula médica). Es el dueño quien registra cada evento, incluido el resultado de sus consultas veterinarias, con una foto del documento que le entrega el veterinario — este último no necesita cuenta ni acceso de edición.
-- **Vista de acceso rápido:** identificación, alergias, medicación vigente, últimas vacunas y peso — lo primero que preguntan, sin tener que buscar.
-- **Compartir mediante un reporte en PDF:** el dueño genera, desde el perfil de su mascota, un reporte en PDF con la información relevante —completa o filtrada a lo que necesite mostrar en ese momento— y lo comparte por el medio que prefiera (WhatsApp, correo, impreso), sin que quien lo reciba necesite cuenta ni la misma aplicación. Es la forma más simple de resolver el "mostrar la información ya" sin depender de infraestructura de permisos ni de vencimientos automáticos, que queda para una iteración posterior.
-- **Identificador como dato del perfil:** el dueño escribe a mano el número de su microchip o el código de su placa, como un campo más del perfil — sin lectura automática ni vinculación entre sistemas.
-- **Alertas de lo que vence:** vacunas, desparasitaciones, medicación en curso y próximos controles, avisando antes del vencimiento y no después. Se apoyan en los datos que ya vive el perfil, así que no exigen infraestructura adicional, y son lo que convierte el registro en un hábito en vez de un archivo muerto.
+- **Acceso y cuenta (A).** Registro en tres pasos (cuenta, verificación del correo con código de 6 dígitos, datos del dueño), inicio de sesión, recuperación de contraseña por enlace, periodo de prueba, pago de la suscripción con tarjeta o PSE y modo consulta cuando la suscripción no está activa (sección 3).
+- **Inicio.** Selector de mascota, resumen de la mascota activa, próximo vencimiento y accesos rápidos (salud, medicamentos, alimentación, hábitos). La navegación inferior lleva a Inicio, Línea de tiempo, Registrar, Tienda y Alertas.
+- **Perfil de mascota (B).** Alta en tres pasos: datos básicos (especie, nombre, raza, sexo, nacimiento, esterilización), foto y salud inicial (peso, alergias, condiciones, medicación vigente). Al crear el perfil, la app emite la **cédula animal Balto**: un número único (por ejemplo, BAL-0001-LUNA) con versión digital para mostrar desde el celular y opción de pedir una placa grabada con el número. El número de microchip, si existe, queda como un dato más del perfil.
+- **Carga inicial de datos (C), obligatoria.** Justo después de crear el perfil, el dueño sube lo que ya tiene: carnet de vacunación, exámenes, fórmulas y el historial que tenga en chats de WhatsApp o correo. La app **lee los documentos y propone los datos** (vacunas, exámenes, fórmulas, eventos detectados en el texto), y el dueño los revisa y corrige antes de guardar. Quien no tiene documentos registra al menos el peso y las alergias.
+- **Consultar datos (D).** Vista de acceso rápido (identificación, contacto, peso, alergias, medicación vigente, últimas vacunas) y línea de tiempo con búsqueda, filtros por tipo de evento y fecha, detalle de cada evento, soporte para ver o descargar, edición y eliminación.
+- **Registrar evento (E).** Vacuna, desparasitación, consulta, examen, tratamiento, peso, alimentación, comportamiento u otro, cada uno con sus campos y su soporte adjunto (foto, galería o PDF de hasta 10 MB). Es el dueño quien registra cada evento, incluido el resultado de sus consultas veterinarias; el veterinario no necesita cuenta ni acceso de edición.
+- **Salud y evolución (F).** Panel de salud con carnet de vacunas y desparasitaciones, exámenes y tratamientos, evolución del peso con aviso ante cambios bruscos, y alergias y condiciones (solo las que confirmó un veterinario).
+- **Medicamentos (G).** Tratamientos vigentes y finalizados, horarios de toma, recordatorios con confirmación u omisión de cada toma, lectura de la fórmula médica y cierre del tratamiento sin borrar el historial.
+- **Alimentación (H).** Plan de alimentación con porción sugerida según peso, edad y actividad, horarios y recordatorios de comida, aviso de cuándo se acaba el alimento, alerta de alimentos tóxicos para la especie y una ruta de urgencia si la mascota ya lo comió (llamar a la veterinaria con los datos clave a la vista).
+- **Hábitos y comportamiento (I).** Bitácora de paseos, actividad, sueño, deposiciones, alimentación y comportamientos atípicos, con foto o video de apoyo, exportable en PDF para llevar al veterinario o al etólogo.
+- **Alertas (J).** Centro de alertas de lo que vence (vacunas, desparasitaciones, controles), avisando antes del vencimiento y no después. Desde cada alerta el dueño puede marcarla como resuelta registrando el evento, agendar cita, comprar la vacuna o posponer el aviso.
+- **Veterinarias y proveedores (K).** Buscador de veterinarias, estéticas, paseadores y guarderías, filtrable por tipo de servicio, distancia y horario, con ficha del proveedor, agendamiento de citas y calendario unificado que muestra juntas las citas médicas y las de estética.
+- **Compartir perfil (L).** El dueño elige qué compartir (perfil completo o filtrado por secciones y fechas) y lo comparte de dos formas: un **reporte en PDF** por WhatsApp, correo, impreso o guardado, o un **enlace de solo lectura** que vence a las 24 horas, a los 7 días o nunca. Quien lo recibe no necesita cuenta ni la aplicación.
+- **Cuenta y ajustes (M).** Datos del dueño, mascotas (agregar y archivar sin borrar el historial), notificaciones por tipo con horario de no molestar, suscripción e historial de pagos, pedidos de la tienda, exportación de todos los datos (PDF o ZIP con soportes), ayuda, cierre de sesión y eliminación de la cuenta con confirmación de identidad.
+- **Tienda (N).** Alimento y vacunas recomendados para cada mascota, carrito, dirección de entrega, pago con tarjeta o PSE y seguimiento de pedidos (sección 3).
+- **Estados transversales (O).** Primer uso sin mascotas, uso sin conexión (se consulta lo descargado y los cambios se suben solos cuando vuelve el internet), sesión expirada, permisos de notificaciones, cámara y fotos, y errores al guardar.
 
-La versión mínima que demuestra la propuesta de valor es: el dueño registra a su mascota y su información en la plataforma, anota el identificador que ya tenga (microchip o placa), y puede generar y compartir el PDF de ese perfil completo con quien lo necesite —de forma inmediata— en una consulta o emergencia.
+La versión mínima que demuestra la propuesta de valor sigue siendo la misma: el dueño registra a su mascota y su información, obtiene su cédula animal Balto, y puede compartir ese perfil con quien lo necesite —de forma inmediata— en una consulta o emergencia.
 
 ### Hoja de ruta posterior
 
-El orden responde a una regla: primero lo que el perfil ya sostiene por sí solo, y solo después lo que exige traer proveedores, acuerdos o datos de terceros.
+- **Red y permisos.** Perfil compartido con otros miembros del hogar o cuidadores, permisos granulares por persona y conexión directa con los sistemas de gestión de las veterinarias.
 
-- **Fase 2 — Lo cotidiano.** Registro de alimentación y hábitos con porción sugerida según peso y edad, alertas de alimentos tóxicos, bitácora de comportamientos atípicos para llevar al veterinario o al etólogo, y gráfica de evolución de peso con aviso ante cambios bruscos. Todo esto se construye sobre el perfil existente, sin dependencias externas.
-- **Fase 3 — Proveedores.** Directorio de veterinarias filtrable por tipo de emergencia o consulta, cercanía y calificación; extensión a estilistas (baño, corte de pelo y uñas), paseadores y guarderías; agendamiento de citas y calendario unificado que muestre juntas las citas médicas y las de estética. El valor aquí no está en tener cada tipo de cita por separado, sino en verlas todas en un solo lugar.
-- **Fase 4 — Red y permisos.** Perfil compartido con otros miembros del hogar o cuidadores, permisos granulares y enlaces con vencimiento, y conexión directa con los sistemas de gestión de las veterinarias.
-
-**Visión de producto a futuro**, fuera de lo que se construye y valida este semestre: lectura automática de microchips y códigos QR, vinculación entre los distintos sistemas de identificación existentes, una conexión directa entre la aplicación del dueño y los sistemas de gestión de las veterinarias que permita enviar o sincronizar el perfil sin pasar por el PDF intermedio, y la cédula animal de la Red Colombiana de Identificación Animal (RCIA) si esta se aprueba y entra en operación —ninguna de estas existe todavía como sistema oficial u operativo, así que no forman parte de lo que hay que probar para validar la hipótesis.
+**Visión de producto a futuro**, fuera del alcance actual: lectura automática de microchips y códigos QR, vinculación entre los distintos sistemas de identificación existentes, una conexión directa entre la aplicación del dueño y los sistemas de gestión de las veterinarias que permita enviar o sincronizar el perfil sin pasar por el PDF o el enlace, y la cédula animal de la Red Colombiana de Identificación Animal (RCIA) si esta se aprueba y entra en operación —ninguna de estas existe todavía como sistema oficial u operativo.
 
 ### Fuera de alcance
 
-Queda fuera de alcance para este semestre: avatar 3D, recordatorios genéricos, IA genérica, emisión de un identificador propio (microchip o cédula), permisos granulares y vencimiento automático al compartir, y otras funciones ya comoditizadas por el software veterinario existente.
+Queda fuera de alcance: avatar 3D, recordatorios genéricos, IA genérica (la lectura de documentos solo propone datos que el dueño confirma), emisión de un microchip propio, permisos granulares por persona, y otras funciones ya comoditizadas por el software veterinario existente.
 
 A esto se suman tres exclusiones que se desprenden directamente del análisis competitivo, y que quedan fuera no por falta de tiempo sino por decisión:
 
