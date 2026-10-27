@@ -1,0 +1,4 @@
+id,mascota_id,tipo,marca,tipo_alimento,presentacion_kg,gramos_dia,actividad,fecha_bolsa_abierta,activo
+p01,m01,concentrado,Pro Salmón,Adulto · salmón,15,380,media,2026-09-30,true
+p02,m02,casero,"Arroz, pollo y zanahoria",,,250,alta,,true
+p03,m03,concentrado,Gatuno Indoor,Adulto,3,55,baja,2026-10-10,true

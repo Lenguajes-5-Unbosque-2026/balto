@@ -1,0 +1,13 @@
+id,mascota_id,tipo,evento_id,plan_id,fecha_vencimiento,fecha_aviso,fecha_aviso_pospuesto,estado,fecha_resuelta,evento_resolucion_id
+a01,m01,refuerzo_vacuna,e01,,2026-09-12,2026-09-05,,resuelta,2026-09-12,e14
+a02,m01,refuerzo_vacuna,e14,,2027-09-12,2027-09-05,,proxima,,
+a03,m01,refuerzo_vacuna,e02,,2027-03-03,2027-02-24,,proxima,,
+a04,m01,proxima_desparasitacion,e03,,2026-11-18,2026-11-11,,proxima,,
+a05,m01,control_examen,e04,,2027-08-18,2027-08-11,,proxima,,
+a06,m01,control_peso,,,2026-10-01,2026-10-01,,vencida,,
+a07,m01,alimento_por_acabarse,,p01,2026-11-08,2026-11-03,,proxima,,
+a08,m02,proxima_desparasitacion,e23,,2026-10-28,2026-10-21,,proxima,,
+a09,m02,refuerzo_vacuna,e21,,2027-02-14,2027-02-07,,proxima,,
+a10,m03,proxima_desparasitacion,e32,,2026-12-01,2026-11-24,2026-11-26,proxima,,
+a11,m03,refuerzo_vacuna,e30,,2027-03-15,2027-03-08,,proxima,,
+a12,m03,refuerzo_vacuna,e31,,2027-03-15,2027-03-08,,proxima,,

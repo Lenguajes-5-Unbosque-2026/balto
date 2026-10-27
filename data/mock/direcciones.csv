@@ -1,0 +1,4 @@
+id,dueno_id,nombre,direccion,barrio,indicaciones,predeterminada
+dir01,d01,Casa,"Calle 63 # 9-48, apto 502",Chapinero,"Torre 2, dejar en portería",true
+dir02,d01,Oficina,"Carrera 11 # 93-07, oficina 301",Chicó,,false
+dir03,d02,Casa,Calle 45 # 22-10,Teusaquillo,"Casa esquinera de reja negra, timbre del segundo piso",true

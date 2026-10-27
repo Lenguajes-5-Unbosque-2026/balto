@@ -70,20 +70,34 @@ Estos tokens existen para mantener el significado, pero apuntan a otros colores:
 | `categoría/{vacuna, medicamento, examen, consulta, bienestar, alimentación}` | `primario/900` | Las categorías no llevan color propio |
 | `categoría/*-suave` | `acento/100` | Ídem |
 
+#### Translúcidos
+
+No son variables en Figma; están escritos en las capas.
+
+| Uso | Valor |
+|---|---|
+| Fondo de modal (detrás de diálogos y hojas) | `#262626` al 45 % (en algunas pantallas, `#170D08` al 55 %) |
+| Texto secundario sobre tarjetas oscuras o verdes | `#FFFFFF` al 70 % |
+| Íconos atenuados sobre fondo oscuro | `#FFFFFF` al 55 % |
+| Halo decorativo sobre fondo oscuro | `#FFFFFF` al 22 % |
+| Borde de nota de éxito / error | `semántico/éxito` o `semántico/error` al 28 % |
+
+> **Nota sobre `F9`:** en Figma la variable vale `#F9F9F9` con opacidad 70 %. Como fondo de pantalla se ve casi igual, pero si se usa para texto lo atenúa (así se veía deshabilitado el botón principal hasta el 27 oct 2026). Ver `design/tokens.md`, sección 7.
+
 > **Colores retirados:** morado y lavanda (`morado/900`, `lavanda/400`, `lavanda/300`, `lavanda/100`) y arena (`acento/400`). Siguen en las colecciones por compatibilidad, pero ningún componente ni pantalla los usa.
 
 ### Tipografía
 
-| Rol | Familia | Estilo | Tamaño |
-|---|---|---|---|
-| Display (reloj) | Outfit | SemiBold | 40 |
-| Título de pantalla / estado | Outfit | SemiBold | 28 |
-| Título de tarjeta / diálogo | Outfit | SemiBold | 22 |
-| Título de encabezado / sección | Outfit | Medium | 18 |
-| Botón | Plus Jakarta Sans | Bold | 16 |
-| Cuerpo / título de fila | Plus Jakarta Sans | SemiBold · Regular | 15 |
-| Etiqueta / secundario | Plus Jakarta Sans | SemiBold · Regular | 13 |
-| Microcopia / etiqueta en mayúsculas | Plus Jakarta Sans | Medium | 11 |
+| Rol | Familia | Estilo | Tamaño | Interlineado | Espaciado entre letras |
+|---|---|---|---|---|---|
+| Display (reloj) | Outfit | SemiBold | 40 | 44 | −2 % |
+| Título de pantalla / estado | Outfit | SemiBold | 28 | 34 | −1 % |
+| Título de tarjeta / diálogo | Outfit | SemiBold | 22 | 28 | −0,5 % |
+| Título de encabezado / sección | Outfit | Medium | 18 | 24 | 0 |
+| Botón | Plus Jakarta Sans | Bold | 16 | 20 | 0 |
+| Cuerpo / título de fila | Plus Jakarta Sans | SemiBold · Regular | 15 | 22 | 0 |
+| Etiqueta / secundario | Plus Jakarta Sans | SemiBold · Regular | 13 | 16 (SemiBold) · 18 (Regular) | 0 |
+| Microcopia / etiqueta en mayúsculas | Plus Jakarta Sans | Medium | 11 | 14 | +0,5 % |
 
 ### Iconografía
 
@@ -113,6 +127,17 @@ Estos tokens existen para mantener el significado, pero apuntan a otros colores:
 | `espacio/xl` | 24 |
 | `espacio/2xl` | 32 |
 
+En las pantallas también se usan mucho 6, 10, 14, 20 y 28, que no están en la escala; y en los radios, 8, 16, 18, 22, 24 y 32. La lista con los usos y la propuesta para cada uno está en `design/tokens.md`.
+
+### Sombras
+
+No son estilos de Figma; están escritas en las capas.
+
+| Uso | Valor |
+|---|---|
+| Tarjetas elevadas (tarjeta de evento, formulario, barra de acción, tarjeta de producto) | X 0 · Y 8 · desenfoque 24 · `#4E458C` al 10 % (usa el morado retirado) |
+| Navegación inferior flotante | X 0 · Y 12 · desenfoque 32 · `#262626` al 22 % |
+
 ---
 
 ## 2. Básicos
@@ -132,7 +157,7 @@ Botón en píldora de 56 px de alto.
 | Secundario | Alternativa (contorno) |
 | Oscuro | Llamado destacado |
 | Suave | Acción terciaria |
-| Destructivo | Confirmar algo irreversible (eliminar, cancelar suscripción) |
+| Destructivo | Confirmar algo irreversible (eliminar un evento, eliminar la cuenta) |
 | Destructivo contorno | Acción destructiva secundaria (salir y descartar) |
 
 | Propiedad | Tipo | Por defecto |
@@ -550,6 +575,8 @@ Producto de la tienda: imagen o ícono, aviso de reposición opcional, nombre, d
 | Precio | Texto | $ 00.000 |
 
 ### Tarjeta de plan
+**Retirada:** Balto no tiene suscripción desde el 27 oct 2026. Sigue en la página de componentes de Figma, pero no se implementa.
+
 Resumen del plan de suscripción con precio y beneficios.
 - **Tamaño:** 342 × 208, radio 28
 
@@ -698,7 +725,7 @@ Vista previa de una notificación del sistema con dos acciones. Solo de maqueta:
 | Propiedad | Tipo | Por defecto |
 |---|---|---|
 | Ícono app | Texto | pets |
-| App | Texto | MASCOTAS |
+| App | Texto | BALTO |
 | Tiempo | Texto | ahora |
 | Título | Texto | Hora de la dosis de Luna |
 | Mensaje | Texto | Amoxicilina 250 mg · 1 cápsula (20:00) |

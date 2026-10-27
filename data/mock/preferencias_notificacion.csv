@@ -1,0 +1,13 @@
+dueno_id,tipo,activo,anticipacion
+d01,vacunas_desparasitaciones,true,7 dias
+d01,tomas,true,10 min
+d01,comidas,false,
+d01,citas,true,1 dia
+d01,pedidos,true,
+d01,salud,true,7 dias
+d02,vacunas_desparasitaciones,true,7 dias
+d02,tomas,true,10 min
+d02,comidas,true,
+d02,citas,true,1 dia
+d02,pedidos,true,
+d02,salud,true,7 dias

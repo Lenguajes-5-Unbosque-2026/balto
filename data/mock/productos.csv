@@ -1,0 +1,12 @@
+id,tipo,nombre,especie,etapa,presentacion,precio_cop,stock,incluye_aplicacion,descripcion,imagen
+pr01,alimento,Concentrado adulto salmón,perro,adulto,15 kg,289900,34,false,Perro adulto · raza grande,
+pr02,alimento,Concentrado adulto cordero,perro,adulto,8 kg,164900,12,false,Perro adulto · todas las razas,
+pr03,alimento,Alimento húmedo para perro adulto,perro,adulto,Pack x 12 latas de 85 g,79900,20,false,Trozos en salsa,
+pr04,alimento,Snacks dentales,perro,adulto,28 unidades,45900,0,false,Ayudan a reducir el sarro,
+pr05,alimento,Concentrado cachorro razas pequeñas pollo y arroz con DHA para el desarrollo cerebral,perro,cachorro,3 kg,98900,8,false,Croquetas pequeñas para cachorros de hasta 12 meses,
+pr06,alimento,Concentrado gato adulto indoor,gato,adulto,3 kg,112900,15,false,Gato adulto que vive en casa,
+pr07,vacuna,Antirrábica,perro;gato,todas,1 dosis,45000,,true,Incluye la aplicación en una veterinaria aliada,
+pr08,vacuna,Múltiple DHPPi+L,perro,todas,1 dosis,85000,,true,Incluye la aplicación en una veterinaria aliada,
+pr09,vacuna,Tos de las perreras,perro,todas,1 dosis,70000,,true,Incluye la aplicación en una veterinaria aliada,
+pr10,vacuna,Triple felina,gato,todas,1 dosis,80000,,true,Incluye la aplicación en una veterinaria aliada,
+pr11,desparasitacion,Desparasitación interna,perro;gato,todas,1 dosis,38000,,true,Incluye la aplicación en una veterinaria aliada,

@@ -1,0 +1,3 @@
+id,dueno_id,tipo,franquicia,ultimos_4,token_pasarela,predeterminado
+mp01,d01,tarjeta,Visa,4417,tok_prueba_4417,true
+mp02,d02,tarjeta,Mastercard,0032,tok_prueba_0032,true

@@ -1,0 +1,5 @@
+id,mascota_id,evento_id,medicamento,presentacion,via,dosis,frecuencia,dias_semana,fecha_inicio,duracion_dias,fecha_fin,prescrito_por,estado,finalizado_antes,recordatorio
+t01,m01,e05,Amoxicilina,Cápsula 250 mg,oral,1 cápsula,cada_12h,,2026-09-21,7,2026-09-28,Dra. Gómez · Vet. Norte,finalizado,false,true
+t02,m01,e07,Champú medicado con clorhexidina al 4 %,Champú 250 ml,topica,Un baño,por_dias,martes;viernes,2026-09-05,30,2026-10-05,Dra. Gómez · Vet. Norte,finalizado,false,true
+t03,m02,e25,Meloxicam,Suspensión oral 1.5 mg/ml,oral,0.5 ml,cada_24h,,2026-03-20,5,2026-03-25,Clínica Animal Kennedy,finalizado,false,false
+t04,m02,e28,Glucosamina y condroitina,Tableta 500 mg,oral,1 tableta,cada_24h,,2026-09-15,60,2026-11-14,VetCentro Chapinero,vigente,false,true
