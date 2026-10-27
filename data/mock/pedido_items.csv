@@ -1,0 +1,5 @@
+id,pedido_id,producto_id,cantidad,precio_unitario,mascota_id,cita_id
+pi01,pd01,pr01,1,289900,m01,
+pi02,pd01,pr07,1,45000,m01,ci01
+pi03,pd02,pr01,1,289900,m01,
+pi04,pd03,pr04,1,45900,m02,

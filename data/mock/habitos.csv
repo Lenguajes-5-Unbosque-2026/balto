@@ -1,0 +1,13 @@
+id,mascota_id,tipo,fecha,duracion_min,consistencia,observacion,imagen
+hb01,m01,paseo,2026-09-01,40,,Paseo por el Parque de los Hippies.,
+hb02,m01,paseo,2026-09-03,30,,,
+hb03,m01,paseo,2026-09-08,45,,Corrió mucho con otros perros.,
+hb04,m01,paseo,2026-09-10,25,,Llovía; volvimos rápido.,
+hb05,m01,paseo,2026-09-15,35,,,
+hb06,m01,paseo,2026-09-17,40,,,
+hb07,m01,paseo,2026-09-19,30,,,
+hb08,m01,sueno,2026-09-19,360,,Durmió poco: se despertó varias veces ladrando.,
+hb09,m01,paseo,2026-09-22,45,,"Paseo largo en el parque, muy activa.",luna.jpg
+hb10,m01,deposiciones,2026-09-23,,blanda,Después de cambiar al concentrado de salmón.,
+hb11,m02,actividad,2026-10-05,20,,Juego con la pelota en el patio.,
+hb12,m03,deposiciones,2026-10-21,,con_sangre,"Vi un poco de sangre en la arena. Consultar con la veterinaria.",

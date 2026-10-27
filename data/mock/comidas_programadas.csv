@@ -1,0 +1,6 @@
+id,plan_id,nombre,hora,gramos
+cp01,p01,Desayuno,07:00,190
+cp02,p01,Cena,18:00,190
+cp03,p02,Almuerzo,12:30,250
+cp04,p03,Mañana,08:00,25
+cp05,p03,Noche,20:00,30

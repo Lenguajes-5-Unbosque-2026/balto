@@ -1,0 +1,5 @@
+# Archivos binarios: git no debe cambiar sus finales de línea
+*.pdf binary
+*.jpg binary
+*.jpeg binary
+*.png binary

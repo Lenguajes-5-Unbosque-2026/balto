@@ -1,0 +1,6 @@
+id,dueno_id,mascota_id,proveedor_id,servicio,fecha_hora,duracion_min,estado,alerta_id,pedido_id
+ci01,d01,m01,v01,Vacunación,2026-09-12 10:00,30,realizada,a01,pd01
+ci02,d01,m02,v03,Baño y corte,2026-08-30 11:00,60,realizada,,
+ci03,d01,m02,v02,Consulta general,2026-10-29 09:30,30,confirmada,,
+ci04,d01,m03,v07,Consulta general,2026-10-30 16:00,30,por_confirmar,,
+ci05,d02,m05,v12,Vacunación,2026-11-04 08:30,30,cancelada,,
