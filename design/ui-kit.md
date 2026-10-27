@@ -32,20 +32,19 @@ Sistema de diseño de **Balto**, la app de historia clínica y cuidado de mascot
 
 ### Color
 
-La paleta activa es la colección **Paleta · Verde y arena**. El texto usa además dos neutros de la colección **Paleta** (modo *Claro*).
+La única colección de color es **Paleta · Verde y arena**. Las colecciones *Paleta* y *Paleta · Cálida* se borraron el 27 oct 2026, y todas las capas usan esta.
 
 #### Marca y neutros
 
 | Token | Hex | Uso |
 |---|---|---|
 | `primario/900` | `#2E5955` | Color principal: íconos, enlaces, botones activos, tarjetas destacadas |
-| `primario/800` | `#2F5F5F` | Relleno del botón primario, chips activos, interruptor encendido |
-| `acento/300` | `#C7D0D5` | Botón suave, barras de progreso pendientes, rasgos |
-| `acento/100` | `#DCE2E5` | Contenedores de ícono, notas informativas, fondos de campos |
-| `neutro/900` | `#262626` | Texto principal (colección *Paleta*) |
-| `neutro/500` | `#77737F` | Texto secundario, subtítulos, íconos finales (colección *Paleta*) |
-| `neutro/50` | `#F2F2F2` | Fondos sutiles |
-| `F9` | `#F9F9F9` | Fondo de pantalla |
+| `primario/800` | → `primario/900` | Relleno del botón primario, chips activos, interruptor encendido. Es un alias: antes era `#2F5F5F`, casi igual. |
+| `acento/300` | `#C7D0D5` | Botón suave, barras de progreso pendientes, rasgos, bordes fuertes |
+| `acento/100` | `#DCE2E5` | Contenedores de ícono, notas informativas, fondos y bordes de campos |
+| `neutro/900` | `#262626` | Texto principal, navegación inferior, tarjetas oscuras |
+| `neutro/500` | `#77737F` | Texto secundario, subtítulos, íconos finales |
+| `fondo/pantalla` | `#F9F9F9` | Fondo de pantalla (reemplaza a `F9`) |
 | `neutro/0` | `#FFFFFF` | Superficies, tarjetas, texto sobre color |
 
 #### Semánticos
@@ -72,19 +71,17 @@ Estos tokens existen para mantener el significado, pero apuntan a otros colores:
 
 #### Translúcidos
 
-No son variables en Figma; están escritos en las capas.
+Usan una variable de color con opacidad en la capa.
 
 | Uso | Valor |
 |---|---|
-| Fondo de modal (detrás de diálogos y hojas) | `#262626` al 45 % (en algunas pantallas, `#170D08` al 55 %) |
-| Texto secundario sobre tarjetas oscuras o verdes | `#FFFFFF` al 70 % |
-| Íconos atenuados sobre fondo oscuro | `#FFFFFF` al 55 % |
-| Halo decorativo sobre fondo oscuro | `#FFFFFF` al 22 % |
+| Fondo de modal (detrás de diálogos y hojas) | `neutro/900` al 45 % |
+| Texto secundario sobre tarjetas oscuras o verdes | `neutro/0` al 70 % |
+| Íconos atenuados sobre fondo oscuro | `neutro/0` al 55 % |
+| Halo decorativo sobre fondo oscuro | `neutro/0` al 22 % |
 | Borde de nota de éxito / error | `semántico/éxito` o `semántico/error` al 28 % |
 
-> **Nota sobre `F9`:** en Figma la variable vale `#F9F9F9` con opacidad 70 %. Como fondo de pantalla se ve casi igual, pero si se usa para texto lo atenúa (así se veía deshabilitado el botón principal hasta el 27 oct 2026). Ver `design/tokens.md`, sección 7.
-
-> **Colores retirados:** morado y lavanda (`morado/900`, `lavanda/400`, `lavanda/300`, `lavanda/100`) y arena (`acento/400`). Siguen en las colecciones por compatibilidad, pero ningún componente ni pantalla los usa.
+> **Colores retirados:** morado y lavanda se borraron con la colección *Paleta*. La arena (`acento/400`) sigue en la colección, pero ningún componente ni pantalla la usa.
 
 ### Tipografía
 
@@ -96,24 +93,27 @@ No son variables en Figma; están escritos en las capas.
 | Título de encabezado / sección | Outfit | Medium | 18 | 24 | 0 |
 | Botón | Plus Jakarta Sans | Bold | 16 | 20 | 0 |
 | Cuerpo / título de fila | Plus Jakarta Sans | SemiBold · Regular | 15 | 22 | 0 |
-| Etiqueta / secundario | Plus Jakarta Sans | SemiBold · Regular | 13 | 16 (SemiBold) · 18 (Regular) | 0 |
+| Etiqueta / secundario | Plus Jakarta Sans | SemiBold · Regular | 13 | 18 | 0 |
 | Microcopia / etiqueta en mayúsculas | Plus Jakarta Sans | Medium | 11 | 14 | +0,5 % |
 
 ### Iconografía
 
 - **Familia:** Material Symbols Rounded (Regular), escrita como texto con ligaduras. Por ejemplo, `vaccines`, `medication`, `pets`, `check_circle` o `error`.
-- **Tamaños habituales:** 18–22 px en filas y botones, 24 px en tarjetas, 48 px en bloques de estado.
+- **Tamaños:** 14 en metadatos, 18 en chips, campos y botones, 22 en contenedores de fila y botones ícono, 24 en tarjetas, 32 en marcadores y 48 en bloques de estado.
 - **Cambiar un ícono:** se edita la propiedad de texto **Ícono** del componente.
 
 ### Radios
 
-| Token | Valor |
-|---|---|
-| `radio/sm` | 14 |
-| `radio/md` | 20 |
-| `radio/lg` | 28 |
-| `radio/xl` | 44 |
-| `radio/full` | 999 (píldora) |
+| Token | Valor | Uso |
+|---|---|---|
+| `radio/xs` | 8 | Contenedores de ícono muy pequeños |
+| `radio/sm` | 14 | Etiquetas de estado, dígito de código |
+| `radio/md` | 20 | Campos, filas, notas, tarjetas de evento, rasgos |
+| `radio/bloque` | 24 | Marcadores, cédula, gráfica, calendario, ficha |
+| `radio/lg` | 28 | Tarjetas destacadas y de alerta |
+| `radio/dialogo` | 32 | Diálogo, tarjeta de tratamiento |
+| `radio/xl` | 44 | Hojas inferiores |
+| `radio/full` | 999 | Píldora |
 
 ### Espaciado
 
@@ -121,13 +121,18 @@ No son variables en Figma; están escritos en las capas.
 |---|---|
 | `espacio/2xs` | 2 |
 | `espacio/xs` | 4 |
+| `espacio/xs-sm` | 6 |
 | `espacio/sm` | 8 |
+| `espacio/sm-md` | 10 |
 | `espacio/md` | 12 |
+| `espacio/md-lg` | 14 |
 | `espacio/lg` | 16 |
+| `espacio/lg-xl` | 20 |
 | `espacio/xl` | 24 |
+| `espacio/xl-2xl` | 28 |
 | `espacio/2xl` | 32 |
 
-En las pantallas también se usan mucho 6, 10, 14, 20 y 28, que no están en la escala; y en los radios, 8, 16, 18, 22, 24 y 32. La lista con los usos y la propuesta para cada uno está en `design/tokens.md`.
+Los nombres para código y dónde se usa cada valor están en `design/tokens.md`.
 
 ### Sombras
 
@@ -135,7 +140,7 @@ No son estilos de Figma; están escritas en las capas.
 
 | Uso | Valor |
 |---|---|
-| Tarjetas elevadas (tarjeta de evento, formulario, barra de acción, tarjeta de producto) | X 0 · Y 8 · desenfoque 24 · `#4E458C` al 10 % (usa el morado retirado) |
+| Tarjetas elevadas (tarjeta de evento, formulario, barra de acción, tarjeta de producto) | X 0 · Y 8 · desenfoque 24 · `#262626` al 8 % |
 | Navegación inferior flotante | X 0 · Y 12 · desenfoque 32 · `#262626` al 22 % |
 
 ---
@@ -468,7 +473,7 @@ Foto, nombre y datos básicos de la mascota.
 
 ### Fila de toma
 Toma programada de un medicamento, con hora, dosis y estado.
-- **Tamaño:** 342 × 68, radio 22
+- **Tamaño:** 342 × 68, radio 20
 
 | Variante `Estado` | Uso |
 |---|---|
@@ -505,7 +510,7 @@ Hora y periodo (AM/PM) al inicio de una fila de toma.
 
 ### Tarjeta de evento
 Evento de la línea de tiempo, el historial de salud, la bitácora de hábitos y el resumen de carga inicial.
-- **Tamaño:** 342 × 80, radio 22
+- **Tamaño:** 342 × 80, radio 20
 
 | Propiedad | Tipo | Por defecto |
 |---|---|---|
@@ -563,7 +568,7 @@ Cabecera del tratamiento activo con el progreso de días y sus rasgos.
 
 ### Tarjeta de producto
 Producto de la tienda: imagen o ícono, aviso de reposición opcional, nombre, detalle y precio con botón de agregar.
-- **Tamaño:** 166 × 230, radio 22
+- **Tamaño:** 166 × 230, radio 20
 
 | Propiedad | Tipo | Por defecto |
 |---|---|---|
@@ -611,7 +616,7 @@ Datos clave de la mascota para compartir con el veterinario.
 
 ### Estadística
 Dato resumido con número grande y etiqueta. Se usan 3 en fila.
-- **Tamaño:** 107 × 68, radio 22
+- **Tamaño:** 107 × 68, radio 20
 
 | Variante `Tono` | Uso |
 |---|---|
@@ -628,7 +633,7 @@ Dato resumido con número grande y etiqueta. Se usan 3 en fila.
 
 ### Rasgo
 Dato corto de la mascota o del tratamiento: esterilizada, peso, microchip, frecuencia.
-- **Tamaño:** 76 × 76, radio 22
+- **Tamaño:** 76 × 76, radio 20
 - **Variantes `Tema`:** Claro · Oscuro
 
 | Propiedad | Tipo | Por defecto |
@@ -638,7 +643,7 @@ Dato corto de la mascota o del tratamiento: esterilizada, peso, microchip, frecu
 
 ### Acceso rápido
 Mosaico de acceso a una sección, como en la Tienda o el Inicio.
-- **Tamaño:** 107 × 96, radio 22
+- **Tamaño:** 107 × 96, radio 20
 - **Variantes `Estado`:** Activo · Inactivo
 
 | Propiedad | Tipo | Por defecto |
@@ -648,7 +653,7 @@ Mosaico de acceso a una sección, como en la Tienda o el Inicio.
 
 ### Tipo de evento
 Mosaico de categoría para elegir qué registrar: vacuna, consulta, alimentación…
-- **Tamaño:** 107 × 70, radio 22
+- **Tamaño:** 107 × 70, radio 20
 
 | Propiedad | Tipo | Por defecto |
 |---|---|---|
@@ -687,7 +692,7 @@ Bloque de estado centrado: ícono en círculo de 104 px, título y mensaje. Se u
 
 ### Nota
 Nota corta con ícono y texto sobre fondo suave.
-- **Tamaño:** 342 de ancho, radio 18
+- **Tamaño:** 342 de ancho, radio 20
 
 | Variante `Tono` | Fondo | Borde | Uso |
 |---|---|---|---|
