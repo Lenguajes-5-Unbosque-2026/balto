@@ -103,7 +103,9 @@ Caso: en una consulta en una clínica nueva, le preguntan a Samuel cuándo le pu
 ## Preguntas abiertas
 
 1. **Borrado y permanencia** (pregunta 6 de `CLAUDE.md`). La propuesta de esta spec: el borrado se ve definitivo para el dueño, pero el evento se conserva 30 días con borrado lógico y se puede recuperar escribiendo a Ayuda (igual que M16). Falta que el equipo la confirme.
-2. **Línea de tiempo y bitácora de hábitos (I).** ¿Los registros de la bitácora de I aparecen en D2 bajo "Hábitos", o solo los eventos de alimentación y comportamiento de E7? Se resuelve en la spec de I.
+
+
+*Resuelto con la spec de I:* el chip "Hábitos" de D2 muestra solo los eventos de alimentación y comportamiento (E7, y Alimentación / Atípico de I2). Paseos, sueño, actividad y deposiciones se ven solo en la bitácora de I.
 
 ## Cambios
 
