@@ -30,7 +30,7 @@
 | `design/UI-KIT-BaltoOficial.md` | UI kit: tokens de color, tipografía, íconos, radios, espaciado; 59 componentes y reglas de color semántico. Enlace al archivo de Figma. |
 | `design/auditoria-referencias.md` | Referencias visuales, decisiones de UI que salieron de ellas y riesgos detectados en el archivo de Figma. |
 | `design/flujos/` | Pantallas exportadas de Figma (JPG, 390 × 844), una carpeta por flujo. Ver sección 4. |
-| `specs/` | Specs de cada flujo: una carpeta con `spec.md`, `plan.md` y `tareas.md`. Hoy solo tiene el README. |
+| `specs/` | Specs de cada flujo: una carpeta por flujo con el mismo nombre de su carpeta en `design/flujos/`, con `spec.md` (y luego `plan.md` y `tareas.md`). `specs/README.md` tiene el mapa de flujos, sus conexiones, las inconsistencias y todas las preguntas abiertas. `specs/_plantilla.md` es la plantilla. La spec modelo es la de E. |
 | `data/` | Modelo de datos (`modelo-datos.md`, todavía no existe). |
 | `web/` | Todo el código de la aplicación (Next.js). Hoy solo tiene el README. |
 
@@ -84,12 +84,12 @@ Ya resuelto: los flujos de `design/flujos/` son la versión final de la aplicaci
 5. **Tienda.** ¿Con qué proveedores de alimento y veterinarias aliadas se trabaja, y de dónde salen el catálogo, los precios y el seguimiento de pedidos?
 6. **Borrado y permanencia.** D7 borra un evento "sin vuelta atrás" y M16 habla de 30 días para recuperar la cuenta, pero el brief promete que "nada que se registre se pierde". ¿El borrado es definitivo o reversible? ¿Cuál es la política de retención?
 7. **Modelo de ingreso y pagos de la Tienda.** Sin suscripción, ¿el ingreso sale solo de la Tienda? `docs/Brief.md` todavía describe la suscripción y hay que actualizarlo. ¿Qué pasarela procesa los pagos con tarjeta y PSE de la Tienda (N7, N13, N14)? No está en el stack.
-8. **Nombre visible.** Las notificaciones G5 y H5 y el componente Notificación push dicen "MASCOTAS"; J6 dice "BALTO". ¿El nombre es Balto en todas partes?
+8. **Nombre visible.** Las notificaciones G5 y H5 y el componente Notificación push dicen "MASCOTAS"; J6 dice "BALTO". ¿El nombre es Balto en todas partes? *Resuelto en las specs: Balto en todas partes (ajuste pendiente en Figma para G5 y H5).*
 
 **Plataforma**
 
 9. **Capacidades de la web móvil.** ¿Se instala como PWA? De eso depende si se pueden enviar notificaciones push (G5, H5, J6, O5), sobre todo en iPhone. Además: ¿hasta dónde llega el modo sin conexión con cola de cambios (O2, O3, O8)? ¿Las pantallas de permisos de cámara (O6) y fotos (O7) se mantienen, si en la web los pide el navegador? ¿Qué se muestra en pantallas más anchas que un teléfono?
-10. **Specs.** `specs/` está vacía y `design/flujos/README.md` habla de carpetas por caso de uso (CU-01, CU-02…), pero los flujos están nombrados con letras (A–O). ¿Va una spec por letra de flujo? ¿Cómo se nombran las carpetas?
+10. **Specs.** `specs/` está vacía y `design/flujos/README.md` habla de carpetas por caso de uso (CU-01, CU-02…), pero los flujos están nombrados con letras (A–O). ¿Va una spec por letra de flujo? ¿Cómo se nombran las carpetas? *Resuelto: una spec por carpeta de `design/flujos/`, con el mismo nombre (ver `specs/README.md`).*
 11. **Modelo de datos.** `data/README.md` menciona `modelo-datos.md`, que todavía no existe. ¿Quién lo escribe y cuándo?
 
 **Diseño y tokens**
@@ -98,8 +98,8 @@ Ya resuelto: los flujos de `design/flujos/` son la versión final de la aplicaci
 13. **Espaciado y medidas.** La auditoría dice que en Figma se usan 6, 10 y 14 px, que no están en la escala de `espacio/*`. Tampoco hay tokens para los altos fijos (botón de 56, campo de 80, barra de acción de 108). ¿Cuáles se vuelven tokens?
 14. **Colores.** La auditoría menciona neutros #6A797A y #180D08 y arena #ECD3AB. El kit usa `neutro/500` #77737F, retira la arena y tiene un token llamado solo `F9`. ¿La paleta definitiva es la del kit? ¿Qué nombre lleva `F9`? Además, la barra de navegación inferior es casi negra: ¿qué token le corresponde?
 15. **Estados que faltan.** El botón no tiene variantes deshabilitado ni cargando, pero muchas pantallas muestran el botón principal con el texto atenuado (B1, C1, E2, L1…). ¿Ese es el estado deshabilitado? Hay que agregarlo al kit.
-16. **Botones sin texto.** E9 y N8 tienen un botón principal vacío a la izquierda, y A6 muestra "Ya tengo cuenta" en la propia pantalla de inicio de sesión. ¿Qué deben decir esos botones, o se quitan?
-17. **Videos.** E7, E11 e I2 aceptan "foto o video", pero E8, E13 y C13 solo aceptan JPG, PNG y PDF de hasta 10 MB. ¿Qué formatos y qué tamaño se permiten para video?
+16. **Botones sin texto.** E9 y N8 tienen un botón principal vacío a la izquierda, y A6 muestra "Ya tengo cuenta" en la propia pantalla de inicio de sesión. ¿Qué deben decir esos botones, o se quitan? *Resuelto: E9 ya dice "Registrar otro" en Figma; N8 pasa a "Ver mi pedido" y A6 a "Crear cuenta" (pendientes en Figma).*
+17. **Videos.** E7, E11 e I2 aceptan "foto o video", pero E8, E13 y C13 solo aceptan JPG, PNG y PDF de hasta 10 MB. ¿Qué formatos y qué tamaño se permiten para video? *Resuelto: por ahora no hay video; solo JPG, PNG y PDF de hasta 10 MB (ver specs de E e I).*
 18. **Fuentes e íconos.** Outfit, Plus Jakarta Sans y Material Symbols Rounded: ¿se cargan desde Google Fonts o se alojan en el proyecto?
 
 **Repo**

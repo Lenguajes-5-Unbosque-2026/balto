@@ -55,7 +55,7 @@ Caso: Samuel acaba de crear su cuenta (A5) y registra a Luna, una golden hembra 
 | Paso incompleto | B1 | "Siguiente" deshabilitado hasta que estén Especie, Nombre y Sexo. |
 | Sin foto | B2 | "Siguiente" deshabilitado; "Omitir por ahora" disponible. |
 | Foto cargada | B2 | La foto reemplaza el área de cámara. Cámara / Galería permiten cambiarla. |
-| Sin permiso de cámara o fotos | B2 | **O6 · Permiso de cámara** / **O7 · Permiso de fotos** (flujo O). |
+| Cámara del teléfono | B2 | "Cámara" y el área de vista de cámara abren la cámara nativa del teléfono; "Galería", el selector de fotos. No piden permiso (ver la spec de O). |
 | Raza no encontrada | B1 | El buscador ofrece "Mestizo / no sé" y "Usar «texto escrito»". |
 | Salir con datos | B1 (X) | Diálogo **B8**. "Salir y descartar" vuelve a donde se abrió el flujo. Si es la primera mascota, va a **O1**. |
 | Salir sin datos | B1 (X) | Cierra sin preguntar. |
@@ -85,7 +85,7 @@ Caso: Samuel acaba de crear su cuenta (A5) y registra a Luna, una golden hembra 
 - **Cédula:** número único con formato `BAL-NNNN-NOMBRE`, donde NNNN es un consecutivo global y NOMBRE el nombre en mayúsculas sin tildes ni espacios, más la fecha de emisión. El número no cambia si después se edita el nombre.
 - **Peso inicial:** una medición (mascota, kg, fecha = hoy). Es el mismo dato que un evento de peso de E6.
 - **Alergias:** lista de textos por mascota.
-- **Condiciones preexistentes:** texto por mascota.
+- **Condiciones preexistentes:** si el dueño escribe algo distinto de "Ninguna", se crea una **Condición** (la misma entidad de F) con ese texto, sin fecha ni diagnóstico. Se completa después en F6.
 - **Medicación vigente:** un tratamiento activo (mascota, medicamento, estado = activo) que consume G.
 
 **Lee**

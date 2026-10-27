@@ -99,7 +99,7 @@ Caso: antes de un control, Samuel revisa cómo está Luna.
 
 ## Preguntas abiertas
 
-1. **¿Quién avisa del cambio brusco de peso?** F4 promete "Te avisaremos si varía más de 10 % en un mes", pero M3 no tiene un interruptor para ese aviso. La propuesta es incluirlo en "Vacunas y desparasitaciones", o agregar un interruptor "Salud" en M3.
+Ninguna pendiente del equipo. *Resuelto en la revisión cruzada:* los avisos de cambio brusco de peso, control de peso y próximo control de examen se activan con un interruptor nuevo **"Salud"** en M3 (ver la spec de M).
 
 ## Cambios
 

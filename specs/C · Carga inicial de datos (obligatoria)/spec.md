@@ -73,7 +73,7 @@ Caso: Samuel acaba de crear el perfil de Luna (B5) y tiene a mano la foto del ca
 | Dosis por confirmar | C10 | Alerta roja permanente: la dosis leída debe confirmarla un veterinario. |
 | Volver | C2–C6 | La flecha atrás regresa al paso anterior sin perder lo guardado. En el primer paso vuelve a C1. |
 | Cerrar sin terminar | Todo C | El flujo no tiene X: es obligatorio. Si el dueño cierra la app, la próxima vez que entre con esa mascota vuelve al paso pendiente. Lo confirmado ya queda guardado. |
-| Sin permiso de cámara o fotos | C2–C4 | **O6** / **O7** (flujo O). |
+| Cámara del teléfono | C2–C4 | El área de cámara abre la cámara nativa del teléfono, sin pedir permiso (ver la spec de O). |
 | Sin conexión o error al guardar | — | **O2**, **O3**, **O8** (flujo O). La lectura necesita conexión. |
 
 ## Qué pasa después

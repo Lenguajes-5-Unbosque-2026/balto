@@ -34,17 +34,19 @@ Pantalla reutilizada de otro flujo: **B8 · Salir sin guardar** (diálogo de des
 
 | Tipo | Pantalla | Campos | Soporte | Extra |
 |---|---|---|---|---|
-| Vacuna | E2 | Vacuna aplicada *, Fecha aplicada *, Próximo refuerzo | Foto del carnet o PDF | Recordarme el refuerzo |
+| Vacuna | E2 | Vacuna aplicada *, Fecha aplicada *, Próximo refuerzo, Veterinaria, Lote | Foto del carnet o PDF | Recordarme el refuerzo |
 | Desparasitación | E10 | Producto *, Fecha *, Vía, Próxima dosis | No lleva | Recordarme la próxima dosis; nota "Interna cada 3 meses, externa cada mes. Confirma con tu veterinario." |
 | Consulta | E3 | Veterinaria que atendió *, Motivo, Fecha *, Diagnóstico, Recomendaciones | Foto o PDF (ajuste pendiente en Figma) | Nota de que el veterinario no necesita cuenta |
-| Examen | E4 | Tipo de examen *, Laboratorio, Fecha *, Resultado principal | Foto o PDF | — |
+| Examen | E4 | Tipo de examen *, Laboratorio, Fecha *, Resultado principal, Resultado (normal / alterado), Solicitado por, Próximo control | Foto o PDF | El próximo control crea una alerta en J (ver la spec de F) |
 | Tratamiento | E5 | Medicamento *, Dosis, Vía, Frecuencia, Duración | Foto de la fórmula (opcional) | Crear horarios de toma (abre G4) |
 | Peso | E6 | Peso (kg) *, Fecha de la medición | No lleva | Gráfica de evolución y comparación con el mes anterior |
 | Alimentación | E7 | ¿Qué cambió? *, Fecha | Foto (opcional) | — |
 | Comportamiento | E7 | ¿Qué cambió? *, Fecha | Foto (opcional) | — |
 | Otro | E11 | ¿Qué pasó? *, Fecha *, Lugar, Detalle | Foto (opcional) | — |
 
-En los tipos que lo aceptan, el soporte siempre es opcional. Por ahora no se aceptan videos.
+En los tipos que lo aceptan, el soporte siempre es opcional. Se aceptan hasta 5 soportes por evento. Por ahora no se aceptan videos.
+
+Los campos de texto *Veterinaria* (E2) y *Veterinaria que atendió* (E3) sugieren las veterinarias favoritas de K y las que ya se usaron en otros eventos; también se puede escribir otra.
 
 ## Paso a paso
 
@@ -53,21 +55,24 @@ Caso: Valentina registra la vacuna antirrábica que le pusieron a Luna el 12/09/
 1. **Entrada.** En Inicio, con Luna seleccionada, Valentina toca el botón **+** de la barra de navegación inferior. Se abre **E1** con la foto y el nombre de Luna.
 2. **Tipo.** Toca **Vacuna**. Se abre **E2** con el chip "Vacuna" activo y el selector de mascota mostrando "Luna" en el encabezado.
 3. **Campos.** Escribe "Antirrábica · Nobivac Rabies" en *Vacuna aplicada*, deja *Fecha aplicada* en 12/09/2026 y pone *Próximo refuerzo* en 12/09/2027. Mientras falten campos obligatorios, el botón "Guardar evento" está deshabilitado.
-4. **Soporte.** Toca **Cámara** en el bloque de soporte. Se abre la cámara del dispositivo; si el navegador no tiene permiso, se muestra **O6 · Permiso de cámara**. Las opciones *Galería* y *PDF* del bloque, y cualquier área de soporte de los otros tipos, abren la hoja **E8**, que ofrece las mismas tres opciones.
+4. **Soporte.** Toca **Cámara** en el bloque de soporte y se abre la cámara nativa del teléfono, sin pedir permiso (ver la spec de O). Las opciones *Galería* y *PDF* del bloque, y cualquier área de soporte de los otros tipos, abren la hoja **E8**, que ofrece las mismas tres opciones.
 5. **Revisión de la foto.** Después de tomar la foto se abre **E12**. Valentina puede recortar, girar o repetir. Toca **Usar esta foto** y vuelve a E2 con la tarjeta "carnet_luna.jpg · Foto · 1,2 MB · Cargado". La X de la tarjeta quita el soporte.
 6. **Recordatorio.** Como hay fecha de *Próximo refuerzo*, el interruptor "Recordarme el refuerzo" está disponible. Lo deja encendido; debajo se lee "7 días antes · 5 sep 2027". La anticipación sale de M3 (ver Qué pasa después).
 7. **Guardar.** Toca **Guardar evento**. Se abre **E9** con:
    - "La vacuna antirrábica quedó en la línea de tiempo de Luna."
    - "Te avisaremos 7 días antes del refuerzo (5 sep 2027)."
    - La tarjeta del evento: Vacuna antirrábica · Refuerzo anual · Vet. Norte · 12 SEP 2026 · 1 soporte.
-8. **Salida.** Toca **Listo** y sale del flujo; si toca **Registrar otro**, vuelve a E1.
+8. **Salida.** Toca **Listo** y vuelve a la pantalla desde la que abrió el flujo (aquí, Inicio). Si toca **Registrar otro**, vuelve a E1.
 
 ### Variantes del paso a paso
 
 - **Cambiar de tipo dentro del formulario.** Los chips de arriba (E2–E6, E10, E11) cambian el formulario sin volver a E1. El chip del tipo actual aparece primero y activo. En E7, el selector segmentado cambia entre Alimentación y Comportamiento.
+  - Al cambiar de tipo se conservan la fecha y los soportes. Los campos propios del tipo anterior se descartan sin preguntar.
+- **Cambiar de mascota.** Todos los formularios muestran el selector de mascota del encabezado, como E2.
+- **Desde una alerta (J).** "Ya lo resolví" abre el formulario del tipo con los datos llenos. Al guardar se muestra **J5 · Alerta resuelta** en lugar de E9.
 - **Tratamiento (E5).** La fila "Crear horarios de toma" abre **G4 · Definir horarios de toma**. Al confirmar, vuelve a E5 con los horarios en la fila (por ejemplo, "08:00 · 20:00").
 - **Peso (E6).** Mientras escribe el peso, el dueño ve la gráfica de los últimos 6 meses (la última barra es la medición nueva) y la diferencia con el mes anterior ("+0,3 kg frente al mes anterior").
-- **Galería.** "Elegir de la galería" en E8 abre la galería del dispositivo; si no hay permiso, se muestra **O7 · Permiso de fotos**.
+- **Galería.** "Elegir de la galería" en E8 abre el selector de fotos del teléfono y adjunta la foto sin pasar por E12, que solo se usa con la cámara. Las fotos HEIC del iPhone se convierten a JPG en el teléfono antes de subirlas.
 - **PDF.** "Subir PDF" en E8 abre el selector de archivos. El archivo queda en el formulario como tarjeta con nombre, tipo y tamaño, igual que en E4.
 
 ## Estados
@@ -76,8 +81,10 @@ Caso: Valentina registra la vacuna antirrábica que le pusieron a Luna el 12/09/
 |---|---|---|
 | Formulario incompleto | E2–E7, E10, E11 | "Guardar evento" deshabilitado hasta que estén todos los campos `*`. |
 | Formulario completo | E2–E7, E10, E11 | "Guardar evento" habilitado. |
+| Subiendo soporte | Formularios | La tarjeta del soporte muestra el progreso en lugar de "Cargado". "Guardar evento" espera a que termine. *(Falta en Figma.)* |
 | Soporte cargado | E2, E4 (y los demás tipos con soporte) | Tarjeta con miniatura o ícono, nombre, tipo, tamaño y "Cargado", más una X para quitarlo. |
-| Archivo de más de 10 MB | E13 | "El archivo pesa más de 10 MB", con el nombre y el peso del archivo y el texto "Aceptamos JPG, PNG y PDF de hasta 10 MB." Opciones: *Tomar una foto del documento* (lleva a la cámara y E12), *Elegir otro archivo* (galería o archivos) y *Guardar sin soporte*. La flecha atrás vuelve al formulario. |
+| Error de subida | Formularios | La tarjeta en rojo con "No se pudo subir · Reintentar". *(Falta en Figma.)* |
+| Archivo de más de 10 MB | E13 | "El archivo pesa más de 10 MB", con el nombre y el peso del archivo y el texto "Aceptamos JPG, PNG y PDF de hasta 10 MB." Opciones: *Tomar una foto del documento* (lleva a la cámara y E12), *Elegir otro archivo* (galería o archivos) y *Guardar sin soporte*, que vuelve al formulario sin el adjunto (el evento se guarda desde ahí). La flecha atrás también vuelve al formulario. |
 | Recordatorio disponible | E2, E10 | Interruptor activo cuando *Próximo refuerzo* / *Próxima dosis* tiene fecha; muestra "N días antes · fecha del aviso". |
 | Recordatorio no disponible | E2, E10 | Sin fecha de próximo refuerzo o dosis, el interruptor está apagado y no se puede activar. |
 | Avisos apagados en ajustes | E2, E10 | Si "Vacunas y desparasitaciones" está apagado en M3, el interruptor aparece apagado con la nota "Activa los avisos en Ajustes › Notificaciones". *(Falta en Figma.)* |
@@ -85,7 +92,6 @@ Caso: Valentina registra la vacuna antirrábica que le pusieron a Luna el 12/09/
 | Salir sin datos | Formularios y E1 | La X cierra sin preguntar y vuelve a la pantalla desde la que se abrió el flujo. |
 | Cancelar adjunto | E8 | "Cancelar" cierra la hoja y vuelve al formulario sin cambios. |
 | Evento guardado | E9 | Confirmación. El aviso del recordatorio solo aparece si se activó. |
-| Sin permiso de cámara o fotos | — | **O6** / **O7** (flujo O). |
 | Sin conexión al guardar | — | **O3 · Guardado pendiente** (flujo O). |
 | Error al guardar | — | **O8 · No se pudo guardar** (flujo O). |
 
@@ -93,7 +99,7 @@ Caso: Valentina registra la vacuna antirrábica que le pusieron a Luna el 12/09/
 
 Desde **E9**:
 - **Registrar otro** vuelve a E1, con la misma mascota.
-- **Listo** sale del flujo (destino por definir, ver Preguntas abiertas).
+- **Listo** vuelve a la pantalla desde la que se abrió el flujo (Inicio, D2, F2, F4…).
 - La **tarjeta del evento** abre **D4 · Detalle de evento**.
 
 Efectos de guardar un evento en el resto de la app:
@@ -113,21 +119,22 @@ La anticipación de los recordatorios no se elige en este flujo: se toma de **M3
 ## Datos que usa
 
 **Lee**
-- **Mascota activa:** id, nombre, foto. Sale del selector de Inicio y de E1, y se puede cambiar en el encabezado de E2.
+- **Mascota activa:** id, nombre, foto. Sale del selector de Inicio y de E1, y se puede cambiar en el encabezado de los formularios.
+- **Veterinarias favoritas (K) y usadas en otros eventos:** para las sugerencias del campo veterinaria.
 - **Pesos anteriores de la mascota:** para la gráfica de E6 y la comparación con el mes anterior.
 - **Preferencias de notificación del dueño (M3):** si los avisos de vacunas y desparasitaciones están encendidos y con cuántos días de anticipación.
 
 **Guarda**
 - **Evento:** id, mascota, tipo (vacuna | desparasitación | consulta | examen | tratamiento | peso | alimentación | comportamiento | otro), fecha, fecha de creación, campos propios del tipo:
-  - vacuna: nombre de la vacuna, fecha del próximo refuerzo
+  - vacuna: nombre de la vacuna, fecha del próximo refuerzo, veterinaria (texto), lote
   - desparasitación: producto, vía, fecha de la próxima dosis
   - consulta: veterinaria (texto), motivo, diagnóstico, recomendaciones
-  - examen: tipo de examen, laboratorio, resultado principal
+  - examen: tipo de examen, laboratorio, resultado principal, resultado (normal | alterado), solicitado por, fecha del próximo control
   - tratamiento: medicamento, dosis, vía, frecuencia, duración
   - peso: valor en kg
   - alimentación / comportamiento: qué cambió
   - otro: título, lugar, detalle
-- **Soporte** (0 o más por evento): evento, archivo en almacenamiento (Supabase Storage), nombre, tipo (JPG | PNG | PDF), tamaño (≤ 10 MB).
+- **Soporte** (de 0 a 5 por evento): evento, archivo en almacenamiento (Supabase Storage), nombre, tipo (JPG | PNG | PDF), tamaño (≤ 10 MB).
 - **Recordatorio / alerta** (si se activó): mascota, evento de origen, tipo, fecha de vencimiento, fecha del aviso, estado (pendiente). Lo consume J.
 - **Tratamiento activo** (si el tipo es tratamiento): medicamento, dosis, vía, frecuencia, duración, horarios de toma (de G4), estado (activo). Lo consume G.
 
@@ -145,17 +152,9 @@ Estos temas tienen su propia spec:
 
 ## Preguntas abiertas
 
-1. **Cambiar de tipo con datos escritos.** Si el dueño llenó campos y toca otro chip, ¿se pierde lo escrito, se conserva lo común (fecha, soporte) o se pide confirmación?
-2. **Destino de "Listo" en E9.** ¿Vuelve a Inicio o a la pantalla desde la que se abrió el flujo (por ejemplo, la línea de tiempo)?
-3. **Selector de mascota en los formularios.** Solo E2 muestra "Luna ▾" en el encabezado. ¿Todos los formularios permiten cambiar la mascota, o la mascota se fija en E1?
-4. **E12 desde la galería.** ¿Las fotos elegidas de la galería también pasan por "Revisar la foto", o solo las que se toman con la cámara? El botón "Tomar otra" sugiere que solo se usa con la cámara.
-5. **"Guardar sin soporte" en E13.** ¿Guarda el evento de una vez (y va a E9) o vuelve al formulario sin adjunto? ¿Qué pasa si faltan campos obligatorios?
-6. **Formatos de foto del teléfono.** Algunos teléfonos guardan las fotos en HEIC. ¿Se convierten a JPG o se rechazan? Si se rechazan, ¿con qué pantalla?
-7. **Varios soportes por evento.** Los diseños muestran uno. ¿Se puede adjuntar más de uno (por ejemplo, las dos caras del carnet)?
-8. **Veterinaria en E3.** ¿Es texto libre o se elige de los proveedores de K? La tarjeta de E9 muestra "Vet. Norte" en un evento de vacuna, pero E2 no tiene campo de veterinaria.
-9. **Subtítulo "Refuerzo anual" en E9.** ¿De dónde sale? E2 no tiene un campo de frecuencia del refuerzo.
-10. **Estado visual del botón deshabilitado.** Figma muestra solo el botón habilitado; el kit todavía no tiene la variante deshabilitada (pregunta 15 de `CLAUDE.md`).
-11. **Estado de subida.** No hay diseño para un soporte que está subiendo ni para un error de subida que no sea por peso.
+1. **Estado visual del botón deshabilitado.** Figma muestra solo el botón habilitado; el kit todavía no tiene la variante deshabilitada (pregunta 15 de `CLAUDE.md`).
+
+Las demás preguntas de la primera versión se resolvieron en la revisión cruzada (ver Cambios).
 
 ## Cambios
 
@@ -182,4 +181,25 @@ Decisiones tomadas:
 - La X con datos escritos reutiliza el diálogo de B8.
 - Toda área de soporte abre E8. E6 y E10 no llevan soporte.
 - E5 abre G4 para los horarios, y el tratamiento guardado queda activo en G1.
+
+**2026-10-27 · Revisión cruzada con las demás specs** (Paso 4)
+
+Decisiones tomadas:
+- E2 gana dos campos opcionales: "Veterinaria" y "Lote", que D4, D6, E9 y F2 muestran.
+- E4 gana los campos que muestra F7: "Resultado (normal / alterado)", "Solicitado por" y "Próximo control".
+- El subtítulo "Refuerzo anual" de E9 se calcula a partir de la diferencia entre la fecha aplicada y el próximo refuerzo.
+- "Listo" en E9 vuelve a la pantalla desde la que se abrió el flujo.
+- Desde una alerta, al guardar se muestra J5 en vez de E9.
+- Al cambiar de tipo con un chip se conservan la fecha y los soportes, sin confirmación.
+- Todos los formularios llevan el selector de mascota en el encabezado.
+- E12 solo se usa con la cámara. Las fotos de la galería se adjuntan directo.
+- "Guardar sin soporte" (E13) vuelve al formulario sin el adjunto.
+- Las fotos HEIC se convierten a JPG en el teléfono.
+- Hasta 5 soportes por evento.
+- La cámara y la galería son las nativas del teléfono; no se muestran O6 / O7 (ver la spec de O).
+
+Pendiente de ajustar en Figma:
+- E2: agregar "Veterinaria" y "Lote".
+- E3–E7, E10, E11: selector de mascota en el encabezado.
+- Tarjeta de soporte: estados "subiendo" y "error de subida".
 - Los recordatorios de E2 y E10 usan la anticipación de M3 y crean una alerta en J1.
