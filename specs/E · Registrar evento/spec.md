@@ -203,3 +203,15 @@ Pendiente de ajustar en Figma:
 - E3–E7, E10, E11: selector de mascota en el encabezado.
 - Tarjeta de soporte: estados "subiendo" y "error de subida".
 - Los recordatorios de E2 y E10 usan la anticipación de M3 y crean una alerta en J1.
+
+**2026-10-27 · Ajustes aplicados en Figma** (pantallas exportadas a `design/flujos/`)
+
+Hecho:
+- E2: campos Veterinaria y Lote. Para que quepan se ocultaron el título "Vacuna" y el texto "¿Qué quieres registrar?", que repetían lo que dice el chip activo.
+- E3: bloque de soporte (reemplaza la nota del veterinario).
+- E4: Laboratorio y Fecha en una fila, selector "Resultado normal / Alterado", y Solicitado por y Próximo control.
+- E7 y E11: "Foto (opcional)".
+- E11: "Fecha *".
+- E3–E7, E10 y E11: selector de mascota en el encabezado.
+
+Sigue pendiente: E4 sin soporte, E2 / E10 con los avisos apagados, tarjeta de soporte subiendo o con error, y la variante de texto de B8 para eventos.

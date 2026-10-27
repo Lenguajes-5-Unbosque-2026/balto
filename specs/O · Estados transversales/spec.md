@@ -122,3 +122,12 @@ Pendiente de ajustar en Figma:
 - O2: el texto dice "Para subir soportes necesitas conexión". Cambiarlo por "Los soportes se suben cuando vuelva el internet" (quedan en cola, como en O3).
 - O3: cambiar "No cierres sesión mientras haya cambios pendientes: se perderían" por "Si cierras sesión ahora, perderás estos cambios", porque M17 ya lo advierte.
 - B2, C2: la "vista de cámara" pasa a ser un área que abre la cámara del teléfono.
+
+**2026-10-27 · Ajustes aplicados en Figma** (pantallas exportadas a `design/flujos/`)
+
+Hecho:
+- O5: el texto ya no se superpone.
+- O2: "Lo que registres se sube cuando vuelva el internet."
+- O3: "Si cierras sesión ahora, perderás estos cambios."
+
+Sigue pendiente: en B2 y C2, la vista de cámara debe pasar a ser un área que abre la cámara del teléfono.

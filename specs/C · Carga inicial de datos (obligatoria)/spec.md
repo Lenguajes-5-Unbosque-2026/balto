@@ -129,3 +129,11 @@ Pendiente de ajustar en Figma:
 - C12: la barra dice "PASO 2 DE 3 · PROCESANDO". Debe mostrar el paso real del documento que se está leyendo.
 - C11: diseñar el estado "No encontramos eventos en el texto".
 - C2: mostrar las opciones Galería / PDF además de la cámara, como en E8.
+
+**2026-10-27 · Ajustes aplicados en Figma** (pantallas exportadas a `design/flujos/`)
+
+Hecho:
+- C2: botones Cámara / Galería / PDF.
+- C2, C3, C8, C9 y C12: la barra cuenta 2 pasos (Carnet y Exámenes, como en el ejemplo de C1).
+
+Sigue pendiente: estado "No encontramos eventos en el texto" de C11.

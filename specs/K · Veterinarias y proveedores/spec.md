@@ -132,3 +132,9 @@ Pendiente de ajustar en Figma:
 - K11: estados "Por confirmar" y "Cancelada", y diálogo de cancelar.
 - K6: estado sin citas.
 - K11: quitar "Sin costo hasta 2 h antes" hasta definir la política.
+
+**2026-10-27 · Ajustes aplicados en Figma** (pantallas exportadas a `design/flujos/`)
+
+Hecho: K11 dice "Te pedimos confirmarlo" en lugar de "Sin costo hasta 2 h antes".
+
+Sigue pendiente: vista de mapa en K3, estados y diálogo de cancelar en K11, y K6 sin citas.

@@ -123,3 +123,12 @@ Pendiente de ajustar en Figma:
 - B6: ocultar "Pedir la placa grabada" hasta definir la placa. Durante el alta, quitar la flecha atrás, porque el perfil ya se guardó.
 - B8: dice "PASO 1 DE 4"; debe decir "PASO 1 DE 3" (el alta tiene 3 pasos).
 - B2: diseñar el estado con la foto cargada.
+
+**2026-10-27 · Ajustes aplicados en Figma** (pantallas exportadas a `design/flujos/`)
+
+Hecho:
+- B1: campo "Microchip (opcional)".
+- B6: sin "Pedir la placa grabada", sin el sello "Física" y sin flecha atrás.
+- B8: "PASO 1 DE 3".
+
+Sigue pendiente: B2 con la foto cargada.

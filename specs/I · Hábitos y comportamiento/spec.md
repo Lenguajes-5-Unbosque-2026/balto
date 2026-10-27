@@ -24,7 +24,7 @@ Caso: Luna ladra de noche y duerme poco. La veterinaria le pidió a Samuel anota
 1. **Entrada (I1 / I6).** En Inicio toca **Accesos rápidos › Hábitos**. La primera vez ve **I6** y toca **Registrar hábito**.
 2. **Registrar (I2).** Elige **Paseo**, deja la *Fecha* en 22/09/2026, escribe la *Duración* "45 min" y la *Observación* "Paseo largo en el parque, muy activa." y toca **Guardar**. Vuelve a I1 con el registro arriba.
 3. **Durante las semanas.** Registra "Ladrido nocturno" (Atípico) con una foto y "Durmió poco · 6 h" (Sueño). En I1 los chips filtran por tipo, y la gráfica muestra el tipo elegido: paseos por semana, horas de sueño por noche o atípicos por semana.
-4. **Exportar (I3).** Antes de la consulta toca el ícono de exportar en I1 → I3. Marca Paseos y actividad, Sueño y Comportamiento atípico, elige del 01/08/2026 al 23/09/2026 y *Para: Veterinario*. Toca **Generar PDF**.
+4. **Exportar (I3).** Antes de la consulta toca **Exportar bitácora**, el botón de abajo en I1 → I3. Marca Paseos y actividad, Sueño y Comportamiento atípico, elige del 01/08/2026 al 23/09/2026 y *Para: Veterinario*. Toca **Generar PDF**.
 5. **Vista previa (I4).** Revisa el PDF de 2 páginas: resumen, gráficas por tipo y lista de registros con sus fotos. Toca **WhatsApp** (o **Enviar**, que abre el menú de compartir del teléfono) y elige el chat de la clínica.
 6. **Listo (I5).** Ve "Bitácora lista". **Guardar una copia** descarga el PDF al teléfono. "Volver a hábitos" → I1. "Enviar a alguien más" → I4.
 
@@ -104,3 +104,13 @@ Pendiente de ajustar en Figma:
 - I1: la tarjeta "Ladrido nocturno" dice "1 video"; cambiarla a foto.
 - I5: la nota dice "El enlace del PDF no caduca". Cambiarla por "Puedes volver a generarla cuando quieras.", porque no hay enlace.
 - I1: el chip "Comp…" está cortado. Confirmar que dice "Comportamiento".
+
+**2026-10-27 · Ajustes aplicados en Figma** (pantallas exportadas a `design/flujos/`)
+
+Hecho:
+- I1: botón "Exportar bitácora" abajo.
+- I1: la tarjeta dice "1 foto".
+- I2: "Foto de apoyo".
+- I5: "Puedes volver a generarla cuando quieras."
+
+Sigue pendiente: campos por tipo en I2 (duración / cómo fue).

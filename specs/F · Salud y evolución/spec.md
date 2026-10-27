@@ -119,3 +119,9 @@ Pendiente de ajustar en Figma:
 - F2, F3: estados vacíos.
 - F4: aviso de cambio brusco.
 - F1: muestra la barra inferior con Inicio activo. Confirmar que F1 es una subpantalla de Inicio.
+
+**2026-10-27 · Ajustes aplicados en Figma** (pantallas exportadas a `design/flujos/`)
+
+Hecho: los campos nuevos de E4 que F7 muestra.
+
+Sigue pendiente: F1 / F2 con vacuna vencida, estados vacíos de F2 y F3, y el aviso de cambio brusco de F4.

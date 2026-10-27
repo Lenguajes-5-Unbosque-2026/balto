@@ -29,6 +29,7 @@ Importa porque cierra el ciclo "me avisan → lo resuelvo" sin salir de la app. 
 | N13 | Agregar método de pago | Pestañas Tarjeta / PSE, formulario de tarjeta (número, vencimiento, CVV, nombre), la nota "Pago seguro. No guardamos el número completo de tu tarjeta." y "Guardar y continuar". |
 | N14 | Pago rechazado | "No pudimos cobrar el pedido. Guardamos tu carrito. Prueba con otra tarjeta o con PSE. Tu banco rechazó la transacción. No se hizo ningún cobro." Botones "Probar otro medio" / "Ver el carrito". |
 | N15 | Detalle del pedido | "Pedido #000123 · En camino · Llega hoy entre 2 y 6 p. m.", productos, totales y los botones "Seguir el pedido" / "Necesito ayuda". Ayuda (?) arriba. |
+| N16 | Pagar con PSE | "Te llevamos a tu banco. Vas a salir de Balto para autorizar el pago en PSE.", Banco (elige tu entidad), Tipo de persona, la nota "Cuando termines, vuelve a Balto para confirmar el pago." y los botones "Continuar a PSE" / "Cancelar". |
 
 ## Paso a paso
 
@@ -58,7 +59,7 @@ Caso: a Luna se le acaba el concentrado en 12 días y su refuerzo de antirrábic
   - En N7, "Agregar método de pago" abre N13. La tarjeta se guarda con un token de la pasarela; Balto solo guarda los últimos 4 dígitos.
   - En la pestaña PSE se eligen el banco y el tipo de persona.
   - "Guardar y continuar" vuelve a N7 con el método elegido.
-- **Pago con PSE.** Al tocar "Pagar" con PSE, Balto lleva al dueño a la página de su banco. Al volver muestra "Confirmando el pago…" y después **N8** o **N14**. *(Pantalla de PSE y confirmación pendiente en Figma.)*
+- **Pago con PSE (N16).** Al tocar "Pagar" con PSE se abre **N16 · Pagar con PSE**: banco y tipo de persona, y "Continuar a PSE", que lleva a la página del banco. Al volver, Balto muestra "Confirmando el pago…" y después **N8** o **N14**. *(El estado "Confirmando el pago…" falta en Figma.)*
 - **Pago rechazado (N14).** "Probar otro medio" vuelve a N7 con el carrito intacto. "Ver el carrito" → N6.
 - **Carrito vacío (N10).** El + de una recomendación la agrega al carrito. "Ir a la tienda" → N1.
 - **Solo vacunas.** Si el carrito no tiene alimento, N7 no muestra "Entrega del alimento" ni cobra envío.
@@ -144,3 +145,13 @@ Pendiente de ajustar en Figma:
 - N6: el control de cantidad va en cada producto (hoy dice "Bultos de concentrado" aparte).
 - Nueva pantalla: redirección a PSE y "Confirmando el pago…" (A19 se borró con la suscripción).
 - N2, N3: estado agotado. N9: estado sin pedidos.
+
+**2026-10-27 · Ajustes aplicados en Figma** (pantallas exportadas a `design/flujos/`)
+
+Hecho:
+- N3: sin el selector "Compra única / Cada 5 semanas".
+- N8: el botón izquierdo dice "Ver mi pedido".
+- N6: la cantidad va dentro de la fila del concentrado.
+- N16 · Pagar con PSE: pantalla nueva.
+
+Sigue pendiente: estado "Confirmando el pago…", producto agotado y N9 sin pedidos.

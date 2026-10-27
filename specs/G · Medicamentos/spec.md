@@ -46,7 +46,7 @@ Caso: la veterinaria le receta a Luna Amoxicilina 250 mg, 1 cápsula cada 12 hor
   - "Ver medicamentos" → G1. "Ir a la línea de tiempo" → **D2**.
 - **Reactivar.** En G1 › Finalizados, el ••• de G2 ofrece "Reactivar". Abre **G4** con fecha de inicio hoy y la misma duración.
 - **Editar horarios.** "Editar" o "Agregar" en G2 abre G4 con los horarios actuales. Los cambios valen desde la próxima toma.
-- **Frecuencia semanal.** Para tratamientos como "Champú medicado · 2 veces por semana", G4 ofrece una cuarta opción, *Días de la semana*: se eligen los días y la hora.
+- **Frecuencia semanal.** Para tratamientos como "Champú medicado · 2 veces por semana", G4 ofrece una cuarta opción, *Por días*: se eligen los días de la semana y la hora.
 
 ## Estados
 
@@ -129,3 +129,12 @@ Pendiente de ajustar en Figma:
 - G1: estado sin tratamientos vigentes.
 - G2: estado "Sin registrar" de una toma.
 - G6: el título de la pantalla de fondo dice "Dosis de la noche" y en G2 dice "Noche". Unificar.
+
+**2026-10-27 · Ajustes aplicados en Figma** (pantallas exportadas a `design/flujos/`)
+
+Hecho:
+- G5: "BALTO".
+- G4: cuarta opción "Por días".
+- G6: "20:00 · Noche".
+
+Sigue pendiente: G1 sin tratamientos y G2 con una toma "Sin registrar".

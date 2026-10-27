@@ -21,6 +21,7 @@ Importa porque convierte el registro en prevención: una vacuna que no se vence 
 | J5 | Alerta resuelta | "Alerta resuelta. La antirrábica quedó registrada y programamos el próximo refuerzo.", la tarjeta del evento, el aviso del próximo refuerzo y los botones "Volver a alertas" / "Ver línea de tiempo". |
 | J6 | Aviso de vacuna | Notificación: "A Luna le toca el refuerzo · Antirrábica · vence en 2 días (25 sep)", con "Ver alerta" / "Más tarde". La nota "Puedes cambiar cuándo te avisamos en Ajustes › Notificaciones" y "Abrir la app". |
 | J7 | Sin alertas pendientes | "Todo al día. Luna y Toby no tienen nada pendiente esta semana.", "Ver alertas resueltas · 8 este año" y "Próxima: control de peso · 5 oct". |
+| J8 | Filtros de alertas | Hoja inferior sobre J1: "Filtrar alertas", Mascota (Todas, Luna, Toby, Michi), Tipo (Vacunas, Desparasitación, Controles, Alimento, Salud) y los botones "Limpiar" / "Aplicar". |
 
 ## Paso a paso
 
@@ -42,7 +43,7 @@ Caso: el refuerzo de la antirrábica de Luna vence el 25 sep. Samuel la registr�
 - **Comprar la vacuna.** Abre **N5 · Detalle de vacuna y aplicación** con esa vacuna (flujo N).
 - **Vencida (J4).** Si pasa la fecha de vencimiento sin resolverla, la alerta cambia a J4 y cuenta como "Urgente". Llega una notificación el día siguiente al vencimiento. Las acciones son las mismas de J2, sin Posponer.
 - **Ícono de calendario en la tarjeta.** Hace lo mismo que "Agendar cita".
-- **Filtros.** El botón de filtros de J1 abre una hoja con Mascota (todas, Luna, Toby…) y Tipo (vacunas, desparasitación, controles, alimento, salud).
+- **Filtros (J8).** El botón de filtros de J1 abre **J8**, con Mascota (Todas, Luna, Toby…) y Tipo (vacunas, desparasitación, controles, alimento, salud). "Aplicar" filtra J1 y "Limpiar" quita los filtros.
 - **Sin pendientes (J7).** "Ver alertas resueltas" abre la pestaña Resueltas. "Próxima: …" abre el J2 de esa alerta.
 
 ## Tipos de alerta
@@ -127,3 +128,9 @@ Pendiente de ajustar en Figma:
 - J1: hoja de filtros (mascota y tipo).
 - J1: estado "Aviso pospuesto" en la tarjeta.
 - J4: corregir la cita legal cuando se verifique.
+
+**2026-10-27 · Ajustes aplicados en Figma** (pantallas exportadas a `design/flujos/`)
+
+Hecho: J8 · Filtros de alertas, pantalla nueva.
+
+Sigue pendiente: estado "Aviso pospuesto" en J1 y la cita legal de J4.

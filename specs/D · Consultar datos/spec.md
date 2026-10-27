@@ -124,3 +124,13 @@ Pendiente de ajustar en Figma:
 - D2, D8, D9, D10: quitar la flecha atrás cuando se llega desde la barra inferior (es una pestaña).
 - D5: sobra uno de los dos botones de descarga (el de arriba o el de abajo).
 - D9, D10: el chip de Exámenes usa un ícono de matraz; debe ser el mismo de E1 y D2.
+
+**2026-10-27 · Ajustes aplicados en Figma** (pantallas exportadas a `design/flujos/`)
+
+Hecho:
+- D3: chip "Otros".
+- D2, D8, D9 y D10: sin flecha atrás.
+- D5: sin el botón de descarga de arriba.
+- D9 y D10: el chip de Exámenes usa el mismo ícono de D2.
+
+Sigue pendiente: nada.

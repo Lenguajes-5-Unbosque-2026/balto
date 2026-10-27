@@ -19,6 +19,7 @@ Es la otra mitad de la propuesta de valor: "el perfil se muestra en segundos (vi
 | L5 | Vista pública del perfil | Página web pública: "Perfil de salud · Balto · Solo lectura · 23 sep 2026", ficha de la mascota (cédula, microchip, peso, contacto), alergias, medicación vigente, últimas vacunas y los botones "Descargar PDF" / "Volver". |
 | L6 | Enlace expirado | "Este enlace ya no sirve. El dueño lo compartió por 24 horas y ese tiempo ya pasó.", "Pídele a quien te lo envió que genere uno nuevo desde la app." y "Entendido". |
 | L7 | Enviado por correo | "Reporte enviado · Enviado por correo a vetnorte@correo.com · hoy 9:41", "Ver qué compartí · 3 envíos este mes" y los botones "Volver al perfil" / "Enviar a alguien más". |
+| L8 | Lo que compartí | Historial: chips "Todo" / "Enlaces activos", lista de envíos (Enlace · vence en 7 días, PDF por WhatsApp, PDF por correo), "Toca el ícono de un enlace activo para desactivarlo." y "Compartir de nuevo". |
 
 ## Paso a paso
 
@@ -53,7 +54,7 @@ Caso: Samuel va a dejar a Luna en una guardería que le pide el carnet de vacuna
 - **Enlace vencido (L6).**
   - Si el enlace pasó su vencimiento o el dueño lo desactivó, quien lo abre ve L6. El texto cambia según el caso: "El dueño lo compartió por 24 horas y ese tiempo ya pasó" o "El dueño desactivó este enlace".
   - "Entendido" lleva a la página de bienvenida de Balto (A2).
-- **Ver qué compartí (L7).** Abre el historial de envíos y enlaces de la mascota. Cada enlace activo tiene "Desactivar enlace". *(Pantalla pendiente en Figma.)*
+- **Ver qué compartí (L7 → L8).** Abre **L8 · Lo que compartí**: los envíos y enlaces de la mascota, con chips "Todo" / "Enlaces activos". El ícono de un enlace activo lo desactiva. "Compartir de nuevo" → L1.
 - **Ayuda (?).** Explica la diferencia entre PDF y enlace y qué ve quien lo recibe.
 
 ## Estados
@@ -130,3 +131,13 @@ Pendiente de ajustar en Figma:
 - L4: aviso para "Sin vencimiento".
 - L5: ocultar "Volver" en la vista pública.
 - L6: variante "El dueño desactivó este enlace".
+
+**2026-10-27 · Ajustes aplicados en Figma** (pantallas exportadas a `design/flujos/`)
+
+Hecho:
+- L2: opción "Enlace".
+- L4: enlace con token largo.
+- L5: un solo botón, "Descargar PDF".
+- L8 · Lo que compartí: pantalla nueva.
+
+Sigue pendiente: campo de correo en L2, aviso de "Sin vencimiento" en L4 y variante "desactivado" de L6.

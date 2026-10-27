@@ -110,3 +110,9 @@ Pendiente de ajustar en Figma:
 - Hoja "Personalizar" de los accesos rápidos.
 - Agregar "Veterinarias" y "Calendario" a los accesos rápidos.
 - Estados: vacunas vencidas, sin peso, nada por vencer y carga inicial pendiente.
+
+**2026-10-27 · Ajustes aplicados en Figma** (pantallas exportadas a `design/flujos/`)
+
+Hecho: acceso rápido "Calendario" ("Veterinarias" ya existía).
+
+Sigue pendiente: la hoja "Personalizar" y los estados (vacunas vencidas, sin peso, nada por vencer, carga inicial pendiente).

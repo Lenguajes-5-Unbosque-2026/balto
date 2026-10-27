@@ -23,6 +23,7 @@ Importa porque es la primera impresión del producto. El registro tiene que ser 
 | A9 | Crear contraseña nueva | Nueva contraseña, confirmación y lista de reglas: 8+ caracteres, mayúscula y número. Botón "Guardar contraseña". |
 | A12 | Código incorrecto | "El código no coincide", casillas en error, "Te quedan 2 intentos antes de bloquear el código.", "Reenviar código" y "Volver a intentar". |
 | A13 | Código vencido | "El código venció. Los códigos duran 10 minutos." Botones "Enviar código nuevo" y "Cambiar de correo". |
+| A13.2 | Código bloqueado | "Bloqueamos este código. Fallaste 3 veces seguidas. Pide un código nuevo para seguir." Botones "Enviar código nuevo" y "Cambiar de correo". |
 | A14 | Enlace enviado | "Revisa tu correo", "El enlace vence en 30 minutos.", "No me llegó el correo" y botones "Ya tengo el enlace" / "Iniciar sesión". |
 | A15 | Contraseña actualizada | Confirmación, "Si no fuiste tú, escríbenos desde Ayuda." y botón "Iniciar sesión". |
 | A16 | Enlace vencido | "Este enlace ya venció. Por seguridad los enlaces duran 30 minutos." Botones "Pedir enlace nuevo" e "iniciar sesión". |
@@ -68,7 +69,7 @@ Caso: Samuel abre Balto por primera vez y crea su cuenta con samuel@correo.com.
 | Correo ya registrado | A3 | Error bajo el correo: "Este correo ya tiene cuenta." con el enlace "Inicia sesión" → A6. *(Falta en Figma.)* |
 | Contador de reenvío | A4 | "Reenviar código en 0:45", inactivo. A los 0 segundos pasa a "Reenviar código", activo. |
 | Código incorrecto | A12 | Casillas en rojo, intentos restantes y "Volver a intentar", que limpia las casillas. Hay 3 intentos por código. |
-| Código bloqueado | A13 (variante) | Al tercer intento fallido el código se anula y se muestra A13 con el título "Bloqueamos este código" y "Enviar código nuevo". *(Variante de texto pendiente en Figma.)* |
+| Código bloqueado | A13.2 | Al tercer intento fallido el código se anula y se muestra A13.2: "Bloqueamos este código. Fallaste 3 veces seguidas. Pide un código nuevo para seguir." Botones "Enviar código nuevo" / "Cambiar de correo". |
 | Código vencido | A13 | Han pasado más de 10 minutos. "Enviar código nuevo" reenvía y vuelve a A4; "Cambiar de correo" vuelve a A3 con el correo editable. |
 | Credenciales incorrectas | A7 | Los dos campos en error, con el mismo mensaje, sin decir cuál falló. |
 | Cuenta sin verificar | A6 | Si el correo existe pero no se verificó, "Iniciar sesión" envía un código nuevo y lleva a A4. |
@@ -137,3 +138,16 @@ Pendiente de ajustar en Figma:
 - A16: corregir la mayúscula de "iniciar sesión".
 - A3: agregar la lista de reglas de contraseña y los estados de error (formato, correo ya registrado, contraseñas distintas).
 - A13: variante de texto para el código bloqueado.
+
+**2026-10-27 · Ajustes aplicados en Figma** (pantallas exportadas a `design/flujos/`)
+
+Hecho:
+- A6: el botón secundario dice "Crear cuenta".
+- A7: rehecha con el encabezado de A6 y los dos campos en error.
+- A14: un solo botón, "Iniciar sesión".
+- A16: "Iniciar sesión" con mayúscula.
+- A3: lista de reglas de contraseña.
+- A13.2 · Código bloqueado: pantalla nueva.
+- Se borraron de Figma A11 y A18–A21.
+
+Sigue pendiente: estados de error de A3 (formato, correo ya registrado, contraseñas distintas).

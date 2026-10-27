@@ -60,7 +60,7 @@ A1 → A2 → A3 → A4 → A5 → B1 → B2 → B4 → B6 → B5 → C1 … C7 
 | J | Barra inferior (J1); "Próximo a vencer" de Inicio (J2); notificación J6; M9. |
 | K | J2 / J4 "Agendar cita" (K3); H6 "Ver veterinarias" (K3); Inicio › Accesos rápidos › Veterinarias (K3) y Calendario (K6); M9 (K11). |
 | L | D1 e Inicio (ícono compartir); F2; F7; ••• de D4. L5 / L6: quien abre un enlace compartido. |
-| M | Avatar de Inicio (M1); campana de arriba en Inicio (M9); O9 y N15 "Necesito ayuda" (M8). |
+| M | Avatar de Inicio (M1); campana de arriba en Inicio (M9); M5 → M18 (Editar mascota); M8, O9 y N15 "Necesito ayuda" → M19 (Escríbenos). |
 | N | Barra inferior (N1); H1 "Comprar alimento" (N2 / N3); J2 / J4 "Comprar la vacuna" (N5); M1 "Mis pedidos" (N9); M9 (N15). |
 | O | Cualquier flujo: O1 desde Inicio; O2 / O3 / O8 al perder la conexión; O4 al abrir con la sesión vencida; O5 después de C7 o al encender un recordatorio; O9 ante un error del servidor. |
 
@@ -101,20 +101,29 @@ A1 → A2 → A3 → A4 → A5 → B1 → B2 → B4 → B6 → B5 → C1 … C7 
 | L7 y C7 mostraban destinos sin definir y M1 no tenía "Eliminar cuenta" (M7 se abre sobre Ajustes). | Destinos definidos en L y M; "Eliminar cuenta" va al final de M1. |
 | Varias pantallas dependían de la suscripción (A11, A18–A21, M4, M10–M12, "Cada 5 semanas" en N3). | Pantallas eliminadas; la compra recurrente de N3 se quita. |
 
-### Pendientes de ajustar en Figma
+### Ajustes aplicados en Figma (27 oct 2026)
 
-Están en la sección **Cambios** de cada spec. Las que afectan a más de un flujo:
+Cada spec detalla lo que se hizo en su sección **Cambios**. Las 69 pantallas modificadas y las 6 nuevas están exportadas en `design/flujos/`. Lo que afecta a más de un flujo:
 
-- **Nombre de la app en las notificaciones:** G5 y H5 dicen "MASCOTAS"; J6 dice "BALTO". Debe ser **Balto** en todas.
-- **Botones vacíos o equivocados:** N8 tiene el botón izquierdo vacío ("Ver mi pedido"); A6 dice "Ya tengo cuenta" en la propia pantalla de inicio de sesión ("Crear cuenta"). E9 ya se corrigió.
-- **Video:** E7, E11 e I2 dicen "Foto o video". Por ahora solo hay foto; I1 muestra una tarjeta con "1 video".
-- **Numeración de pasos:** B8 dice "PASO 1 DE 4" (el alta tiene 3 pasos) y C12 dice "PASO 2 DE 3 · PROCESANDO".
-- **Flecha atrás en pestañas:** D2, D8, D9 y D10 tienen flecha atrás aunque D2 es una pestaña de la barra inferior.
-- **Suscripción:** M1 todavía muestra la fila "Suscripción · Plan completo · activo".
-- **Pantallas nuevas que faltan:** historial "Ver qué compartí" (L), "Editar mascota" (M5), redirección a PSE y "Confirmando el pago…" (N, porque A19 se borró), hoja "Personalizar" accesos rápidos (Inicio), formulario de Ayuda (M8), hoja de filtros de J1.
-- **Campos nuevos:** E2 (Veterinaria, Lote), E4 (Resultado, Solicitado por, Próximo control), B1 (Microchip), G4 ("Días de la semana"), H4 (nivel de actividad), M3 (tipo "Salud" y selector de anticipación), selector de mascota en todos los formularios de E.
-- **Estados vacíos y de error que faltan:** F2, F3, G1, H1, K6, N9 (vacíos); subida de soporte y error de subida (E); vacuna vencida (F1, Inicio); citas por confirmar o canceladas (K11).
-- **Textos a corregir:** E3 sin bloque de soporte; O5 con texto superpuesto; O2 / O3 sobre soportes y cerrar sesión; I5 ("El enlace del PDF no caduca"); K11 ("Sin costo hasta 2 h antes"); J4 (cita legal).
+- **Botón principal:** en 27 pantallas el texto del botón estaba atado a la variable `F9` (blanco con opacidad 0,7) y se veía deshabilitado. Ahora usa `neutro/0`, como E2–E6.
+- **Nombre de la app:** G5 y H5 dicen "BALTO".
+- **Botones:** N8 dice "Ver mi pedido" y A6 "Crear cuenta". A14 y L5 tienen un solo botón.
+- **Video:** E7, E11 e I2 dicen solo "Foto"; I1 dice "1 foto".
+- **Numeración de pasos:** B8 dice "1 de 3"; C2, C3, C8, C9 y C12 cuentan 2 pasos.
+- **Pestañas sin flecha atrás:** D2, D8, D9 y D10.
+- **Suscripción:** se borraron de Figma A11, A18–A21, M4 y M10–M12, y la fila de M1.
+- **Pantallas nuevas:** A13.2 · Código bloqueado, J8 · Filtros de alertas, L8 · Lo que compartí, M18 · Editar mascota, M19 · Escríbenos, N16 · Pagar con PSE.
+- **Campos nuevos:** E2 (Veterinaria, Lote), E3 (soporte), E4 (Resultado, Solicitado por, Próximo control), B1 (Microchip), A3 (reglas de contraseña), C2 (Cámara / Galería / PDF), D3 (chip Otros), G4 ("Por días"), H4 (nivel de actividad), H6 ("Hace" con "Cambiar"), I1 ("Exportar bitácora"), L2 (Enlace), M3 (Salud), M1 (Eliminar cuenta), Inicio (Calendario) y selector de mascota en todos los formularios de E.
+- **Textos:** A7, A16, E11, G6, I5, K11, L4, O2, O3 y O5.
+
+### Sigue pendiente en Figma
+
+Son estados y variantes que las specs describen y que todavía no tienen pantalla:
+
+- **Estados vacíos:** C11 (sin eventos detectados), F2, F3, G1, H1, K6, N9.
+- **Estados de error o de carga:** A3 (correo inválido, ya registrado, contraseñas distintas); tarjeta de soporte subiendo o con error (E); "Confirmando el pago…" (N).
+- **Variantes:** vacuna vencida (F1, F2, Inicio); cambio brusco de peso (F4); toma "Sin registrar" (G2); alimento por acabarse y menú (H1); Casero / Snack (H2); campos por tipo (I2); aviso pospuesto (J1); citas por confirmar o canceladas (K11); avisos apagados (E2, E10); E4 sin soporte; L2 con campo de correo; aviso "Sin vencimiento" (L4); enlace desactivado (L6); Archivadas (M5); M17 con pendientes; producto agotado (N2, N3); B2 con foto; B8 con el texto para eventos.
+- **Otros:** hoja "Personalizar" (Inicio); vista de mapa (K3); selector de anticipación (M3); la vista de cámara de B2 y C2 debe abrir la cámara del teléfono; cita legal de J4.
 
 ## 4. Preguntas abiertas (todas)
 

@@ -44,7 +44,7 @@ Caso: Samuel arma el plan de alimentación de Luna con un concentrado nuevo.
 1. Samuel elige **Snack** y escribe "Uvas". Balto lo detecta como tóxico y abre **H3**: "Este alimento es tóxico para perros", con alternativas seguras (manzana sin semillas, zanahoria, pepino).
 2. "Cambiar alimento" vuelve a H2. La X cierra sin guardar.
 3. Si Luna ya se las comió, Samuel toca **Buscar veterinaria de urgencia** → **H6**.
-4. H6 propone la veterinaria de confianza y muestra qué comió y su peso. Samuel elige hace cuánto lo comió: "menos de 30 min", "30–60 min", "1–2 h" o "más de 2 h".
+4. H6 propone la veterinaria de confianza y muestra qué comió y su peso. La fila "Hace" muestra "Menos de 30 min" por defecto. Con "Cambiar", Samuel elige otro rango: "30–60 min", "1–2 h" o "más de 2 h".
 5. **Llamar ahora** abre el marcador del teléfono con el número de la veterinaria, y Balto muestra **H7** con los datos para leerlos durante la llamada.
 6. "Ver veterinarias" abre **K3 · Listado de proveedores** filtrado por "abiertas ahora" y "urgencias".
 7. En H7, **Registrar lo que pasó** abre **E11 · Otro evento** con los datos llenos: "Comió uvas", la fecha y la hora, y el detalle con la cantidad de tiempo y la veterinaria. "Volver" regresa a H6.
@@ -131,3 +131,13 @@ Pendiente de ajustar en Figma:
 - H5: "MASCOTAS" → "BALTO".
 - H6: selector "Hace cuánto" (hoy el valor "20 minutos" es fijo).
 - H3: el botón principal se ve deshabilitado; en una urgencia debe verse siempre activo.
+
+**2026-10-27 · Ajustes aplicados en Figma** (pantallas exportadas a `design/flujos/`)
+
+Hecho:
+- H5: "BALTO".
+- H4: selector de nivel de actividad.
+- H6: la fila "Hace" muestra "Menos de 30 min" con un enlace "Cambiar".
+- H3: el botón principal se ve activo.
+
+Sigue pendiente: H1 sin plan, con menú y con el alimento por acabarse; H2 para Casero y Snack.

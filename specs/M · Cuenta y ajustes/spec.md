@@ -30,6 +30,8 @@ Importa porque responde a la objeción principal de la persona de referencia: "�
 | M15 | Confirmar identidad | "Confirma que eres tú": contraseña, la nota "Antes de seguir, considera exportar tus datos. Después no hay vuelta atrás." y los botones "Eliminar mi cuenta" / "Exportar primero". |
 | M16 | Cuenta eliminada | "Tu cuenta fue eliminada. Borramos tus mascotas, eventos y soportes.", "Si fue un error, escríbenos en los próximos 30 días." y "Volver al inicio". |
 | M17 | Cerrar sesión | Diálogo "¿Cerrar sesión? Tus datos quedan guardados." Botones "Cerrar sesión" / "Cancelar". |
+| M18 | Editar mascota | "Foto de Luna · Cambiar foto", Perro / Gato, nombre, raza, sexo, nacimiento, esterilizada, microchip (opcional), "Archivar mascota" y "Guardar cambios". |
+| M19 | Escríbenos | Tema, "Te respondemos a" (correo), mensaje, adjunto (Cámara / Galería / PDF), la nota "Respondemos en 1 día hábil." y "Enviar". |
 
 M4 · Gestionar suscripción, M10 · Historial de pagos, M11 · Cancelar suscripción y M12 · Suscripción cancelada se eliminaron (no hay suscripción).
 
@@ -52,7 +54,7 @@ Caso: Samuel quiere llevarse una copia de todo lo que tiene en Balto.
   - Si cambia el **correo**, Balto envía un código al nuevo correo (pantalla **A4**). El cambio solo se aplica cuando lo verifica.
 - **Mascotas (M5).**
   - **Agregar mascota** o **+** → **B1**.
-  - Tocar una mascota abre **Editar mascota** (los campos de B1, la foto de B2 y la salud de B4 en una pantalla), con "Archivar mascota" al final. *(Pantalla pendiente en Figma.)*
+  - Tocar una mascota abre **M18 · Editar mascota**: "Foto de Luna · Cambiar foto" y los campos de B1 (con microchip), con "Archivar mascota" al final (→ M13). Las alergias y condiciones se editan en F5 / F6.
   - **Archivar (M13):** "Archivar a Toby" lo quita de Inicio y de las alertas, y lo pasa a la sección "Archivadas" de M5. Ahí, "Restaurar" lo vuelve a activar.
 - **Notificaciones (M3).**
   - Cada interruptor enciende o apaga un tipo de aviso. Tocar el texto de la fila cambia la anticipación:
@@ -68,7 +70,7 @@ Caso: Samuel quiere llevarse una copia de todo lo que tiene en Balto.
 - **Pedidos.** "Mis pedidos" → **N9 · Mis pedidos y seguimiento**.
 - **Ayuda (M8).**
   - El buscador filtra las preguntas frecuentes.
-  - "Escríbenos" y "Escribirnos" abren un formulario (tema y mensaje). "Reportar un problema" abre el mismo formulario con el tema "Problema" y la opción de adjuntar una captura.
+  - "Escríbenos" y "Escribirnos" abren **M19 · Escríbenos** (tema, correo de respuesta, mensaje y adjunto). "Reportar un problema" abre M19 con el tema "Problema con la app".
   - "Términos y política de datos" abre el documento vigente.
 - **Cerrar sesión (M17).** "Cerrar sesión" (M1) → M17 → "Cerrar sesión" → **A6**. Si hay cambios pendientes de subir (**O3**), M17 lo advierte y ofrece "Intentar subir ahora" antes de cerrar.
 - **Eliminar la cuenta (M7 → M15 → M16).**
@@ -156,3 +158,14 @@ Pendiente de ajustar en Figma:
 - M3: selector de anticipación por tipo.
 - M3: agregar el interruptor "Salud · 7 días antes" (control de peso, cambio brusco de peso, controles de examen).
 - M17: variante con cambios pendientes de subir.
+
+**2026-10-27 · Ajustes aplicados en Figma** (pantallas exportadas a `design/flujos/`)
+
+Hecho:
+- M1: sin la fila "Suscripción" y con "Eliminar cuenta" al final.
+- M3: fila "Salud (peso y controles)".
+- M8: sin el botón de filtros.
+- M18 · Editar mascota y M19 · Escríbenos: pantallas nuevas.
+- Se borraron de Figma M4, M10, M11 y M12.
+
+Sigue pendiente: sección "Archivadas" en M5, selector de anticipación en M3 y variante de M17 con cambios pendientes.
