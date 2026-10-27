@@ -1,6 +1,6 @@
 # Balto · Mapa de componentes
 
-Cada componente de `design/UI-KIT-BaltoOficial.md` con su equivalente en [shadcn/ui](https://ui.shadcn.com/docs/components), o marcado como **desde cero** si no hay uno que sirva, y las pantallas donde aparece.
+Cada componente de `design/ui-kit.md` con su equivalente en [shadcn/ui](https://ui.shadcn.com/docs/components), o marcado como **desde cero** si no hay uno que sirva, y las pantallas donde aparece.
 
 **Cómo se contó:**
 - Instancias de cada componente en las 156 pantallas de *Casos de uso* en Figma (27 oct 2026).

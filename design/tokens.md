@@ -3,7 +3,7 @@
 Valores base del sistema de diseño con un nombre fijo. En código, cada pantalla usa estos nombres y nunca valores sueltos (regla de `CLAUDE.md`, sección 5).
 
 **Fuentes:**
-- `design/UI-KIT-BaltoOficial.md`.
+- `design/ui-kit.md`.
 - Las variables de Figma (colecciones *Paleta*, *Paleta · Verde y arena*, *Radio* y *Espaciado*).
 - Un conteo de los valores que usan de verdad las 156 pantallas de *Casos de uso* (27 oct 2026). La columna **Usos** es ese conteo de capas.
 
