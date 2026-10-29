@@ -150,7 +150,7 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
   const esE7 = tipo === "alimentacion" || tipo === "comportamiento"
 
   return (
-    <main className="flex flex-1 flex-col gap-4 px-6 pt-14">
+    <main className="flex flex-1 flex-col gap-4 px-pantalla pt-14">
       {original ? (
         <>
           <Encabezado titulo="Editar evento" izquierda={<BotonIcono icono="close" etiqueta="Cerrar" onClick={cerrar} />} />
@@ -177,7 +177,7 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
       )}
 
       {tipo === "vacuna" && (
-        <section className="flex flex-col gap-4 rounded-lg bg-superficie p-5 shadow-tarjeta">
+        <section className="flex flex-col gap-4 rounded-lg bg-superficie p-4 shadow-tarjeta movil-m:p-5">
           <Campo etiqueta="Vacuna aplicada" requerido icono="vaccines" placeholder="Nombre de la vacuna" valor={v("vacuna")} onCambio={set("vacuna")} />
           <div className="grid grid-cols-2 gap-3">
             <Campo etiqueta="Fecha aplicada" requerido type="date" valor={v("fecha")} onCambio={set("fecha")} />

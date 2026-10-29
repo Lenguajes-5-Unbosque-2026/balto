@@ -28,7 +28,7 @@ export function Campo({ etiqueta, requerido, icono, valor, onCambio, sugerencias
         {etiqueta}
         {requerido && " *"}
       </Label>
-      <div className="flex h-14 items-center gap-3 rounded-md border border-borde bg-superficie px-4 transition-colors focus-within:border-primario">
+      <div className="flex h-14 items-center gap-3 rounded-md border border-borde bg-superficie px-3 transition-colors focus-within:border-primario movil-m:px-4">
         {icono && <Icono nombre={icono} className="icono-m text-primario" />}
         <Input
           id={id}

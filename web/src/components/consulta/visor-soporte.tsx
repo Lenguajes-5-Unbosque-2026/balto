@@ -42,7 +42,7 @@ export function VisorSoporte({ soporte, onCerrar }: { soporte: Soporte; onCerrar
   }
 
   return (
-    <div role="dialog" aria-label="Soporte" className="fixed inset-0 z-20 mx-auto flex max-w-app flex-col gap-4 bg-fondo px-6 pt-14 pb-10">
+    <div role="dialog" aria-label="Soporte" className="fixed inset-0 z-20 mx-auto flex max-w-app flex-col gap-4 bg-fondo px-pantalla pt-14 pb-10">
       <Encabezado titulo="Soporte" izquierda={<BotonIcono icono="close" etiqueta="Cerrar" onClick={onCerrar} />} />
 
       <div className="grid min-h-0 flex-1 place-items-center overflow-hidden rounded-lg border border-dashed border-primario bg-acento-suave p-4">
@@ -75,7 +75,7 @@ export function VisorSoporte({ soporte, onCerrar }: { soporte: Soporte; onCerrar
 
       <div className="grid grid-cols-3 gap-2">
         <button type="button" onClick={compartir} disabled={!disponible} className={accion}>
-          <Icono nombre="ios_share" className="icono-s" />
+          <Icono nombre="ios_share" className="hidden icono-s movil-m:inline-block" />
           Compartir
         </button>
         <a
@@ -84,11 +84,11 @@ export function VisorSoporte({ soporte, onCerrar }: { soporte: Soporte; onCerrar
           aria-disabled={!disponible}
           className={cn(accion, !disponible && "pointer-events-none opacity-50")}
         >
-          <Icono nombre="download" className="icono-s" />
+          <Icono nombre="download" className="hidden icono-s movil-m:inline-block" />
           Descargar
         </a>
         <button type="button" onClick={() => setGiro((g) => (g + 90) % 360)} disabled={!disponible || !esFoto} className={accion}>
-          <Icono nombre="rotate_right" className="icono-s" />
+          <Icono nombre="rotate_right" className="hidden icono-s movil-m:inline-block" />
           Rotar
         </button>
       </div>

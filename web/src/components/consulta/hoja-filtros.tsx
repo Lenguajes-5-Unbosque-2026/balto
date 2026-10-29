@@ -20,7 +20,7 @@ type HojaFiltrosProps = {
 export function HojaFiltros({ abierta, onCerrar, filtros, onAplicar }: HojaFiltrosProps) {
   return (
     <Drawer open={abierta} onOpenChange={(o) => !o && onCerrar()}>
-      <DrawerContent className="mx-auto max-w-app rounded-t-xl border-0 bg-superficie px-6 pt-3 pb-9">
+      <DrawerContent className="mx-auto max-w-app rounded-t-xl border-0 bg-superficie px-pantalla pt-3 pb-9">
         <span aria-hidden className="mx-auto mb-4 h-1.5 w-11 rounded-completo bg-acento" />
         {/* Se monta al abrir para empezar con los filtros que ya están aplicados. */}
         {abierta && <Contenido filtros={filtros} onAplicar={onAplicar} />}

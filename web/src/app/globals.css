@@ -164,6 +164,22 @@
   --container-app: 480px;
   --container-contenido: 342px;
   --container-navegacion: 358px;
+
+  /* 6. Margen lateral de las pantallas: clases px-pantalla y -mx-pantalla */
+  --spacing-pantalla: var(--margen-pantalla);
+}
+
+/* 6. Celulares desde 375 px (iPhone SE en adelante): variante movil-m:. Debajo, el diseño se compacta. */
+@theme {
+  --breakpoint-movil-m: 375px;
+}
+
+:root {
+  --margen-pantalla: 16px;
+
+  @variant movil-m {
+    --margen-pantalla: 24px;
+  }
 }
 
 /*

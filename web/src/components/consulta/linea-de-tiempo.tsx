@@ -55,7 +55,7 @@ export function LineaDeTiempo({ mascotas, eventos: base }: { mascotas: PerfilMas
   }
 
   return (
-    <div className="flex flex-col gap-5 px-6 pt-14">
+    <div className="flex flex-col gap-5 px-pantalla pt-14">
       <h1 className="grid h-11 place-items-center texto-titulo-seccion text-texto">Línea de tiempo</h1>
 
       <Busqueda
@@ -70,7 +70,7 @@ export function LineaDeTiempo({ mascotas, eventos: base }: { mascotas: PerfilMas
         <SinEventos nombre={mascota.nombre} />
       ) : (
         <>
-          <nav aria-label="Filtros" className="sin-barra-desplazamiento -mx-6 -mt-1 overflow-x-auto px-6">
+          <nav aria-label="Filtros" className="sin-barra-desplazamiento -mx-pantalla -mt-1 overflow-x-auto px-pantalla">
             <div className="flex w-max gap-2">
               {filtrosAvanzados ? (
                 <>

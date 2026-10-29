@@ -1,9 +1,9 @@
 "use client"
 
+import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 
-import { FotoMascota } from "@/components/foto-mascota"
 import { Icono } from "@/components/icono"
 import { Rasgo } from "@/components/rasgo"
 import { textoKg, type Categoria, type Evento } from "@/lib/eventos"
@@ -27,24 +27,36 @@ export function TarjetaMascota({ mascota, eventos }: { mascota: PerfilMascota; e
   }
 
   return (
-    <section className="relative isolate flex flex-col gap-4 overflow-hidden rounded-lg bg-primario p-5">
-      <FotoMascota
-        nombre={mascota.nombre}
-        imagen={mascota.imagen}
-        prioritaria
-        className="absolute -top-12 -right-10 -z-10 size-55 bg-acento-suave text-primario"
-      />
+    <section className="relative isolate flex flex-col gap-4 overflow-hidden rounded-lg bg-primario p-4 movil-m:p-5">
+      {/* Círculo claro que asoma por la esquina; recorta el retrato por abajo, como en Figma. */}
+      <span
+        aria-hidden
+        className="absolute -top-19 -right-16 -z-10 size-50 overflow-hidden rounded-completo bg-acento-suave movil-m:-top-23 movil-m:size-60"
+      >
+        {mascota.imagen ? (
+          <Image
+            src={`/mascotas/retrato/${mascota.imagen}`}
+            alt=""
+            width={360}
+            height={480}
+            loading="eager"
+            className="absolute top-19 right-18 size-31 object-contain object-top movil-m:top-23 movil-m:size-37.5"
+          />
+        ) : (
+          <Icono nombre="pets" className="absolute top-28 right-24 icono-estado text-primario movil-m:top-34 movil-m:right-28" />
+        )}
+      </span>
       <span aria-hidden className="absolute -right-20 -bottom-20 -z-10 size-40 rounded-completo bg-acento-suave" />
 
       <div className="flex w-3/5 flex-col items-start">
         <span className="rounded-completo bg-sobre-oscuro-halo px-2.5 py-1 texto-micro text-superficie">{especieYRaza(mascota)}</span>
-        <h2 className="mt-3 line-clamp-2 texto-display break-words text-superficie">{mascota.nombre}</h2>
+        <h2 className="mt-3 line-clamp-2 texto-titulo-pantalla break-words text-superficie movil-m:texto-display">{mascota.nombre}</h2>
         <span className="texto-cuerpo text-acento">
           {[mascota.edad, mascota.sexo === "hembra" ? "Hembra" : "Macho"].filter(Boolean).join(" · ")}
         </span>
       </div>
 
-      <div className="flex gap-2 pr-16">
+      <div className="flex gap-1.5 pr-13 movil-m:gap-2 movil-m:pr-16">
         {vacunas !== "sin-vacunas" && (
           <button type="button" onClick={() => verEnLinea("vacunas")} className={rasgoTocable} aria-label="Ver vacunas">
             <Rasgo icono="vaccines" texto={vacunas === "al-dia" ? "Al día" : "Vencida"} alerta={vacunas === "vencida"} className="size-full" />
@@ -69,7 +81,7 @@ export function TarjetaMascota({ mascota, eventos }: { mascota: PerfilMascota; e
       <Link
         href="/vista-rapida"
         aria-label={`Vista rápida de ${mascota.nombre}`}
-        className="absolute right-4 bottom-4 grid size-12 place-items-center rounded-completo bg-primario-relleno text-superficie"
+        className="absolute right-3 bottom-3 grid size-11 place-items-center rounded-completo bg-primario-relleno text-superficie movil-m:right-4 movil-m:bottom-4 movil-m:size-12"
       >
         <Icono nombre="north_east" className="icono-m" />
       </Link>

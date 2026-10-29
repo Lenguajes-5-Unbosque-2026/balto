@@ -30,7 +30,7 @@ export function EditarEvento({ eventos, ...props }: EditarEventoProps) {
   if (!listo) return null
   if (!evento) {
     return (
-      <main className="flex flex-1 flex-col justify-center gap-6 px-6">
+      <main className="flex flex-1 flex-col justify-center gap-6 px-pantalla">
         <Estado icono="search_off" titulo="No encontramos el evento" mensaje="Puede que se haya eliminado." />
         <BotonEnlace href="/linea-de-tiempo" variante="secundario">
           Ir a la línea de tiempo

@@ -146,7 +146,7 @@ export function BloqueSoporte({
 
       {/* E8 · Adjuntar soporte */}
       <Drawer open={hojaAbierta} onOpenChange={setHojaAbierta}>
-        <DrawerContent className="mx-auto max-w-app rounded-t-xl border-0 bg-superficie px-6 pt-3 pb-9">
+        <DrawerContent className="mx-auto max-w-app rounded-t-xl border-0 bg-superficie px-pantalla pt-3 pb-9">
           <span aria-hidden className="mx-auto mb-4 h-1.5 w-11 rounded-completo bg-acento" />
           <DrawerTitle className="mb-4 texto-titulo-tarjeta text-texto">Adjuntar soporte</DrawerTitle>
           <div className="flex flex-col gap-2.5">
@@ -249,7 +249,7 @@ function Chip({ icono, texto, onClick, activo }: { icono: string; texto: string;
 /** Pantalla completa encima del formulario (E12, E13), con flecha para volver. */
 function Pantalla({ titulo, onAtras, children }: { titulo: string; onAtras: () => void; children: React.ReactNode }) {
   return (
-    <div role="dialog" aria-label={titulo} className="fixed inset-0 z-20 mx-auto flex max-w-app flex-col gap-4 overflow-y-auto bg-fondo px-6 pt-14">
+    <div role="dialog" aria-label={titulo} className="fixed inset-0 z-20 mx-auto flex max-w-app flex-col gap-4 overflow-y-auto bg-fondo px-pantalla pt-14">
       <header className="relative mb-2 flex h-11 items-center justify-center">
         <button
           type="button"

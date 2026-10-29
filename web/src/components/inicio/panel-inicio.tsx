@@ -27,7 +27,7 @@ export function PanelInicio({ dueno, mascotas, eventos: base, alertas }: PanelIn
   const eventoAlerta = alerta && eventos.find((e) => e.id === alerta.evento_id)
 
   return (
-    <div className="flex flex-col gap-5 px-6 pt-12">
+    <div className="flex flex-col gap-5 px-pantalla pt-12">
       <EncabezadoInicio nombre={dueno} />
       <SelectorMascotas mascotas={mascotas} activa={mascota} onCambio={cambiarMascota} />
       <TarjetaMascota mascota={mascota} eventos={eventos} />

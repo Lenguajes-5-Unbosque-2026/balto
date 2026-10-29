@@ -45,7 +45,7 @@ export function DetalleEvento({ eventos: base, dueno }: { eventos: Evento[]; due
 
   if (!evento) {
     return (
-      <main className="flex flex-1 flex-col gap-6 px-6 pt-14">
+      <main className="flex flex-1 flex-col gap-6 px-pantalla pt-14">
         <Encabezado titulo="Detalle" izquierda={<BotonIcono icono="arrow_back" etiqueta="Volver" onClick={volver} />} />
         <Estado icono="search_off" titulo="No encontramos el evento" mensaje="Puede que se haya eliminado." />
         <BotonEnlace href="/linea-de-tiempo" variante="secundario">
@@ -81,7 +81,7 @@ export function DetalleEvento({ eventos: base, dueno }: { eventos: Evento[]; due
   }
 
   return (
-    <main className="flex flex-1 flex-col gap-4 px-6 pt-14 pb-10">
+    <main className="flex flex-1 flex-col gap-4 px-pantalla pt-14 pb-10">
       <Encabezado
         titulo="Detalle"
         izquierda={<BotonIcono icono="arrow_back" etiqueta="Volver" onClick={volver} />}
@@ -153,7 +153,7 @@ export function DetalleEvento({ eventos: base, dueno }: { eventos: Evento[]; due
 
       {/* Menú ••• (spec de D): compartir el evento (L1) y descargar sus soportes. */}
       <Drawer open={menu} onOpenChange={setMenu}>
-        <DrawerContent className="mx-auto max-w-app rounded-t-xl border-0 bg-superficie px-6 pt-3 pb-9">
+        <DrawerContent className="mx-auto max-w-app rounded-t-xl border-0 bg-superficie px-pantalla pt-3 pb-9">
           <span aria-hidden className="mx-auto mb-4 h-1.5 w-11 rounded-completo bg-acento" />
           <DrawerTitle className="mb-4 texto-titulo-tarjeta text-texto">Opciones</DrawerTitle>
           <div className="flex flex-col gap-2.5">

@@ -23,7 +23,7 @@ export function AccesosRapidos() {
           Personalizar
         </button>
       </div>
-      <ul className="sin-barra-desplazamiento -mx-6 flex gap-2.5 overflow-x-auto px-6">
+      <ul className="sin-barra-desplazamiento -mx-pantalla flex gap-2.5 overflow-x-auto px-pantalla">
         {ACCESOS.map((a) => (
           <li key={a.nombre}>
             <button

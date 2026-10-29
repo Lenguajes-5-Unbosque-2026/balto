@@ -23,7 +23,7 @@ const CORTES: Record<string, string> = {
 export function SelectorTipo({ mascotas }: { mascotas: MascotaBasica[] }) {
   const [mascota] = useMascotaActiva(mascotas)
   return (
-    <main className="flex flex-1 flex-col gap-6 px-6 pt-14">
+    <main className="flex flex-1 flex-col gap-6 px-pantalla pt-14">
       <header className="relative flex h-11 items-center justify-center">
         <Link
           href="/"

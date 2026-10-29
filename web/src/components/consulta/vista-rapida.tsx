@@ -42,7 +42,7 @@ export function VistaRapida({ mascotas, eventos: base, dueno }: VistaRapidaProps
   const alergico = mascota.sexo === "hembra" ? "Alérgica" : "Alérgico"
 
   return (
-    <main className="flex flex-1 flex-col gap-4 px-6 pt-14 pb-10">
+    <main className="flex flex-1 flex-col gap-4 px-pantalla pt-14 pb-10">
       <Encabezado
         titulo="Vista rápida"
         izquierda={<BotonIconoEnlace href="/" icono="close" etiqueta="Cerrar" />}

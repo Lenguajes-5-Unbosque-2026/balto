@@ -15,7 +15,7 @@ type SelectorMascotasProps = {
 /** Chips con foto para elegir la mascota activa, y el + para agregar otra (B1). */
 export function SelectorMascotas({ mascotas, activa, onCambio }: SelectorMascotasProps) {
   return (
-    <nav aria-label="Mascotas" className="sin-barra-desplazamiento -mx-6 overflow-x-auto px-6">
+    <nav aria-label="Mascotas" className="sin-barra-desplazamiento -mx-pantalla overflow-x-auto px-pantalla">
       <ul className="flex w-max items-center gap-3">
         {mascotas.map((m) => {
           const elegida = m.id === activa.id

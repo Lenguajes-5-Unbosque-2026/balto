@@ -124,4 +124,6 @@ Decisiones tomadas:
 - Mientras no existen F2 y F4, los rasgos "Al día" y el del peso abren la línea de tiempo filtrada por Vacunas o por Peso. "Microchip" abre D1.
 - "Próximo a vencer" abre el evento que generó la alerta (D4) mientras no existe J2. Las alertas vencidas van primero, en rojo, con "venció hace N días".
 - Se construyeron los estados: vacunas vencidas (rasgo rojo "Vencida"), sin microchip (sin rasgo), sin peso ("Registrar peso" abre E6) y nada por vencer ("Todo al día").
-- El círculo detrás de la foto en la tarjeta verde es `acento-suave`, como en Figma; en el resto de la app la foto va sobre `primario`.
+- La tarjeta verde usa un retrato aparte (`imagenes/retrato/`), con la mascota completa: el círculo `acento-suave` la recorta por abajo, como en Figma. En el resto de la app la foto va recortada a la cara sobre `primario`.
+- El ícono de "Próximo a vencer" siempre va en verde; lo vencido se marca solo con el rótulo rojo.
+- Debajo de 375 px (Mobile S) el margen lateral baja a 16 y se compactan el saludo, la tarjeta verde y "Próximo a vencer" (token `movil-m`).

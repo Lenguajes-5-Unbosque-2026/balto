@@ -14,14 +14,14 @@ export function Rasgo({ icono, texto, alerta, className }: RasgoProps) {
   return (
     <span
       className={cn(
-        "flex size-19 shrink-0 flex-col items-center justify-center gap-1 rounded-md px-1 text-center",
+        "flex size-19 shrink-0 flex-col items-center justify-center gap-1 rounded-md px-0.5 text-center",
         alerta ? "bg-error-suave text-error" : "bg-acento-suave text-texto",
         className,
       )}
     >
       <Icono nombre={icono} className={cn("icono-m", !alerta && "text-primario")} />
       {/* Hasta dos líneas: "Registrar peso" no cabe en una. */}
-      <span className="line-clamp-2 w-full texto-micro break-words normal-case">{texto}</span>
+      <span className="line-clamp-2 w-full texto-micro normal-case">{texto}</span>
     </span>
   )
 }

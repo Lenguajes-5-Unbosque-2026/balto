@@ -14,7 +14,7 @@ export function ChipsTipo({ actual, onCambio }: ChipsTipoProps) {
   const tipos = TIPOS_EVENTO.filter((t) => t.slug !== "comportamiento")
   const ordenados = [...tipos.filter((t) => t.slug === actual), ...tipos.filter((t) => t.slug !== actual)]
   return (
-    <nav aria-label="Tipo de evento" className="sin-barra-desplazamiento -mx-6 overflow-x-auto px-6">
+    <nav aria-label="Tipo de evento" className="sin-barra-desplazamiento -mx-pantalla overflow-x-auto px-pantalla">
       <ul className="flex w-max gap-2">
         {ordenados.map((t) => {
           const activo = t.slug === actual

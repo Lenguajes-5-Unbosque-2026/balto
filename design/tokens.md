@@ -186,7 +186,8 @@ No están como variables en Figma, pero se repiten en todo el kit. En código co
 | `ancho-app` | 480 | Ancho máximo de la app en el navegador. Hasta ahí ocupa todo el ancho del teléfono (también los de más de 390); en pantallas más anchas queda centrada |
 | `alto-lienzo` | 844 | Alto del teléfono de diseño |
 | `ancho-contenido` | 342 | Ancho del contenido (390 − 2 × 24) |
-| `margen-pantalla` | 24 (= `espaciado-xl`) | Margen lateral de todas las pantallas |
+| `margen-pantalla` | 24 (= `espaciado-xl`); 16 en celulares de menos de 375 | Margen lateral de todas las pantallas |
+| `movil-m` | 375 | Ancho desde el que se usa el diseño de Figma tal cual. Debajo (Mobile S, 320) se compactan el margen, la tarjeta de Inicio y algunos títulos |
 | `alto-boton` | 56 | Botón |
 | `alto-campo` | 80 (con etiqueta) · 56 (caja) | Campo |
 | `alto-busqueda` | 52 | Búsqueda |

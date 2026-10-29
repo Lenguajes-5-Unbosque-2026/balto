@@ -18,7 +18,7 @@ export function LineaMes({ children, cantidad }: { children: ReactNode; cantidad
 /** Punto de la línea con la tarjeta del evento. El más reciente lleva el punto relleno. */
 export function EventoLinea({ evento, anterior, reciente }: { evento: Evento; anterior?: Evento; reciente?: boolean }) {
   return (
-    <li className="relative flex items-center gap-2.5">
+    <li className="relative flex items-center gap-2 movil-m:gap-2.5">
       <span
         aria-hidden
         className={cn(
