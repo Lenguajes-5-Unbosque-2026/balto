@@ -44,3 +44,35 @@ export function edad(nacimiento: string) {
   const anios = Math.floor(mesesEntre(nacimiento, HOY) / 12)
   return anios === 1 ? "1 año" : `${anios} años`
 }
+
+const MESES_LARGOS = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+
+/** "2026-09-12" → "12/09/2026" (fechas de las filas de datos). */
+export function fechaNumerica(iso: string) {
+  const [a, m, d] = iso.slice(0, 10).split("-")
+  return `${d}/${m}/${a}`
+}
+
+/** "2026-09-01" → "01 sep" (peso de D1). */
+export function fechaDiaMes(iso: string) {
+  const { m, d } = partes(iso)
+  return `${String(d).padStart(2, "0")} ${MESES[m - 1]}`
+}
+
+/** "2026-09-12" → "Septiembre 2026" (grupos de la línea de tiempo). */
+export function mesAnio(iso: string) {
+  const { a, m } = partes(iso)
+  return `${MESES_LARGOS[m - 1]} ${a}`
+}
+
+/** "2026-08-01" → "agosto". */
+export function nombreMes(iso: string) {
+  return MESES_LARGOS[partes(iso).m - 1].toLowerCase()
+}
+
+/** Días de una fecha ISO a otra (negativo si la segunda es anterior). */
+export function diasEntre(desde: string, hasta: string) {
+  const x = partes(desde)
+  const y = partes(hasta)
+  return Math.round((Date.UTC(y.a, y.m - 1, y.d) - Date.UTC(x.a, x.m - 1, x.d)) / 86_400_000)
+}

@@ -14,7 +14,7 @@ type EncabezadoRegistroProps = {
 /** Encabezado de los formularios de E: cerrar, título y selector de mascota. */
 export function EncabezadoRegistro({ onCerrar, mascotas, activa, onCambioMascota }: EncabezadoRegistroProps) {
   return (
-    <header className="flex h-11 items-center gap-3">
+    <header className="flex h-11 items-center gap-2">
       <button
         type="button"
         onClick={onCerrar}
@@ -23,7 +23,8 @@ export function EncabezadoRegistro({ onCerrar, mascotas, activa, onCambioMascota
       >
         <Icono nombre="close" className="icono-m" />
       </button>
-      <h1 className="flex-1 texto-titulo-seccion text-texto">Registrar evento</h1>
+      {/* El título no se parte: si falta espacio, se recorta el nombre en la píldora de la mascota. */}
+      <h1 className="flex-1 whitespace-nowrap texto-titulo-seccion text-texto">Registrar evento</h1>
       {mascotas && activa && onCambioMascota && (
         <SelectorMascota mascotas={mascotas} activa={activa} onCambio={onCambioMascota} />
       )}

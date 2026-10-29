@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next"
 import { Outfit, Plus_Jakarta_Sans } from "next/font/google"
 
+import { Toaster } from "@/components/ui/sonner"
+
 import "./globals.css"
 
 const outfit = Outfit({
@@ -31,9 +33,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="es" className={`${outfit.variable} ${plusJakarta.variable} h-full antialiased`}>
       <body className="min-h-full">
         {/* Mobile-first: en pantallas anchas la app se ve centrada con el ancho de un celular. */}
-        <div className="relative mx-auto flex min-h-dvh w-full max-w-lienzo flex-col bg-fondo">
+        <div className="relative mx-auto flex min-h-dvh w-full max-w-app flex-col bg-fondo">
           {children}
         </div>
+        <Toaster />
       </body>
     </html>
   )

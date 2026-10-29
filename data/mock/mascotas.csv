@@ -1,6 +1,6 @@
 id,dueno_id,nombre,especie,raza,sexo,fecha_nacimiento,esterilizada,microchip,cedula,fecha_emision_cedula,estado,carga_inicial,imagen,fecha_registro
-m01,d01,Luna,perro,Golden Retriever,hembra,2023-03-12,true,985112000123456,BAL-0001-LUNA,2026-09-23,activa,completa,luna.jpg,2026-09-23
-m02,d01,Toby,perro,Criollo,macho,2021-04-18,true,,BAL-0002-TOBY,2026-09-23,activa,completa,toby.jpg,2026-09-23
-m03,d01,Michi,gato,Criollo,hembra,2024-02-05,true,,BAL-0003-MICHI,2026-09-24,activa,completa,michi.jpg,2026-09-24
-m04,d02,Canela,perro,Beagle,hembra,2018-11-30,false,900108000654321,BAL-0004-CANELA,2026-10-02,archivada,completa,canela.jpg,2026-10-02
+m01,d01,Luna,perro,Golden Retriever,hembra,2023-03-12,true,985112000123456,BAL-0001-LUNA,2026-09-23,activa,completa,luna.png,2026-09-23
+m02,d01,Toby,perro,Criollo,macho,2021-04-18,true,,BAL-0002-TOBY,2026-09-23,activa,completa,toby.png,2026-09-23
+m03,d01,Michi,gato,Criollo,hembra,2024-02-05,true,,BAL-0003-MICHI,2026-09-24,activa,completa,michi.png,2026-09-24
+m04,d02,Canela,perro,Beagle,hembra,2018-11-30,false,900108000654321,BAL-0004-CANELA,2026-10-02,archivada,completa,canela.png,2026-10-02
 m05,d02,Señor Bigotes de la Montaña Coronado Pérez,gato,Mestizo / no sé,macho,,false,,BAL-0005-SENORBIGOTESDELAMONTANACORONADOPEREZ,2026-10-02,activa,pendiente,,2026-10-02

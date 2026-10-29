@@ -23,15 +23,16 @@ export function SelectorMascota({ mascotas, activa, onCambio }: SelectorMascotaP
         type="button"
         onClick={() => setAbierto(true)}
         aria-label={`Mascota: ${activa.nombre}. Cambiar`}
-        className="flex h-10.5 items-center gap-2 rounded-completo bg-superficie py-1 pr-2.5 pl-1 shadow-tarjeta"
+        className="flex h-10.5 min-w-0 items-center gap-2 rounded-completo bg-superficie py-1 pr-2.5 pl-1 shadow-tarjeta"
       >
         <FotoMascota nombre={activa.nombre} imagen={activa.imagen} className="size-8.5" />
-        <span className="max-w-20 truncate texto-etiqueta-fuerte text-texto">{activa.nombre}</span>
+        {/* En celulares de menos de 375 px no cabe junto al título: queda la foto. */}
+        <span className="hidden max-w-20 min-w-0 truncate texto-etiqueta-fuerte text-texto movil-m:inline">{activa.nombre}</span>
         <Icono nombre="expand_more" className="icono-s text-texto-secundario" />
       </button>
 
       <Drawer open={abierto} onOpenChange={setAbierto}>
-        <DrawerContent className="mx-auto max-w-lienzo rounded-t-xl border-0 bg-superficie px-6 pt-3 pb-9">
+        <DrawerContent className="mx-auto max-w-app rounded-t-xl border-0 bg-superficie px-pantalla pt-3 pb-9">
           <span aria-hidden className="mx-auto mb-4 h-1.5 w-11 rounded-completo bg-acento" />
           <DrawerTitle className="mb-4 texto-titulo-tarjeta text-texto">¿Para qué mascota?</DrawerTitle>
           <ul className="flex flex-col gap-2.5">

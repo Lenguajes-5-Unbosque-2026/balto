@@ -6,7 +6,7 @@ export function BarraAccion({ children }: { children: ReactNode }) {
     <>
       {/* Reserva el espacio de la barra para que el contenido no quede debajo. */}
       <div aria-hidden className="h-28 shrink-0" />
-      <div className="fixed inset-x-0 bottom-0 z-10 mx-auto flex max-w-lienzo gap-2.5 rounded-t-lg bg-fondo px-6 pt-4 pb-9 shadow-tarjeta">
+      <div className="fixed inset-x-0 bottom-0 z-10 mx-auto flex max-w-app gap-2.5 bg-fondo px-pantalla pt-4 pb-9">
         {children}
       </div>
     </>

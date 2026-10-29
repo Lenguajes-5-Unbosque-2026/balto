@@ -23,7 +23,7 @@ export function EventoGuardado({ mascotas, anticipacion }: { mascotas: MascotaBa
 
   if (!evento) {
     return (
-      <main className="flex flex-1 flex-col justify-center gap-6 px-6">
+      <main className="flex flex-1 flex-col justify-center gap-6 px-pantalla">
         <Estado icono="search_off" titulo="No encontramos el evento" mensaje="Puede que se haya registrado en otro navegador." />
         <BarraAccion>
           <BotonEnlace href="/registrar">Registrar otro</BotonEnlace>
@@ -41,7 +41,7 @@ export function EventoGuardado({ mascotas, anticipacion }: { mascotas: MascotaBa
   const que = evento.tipo === "desparasitacion" ? "de la próxima dosis" : "del refuerzo"
 
   return (
-    <main className="flex flex-1 flex-col gap-5 px-6 pt-18">
+    <main className="flex flex-1 flex-col gap-5 px-pantalla pt-18">
       <Estado
         tono="exito"
         icono="check_circle"
@@ -53,7 +53,7 @@ export function EventoGuardado({ mascotas, anticipacion }: { mascotas: MascotaBa
           Te avisaremos {anticipacion} días antes {que} ({fechaCorta(sumarDias(proxima, -anticipacion))}).
         </Nota>
       )}
-      <TarjetaEvento evento={evento} href="/linea-de-tiempo" />
+      <TarjetaEvento evento={evento} href={`/evento?id=${evento.id}`} />
       <BarraAccion>
         <BotonEnlace href="/registrar">Registrar otro</BotonEnlace>
         <BotonEnlace href="/" variante="secundario">

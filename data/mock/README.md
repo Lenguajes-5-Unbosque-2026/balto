@@ -82,10 +82,11 @@ En `eventos.csv`, las columnas que se llenan dependen del `tipo`:
 
 ## Imágenes
 
-- **`imagenes/`**: fotos de mascotas (`luna.jpg`, `toby.jpg`, `michi.jpg`, `canela.jpg`), 800 × 800.
-  - Se exportaron de las fotos que el equipo ya usa en Figma (Inicio y bienvenida), con fondo `color-acento-suave`.
+- **`imagenes/`**: fotos de mascotas (`luna.png`, `toby.png`, `michi.png`, `canela.png`), 512 × 512, recortadas a la cara y con fondo transparente.
+  - Se exportaron de las fotos que el equipo ya usa en Figma (Inicio y bienvenida), sin fondo: la app pone el círculo detrás.
   - Los nombres de capa de Figma (`38079689_8595615`…) sugieren que vienen de Freepik. **Hay que confirmar la licencia** y, si exige atribución, agregarla o cambiar las fotos por unas de Unsplash o propias.
-  - `habitos.csv` (`hb09`) reutiliza `luna.jpg` como foto del paseo.
+  - `habitos.csv` (`hb09`) reutiliza `luna.png` como foto del paseo.
+- **`imagenes/retrato/`**: las mismas mascotas completas (cabeza y cuello, sin fondo), para la tarjeta verde de Inicio.
 - **`soportes/`**: los archivos de `soportes.csv`.
   - Carnets, fórmula y receta en JPG; exámenes e indicaciones en PDF.
   - Son documentos dibujados para la prueba y dicen "Documento de prueba · datos inventados".

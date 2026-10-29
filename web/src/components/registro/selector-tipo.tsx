@@ -8,11 +8,22 @@ import type { MascotaBasica } from "@/components/registro/tipos"
 import { TIPOS_EVENTO } from "@/lib/eventos"
 import { useMascotaActiva } from "@/lib/mascota-activa"
 
+/**
+ * Guiones opcionales (­) para que, en teléfonos angostos, los nombres largos
+ * se partan por sílabas en vez de salirse del recuadro. A 390 px no se parten.
+ */
+const CORTES: Record<string, string> = {
+  desparasitacion: "Despara­sitación",
+  tratamiento: "Trata­miento",
+  alimentacion: "Alimen­tación",
+  comportamiento: "Compor­tamiento",
+}
+
 /** E1 · Selector de tipo de evento: la mascota activa y la cuadrícula de 9 tipos. */
 export function SelectorTipo({ mascotas }: { mascotas: MascotaBasica[] }) {
   const [mascota] = useMascotaActiva(mascotas)
   return (
-    <main className="flex flex-1 flex-col gap-6 px-6 pt-14">
+    <main className="flex flex-1 flex-col gap-6 px-pantalla pt-14">
       <header className="relative flex h-11 items-center justify-center">
         <Link
           href="/"
@@ -25,7 +36,7 @@ export function SelectorTipo({ mascotas }: { mascotas: MascotaBasica[] }) {
       </header>
 
       <div className="flex items-center gap-3.5">
-        <FotoMascota nombre={mascota.nombre} imagen={mascota.imagen} className="size-16 rounded-md" />
+        <FotoMascota nombre={mascota.nombre} imagen={mascota.imagen} className="size-16 rounded-md" prioritaria />
         <div className="flex min-w-0 flex-col">
           <span className="truncate texto-titulo-tarjeta text-texto">{mascota.nombre}</span>
           <span className="texto-cuerpo text-texto-secundario">¿Qué quieres registrar hoy?</span>
@@ -37,12 +48,12 @@ export function SelectorTipo({ mascotas }: { mascotas: MascotaBasica[] }) {
           <li key={t.slug}>
             <Link
               href={`/registrar/${t.slug}`}
-              className="flex h-17.5 flex-col items-center justify-center gap-1.5 rounded-md border border-borde bg-superficie px-1 text-center"
+              className="flex h-full min-h-17.5 flex-col items-center justify-center gap-1.5 rounded-md border border-borde bg-superficie px-1 py-2 text-center"
             >
-              <span className="grid size-8 place-items-center rounded-completo bg-acento-suave text-primario">
+              <span className="grid size-8 shrink-0 place-items-center rounded-completo bg-acento-suave text-primario">
                 <Icono nombre={t.icono} className="icono-s" />
               </span>
-              <span className="texto-etiqueta text-texto">{t.nombre}</span>
+              <span className="w-full wrap-break-word texto-etiqueta text-texto">{CORTES[t.slug] ?? t.nombre}</span>
             </Link>
           </li>
         ))}

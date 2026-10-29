@@ -13,7 +13,7 @@ El veterinario no participa: no necesita cuenta. Es el dueño quien registra el 
 | ID | Nombre | Qué muestra |
 |---|---|---|
 | E1 | Selector de tipo de evento | Foto y nombre de la mascota activa, "¿Qué quieres registrar hoy?" y una cuadrícula de 9 tipos: Vacuna, Desparasitación, Consulta, Examen, Tratamiento, Peso, Alimentación, Comportamiento, Otro. Botón X para cerrar. |
-| E2 | Registrar vacuna | Formulario de vacuna con selector de mascota en el encabezado, chips de tipo, bloque de soporte (Cámara / Galería / PDF) e interruptor "Recordarme el refuerzo". |
+| E2 | Registrar vacuna | Formulario de vacuna con selector de mascota en el encabezado, chips de tipo, área de soporte que abre E8 e interruptor "Recordarme el refuerzo". |
 | E3 | Consulta veterinaria | Formulario de consulta y nota "El veterinario no necesita cuenta: tú subes el resultado." |
 | E4 | Examen o laboratorio | Formulario de examen con el soporte cargado (hemograma.pdf). |
 | E5 | Tratamiento o medicación | Formulario de tratamiento, fila "Crear horarios de toma" y área "Foto de la fórmula (opcional)". |
@@ -55,7 +55,7 @@ Caso: Valentina registra la vacuna antirrábica que le pusieron a Luna el 12/09/
 1. **Entrada.** En Inicio, con Luna seleccionada, Valentina toca el botón **+** de la barra de navegación inferior. Se abre **E1** con la foto y el nombre de Luna.
 2. **Tipo.** Toca **Vacuna**. Se abre **E2** con el chip "Vacuna" activo y el selector de mascota mostrando "Luna" en el encabezado.
 3. **Campos.** Escribe "Antirrábica · Nobivac Rabies" en *Vacuna aplicada*, deja *Fecha aplicada* en 12/09/2026 y pone *Próximo refuerzo* en 12/09/2027. Mientras falten campos obligatorios, el botón "Guardar evento" está deshabilitado.
-4. **Soporte.** Toca **Cámara** en el bloque de soporte y se abre la cámara nativa del teléfono, sin pedir permiso (ver la spec de O). Las opciones *Galería* y *PDF* del bloque, y cualquier área de soporte de los otros tipos, abren la hoja **E8**, que ofrece las mismas tres opciones.
+4. **Soporte.** Toca el área de soporte y se abre la hoja **E8** con Tomar foto, Elegir de la galería y Subir PDF. Con **Tomar foto** se abre la cámara nativa del teléfono, sin pedir permiso (ver la spec de O).
 5. **Revisión de la foto.** Después de tomar la foto se abre **E12**. Valentina puede recortar, girar o repetir. Toca **Usar esta foto** y vuelve a E2 con la tarjeta "carnet_luna.jpg · Foto · 1,2 MB · Cargado". La X de la tarjeta quita el soporte.
 6. **Recordatorio.** Como hay fecha de *Próximo refuerzo*, el interruptor "Recordarme el refuerzo" está disponible. Lo deja encendido; debajo se lee "7 días antes · 5 sep 2027". La anticipación sale de M3 (ver Qué pasa después).
 7. **Guardar.** Toca **Guardar evento**. Se abre **E9** con:
@@ -169,7 +169,7 @@ Corregido en Figma durante la escritura de la spec:
 Decisión de producto que afecta este flujo: **se elimina la suscripción** (y con ella el modo consulta). Registrar eventos no depende de ningún pago.
 
 Decidido, pendiente de ajustar en Figma:
-- E3: agregar el bloque de soporte (Cámara / Galería / PDF), como en E2.
+- E3: agregar el área de soporte que abre E8.
 - E7, E11: cambiar "Foto o video (opcional)" por "Foto (opcional)". Por ahora no hay video.
 - E11: marcar "Fecha" como obligatoria (`*`).
 - E4: diseñar el estado sin soporte, con el área que abre E8.
@@ -215,3 +215,12 @@ Hecho:
 - E3–E7, E10 y E11: selector de mascota en el encabezado.
 
 Sigue pendiente: E4 sin soporte, E2 / E10 con los avisos apagados, tarjeta de soporte subiendo o con error, y la variante de texto de B8 para eventos.
+
+**2026-10-29 · Revisión del prototipo en el celular**
+
+Decisiones tomadas:
+- El soporte se agrega igual en todos los tipos: un área punteada que abre E8. Se quitan los botones Cámara / Galería / PDF de E2–E4, porque mostraban dos formas distintas de hacer lo mismo.
+- La foto de la mascota va sobre un círculo verde primario (`primario`), no gris, y recortada a la cara.
+
+Pendiente de ajustar en Figma:
+- E2, E3, E4: cambiar los botones Cámara / Galería / PDF por el área de soporte ("Foto del carnet o PDF (opcional)" en E2 y "Foto o PDF (opcional)" en E3 y E4).
