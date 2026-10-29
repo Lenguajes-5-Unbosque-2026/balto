@@ -134,3 +134,17 @@ Hecho:
 - D9 y D10: el chip de Exámenes usa el mismo ícono de D2.
 
 Sigue pendiente: nada.
+
+**2026-10-29 · Construcción en código (MVP)**
+
+Decisiones tomadas:
+- Se construyó todo D (D1–D10): D4 lleva a D5, D6 y D7, y sin ellas la línea de tiempo no sería funcional.
+- D4 y D6 usan `/evento?id=…` y `/evento/editar?id=…`: los eventos registrados en el navegador no existen en el servidor.
+- Mientras no hay Supabase, editar y eliminar se guardan en el navegador. Eliminar oculta el evento en toda la app y quita la alerta que generó.
+- D2 muestra los chips de atajo (un solo tipo). Con más de un tipo o con fechas, muestra los filtros aplicados como chips activos; tocar uno lo quita. El botón de filtros lleva un punto cuando hay filtros.
+- Si las fechas de D3 quedan al revés, se ordenan solas.
+- D9 busca sin tildes ni mayúsculas ("antirrabica" encuentra "Antirrábica").
+- D8 "Subir documentos que ya tengas" abre E1 mientras no existe C1.
+- Menú ••• de D4: "Compartir este evento" avisa que L llega pronto; "Descargar soportes" descarga los archivos.
+- D5: los soportes registrados en el navegador no tienen archivo publicado; muestran el nombre y un aviso en vez de la vista previa.
+- D4 muestra la fila "Última edición" cuando el evento se editó.

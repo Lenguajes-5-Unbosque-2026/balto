@@ -83,7 +83,7 @@ En `eventos.csv`, las columnas que se llenan dependen del `tipo`:
 ## Imágenes
 
 - **`imagenes/`**: fotos de mascotas (`luna.png`, `toby.png`, `michi.png`, `canela.png`), 512 × 512, recortadas a la cara y con fondo transparente.
-  - Se exportaron de las fotos que el equipo ya usa en Figma (Inicio y bienvenida), con fondo `color-acento-suave`.
+  - Se exportaron de las fotos que el equipo ya usa en Figma (Inicio y bienvenida), sin fondo: la app pone el círculo detrás.
   - Los nombres de capa de Figma (`38079689_8595615`…) sugieren que vienen de Freepik. **Hay que confirmar la licencia** y, si exige atribución, agregarla o cambiar las fotos por unas de Unsplash o propias.
   - `habitos.csv` (`hb09`) reutiliza `luna.png` como foto del paseo.
 - **`soportes/`**: los archivos de `soportes.csv`.

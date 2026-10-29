@@ -3,43 +3,77 @@
 import type { Evento } from "@/lib/eventos"
 
 /**
- * Eventos registrados en este navegador mientras no hay Supabase.
- * Si el almacenamiento no está disponible (modo privado), se guarda en memoria.
+ * Cambios hechos en este navegador mientras no hay Supabase: eventos nuevos o
+ * editados (E, D6) y eventos eliminados (D7). Si el almacenamiento no está
+ * disponible (modo privado), se guardan en memoria hasta recargar.
  */
 const CLAVE_EVENTOS = "balto:eventos-registrados"
+const CLAVE_ELIMINADOS = "balto:eventos-eliminados"
 const CLAVE_MASCOTA = "balto:mascota-activa"
+const AVISO = "balto:eventos"
 
-let enMemoria: Evento[] = []
-// Última lectura: devuelve el mismo arreglo mientras el almacenamiento no cambie.
-let cache: { crudo: string | null; eventos: Evento[] } = { crudo: null, eventos: [] }
+const enMemoria: Record<string, string> = {}
+// Última lectura de cada clave: devuelve el mismo arreglo mientras el almacenamiento no cambie.
+const cache: Record<string, { crudo: string | null; valor: unknown[] }> = {}
+const VACIO: never[] = []
 
-function leer(): Evento[] {
+function leerLista<T>(clave: string): T[] {
+  let crudo: string | null
   try {
-    const crudo = window.localStorage.getItem(CLAVE_EVENTOS)
-    if (!crudo) return enMemoria
-    if (crudo !== cache.crudo) cache = { crudo, eventos: JSON.parse(crudo) as Evento[] }
-    return cache.eventos
+    crudo = window.localStorage.getItem(clave)
   } catch {
-    return enMemoria
+    crudo = enMemoria[clave] ?? null
   }
+  if (!crudo) return VACIO
+  if (cache[clave]?.crudo !== crudo) cache[clave] = { crudo, valor: JSON.parse(crudo) as T[] }
+  return cache[clave].valor as T[]
 }
 
-export function guardarEvento(evento: Evento) {
-  const lista = [evento, ...leer().filter((e) => e.id !== evento.id)]
-  enMemoria = lista
+function escribirLista(clave: string, lista: unknown[]) {
+  const crudo = JSON.stringify(lista)
+  enMemoria[clave] = crudo
   try {
-    window.localStorage.setItem(CLAVE_EVENTOS, JSON.stringify(lista))
+    window.localStorage.setItem(clave, crudo)
   } catch {
-    // Sin almacenamiento: queda en memoria hasta recargar.
+    // Sin almacenamiento: queda en memoria.
   }
+  window.dispatchEvent(new Event(AVISO))
+}
+
+/** Guarda un evento nuevo o reemplaza uno existente (también los del CSV, al editarlos). */
+export function guardarEvento(evento: Evento) {
+  escribirLista(CLAVE_EVENTOS, [evento, ...eventosRegistrados().filter((e) => e.id !== evento.id)])
+}
+
+/** Borrado de D7: deja de verse en toda la app. */
+export function eliminarEvento(id: string) {
+  escribirLista(
+    CLAVE_EVENTOS,
+    eventosRegistrados().filter((e) => e.id !== id),
+  )
+  escribirLista(CLAVE_ELIMINADOS, [...new Set([...eventosEliminados(), id])])
 }
 
 export function buscarEvento(id: string) {
-  return leer().find((e) => e.id === id)
+  return eventosRegistrados().find((e) => e.id === id)
 }
 
 export function eventosRegistrados() {
-  return leer()
+  return leerLista<Evento>(CLAVE_EVENTOS)
+}
+
+export function eventosEliminados() {
+  return leerLista<string>(CLAVE_ELIMINADOS)
+}
+
+/** Para useSyncExternalStore: avisa cuando cambian los eventos en esta pestaña o en otra. */
+export function suscribirEventos(aviso: () => void) {
+  window.addEventListener(AVISO, aviso)
+  window.addEventListener("storage", aviso)
+  return () => {
+    window.removeEventListener(AVISO, aviso)
+    window.removeEventListener("storage", aviso)
+  }
 }
 
 export function leerMascotaActiva() {

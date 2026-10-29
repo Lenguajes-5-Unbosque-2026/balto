@@ -4,6 +4,7 @@ import path from "node:path"
 import { parsearCsv } from "@/lib/csv"
 import type { Evento, Soporte } from "@/lib/eventos"
 import { edad } from "@/lib/fecha"
+import type { Alerta, PerfilMascota } from "@/lib/perfil"
 
 /**
  * Datos de prueba de data/mock/ (fuera de web/). Se leen en el servidor al
@@ -68,7 +69,12 @@ export function obtenerEventos(mascotaId?: string): Evento[] {
       ...e,
       soportes: soportes
         .filter((s) => s.evento_id === e.id)
-        .map((s): Soporte => ({ nombre: s.archivo, tipo: s.tipo as Soporte["tipo"], tamanoKb: Number(s.tamano_kb) })),
+        .map((s): Soporte => ({
+          nombre: s.archivo,
+          tipo: s.tipo as Soporte["tipo"],
+          tamanoKb: Number(s.tamano_kb),
+          url: `/soportes/${s.archivo}`,
+        })),
     }))
 }
 
@@ -83,4 +89,41 @@ export function anticipacionAvisos(duenoId = DUENO_ACTUAL): number {
   )
   if (!pref || pref.activo !== "true") return 0
   return Number.parseInt(pref.anticipacion, 10) || 0
+}
+
+export type Dueno = { id: string; nombre: string; telefono: string }
+
+export function obtenerDueno(duenoId = DUENO_ACTUAL): Dueno {
+  const d = leer("duenos").find((x) => x.id === duenoId)!
+  return { id: d.id, nombre: d.nombre, telefono: d.telefono }
+}
+
+/** Mascotas activas con lo que muestran Inicio y D1, y sus alergias (B4, F5). */
+export function obtenerPerfiles(duenoId = DUENO_ACTUAL): PerfilMascota[] {
+  const alergias = leer("alergias")
+  return obtenerMascotas(duenoId).map((m) => ({
+    id: m.id,
+    nombre: m.nombre,
+    imagen: m.imagen,
+    especie: m.especie,
+    raza: m.raza,
+    sexo: m.sexo,
+    edad: edad(m.fecha_nacimiento),
+    microchip: m.microchip,
+    alergias: alergias.filter((a) => a.mascota_id === m.id).map((a) => a.alergia),
+  }))
+}
+
+/** Alertas pendientes (próximas o vencidas) de las mascotas del dueño (J). */
+export function obtenerAlertas(duenoId = DUENO_ACTUAL): Alerta[] {
+  const ids = new Set(obtenerMascotas(duenoId).map((m) => m.id))
+  return (leer("alertas") as unknown as Alerta[]).filter(
+    (a) => ids.has(a.mascota_id) && (a.estado === "proxima" || a.estado === "vencida"),
+  )
+}
+
+/** Eventos de todas las mascotas activas del dueño. */
+export function obtenerEventosDueno(duenoId = DUENO_ACTUAL) {
+  const ids = new Set(obtenerMascotas(duenoId).map((m) => m.id))
+  return obtenerEventos().filter((e) => ids.has(e.mascota_id))
 }

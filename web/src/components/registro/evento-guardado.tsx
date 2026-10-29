@@ -53,7 +53,7 @@ export function EventoGuardado({ mascotas, anticipacion }: { mascotas: MascotaBa
           Te avisaremos {anticipacion} días antes {que} ({fechaCorta(sumarDias(proxima, -anticipacion))}).
         </Nota>
       )}
-      <TarjetaEvento evento={evento} href="/linea-de-tiempo" />
+      <TarjetaEvento evento={evento} href={`/evento?id=${evento.id}`} />
       <BarraAccion>
         <BotonEnlace href="/registrar">Registrar otro</BotonEnlace>
         <BotonEnlace href="/" variante="secundario">

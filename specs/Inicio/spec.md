@@ -116,3 +116,12 @@ Pendiente de ajustar en Figma:
 Hecho: acceso rápido "Calendario" ("Veterinarias" ya existía).
 
 Sigue pendiente: la hoja "Personalizar" y los estados (vacunas vencidas, sin peso, nada por vencer, carga inicial pendiente).
+
+**2026-10-29 · Construcción en código (MVP)**
+
+Decisiones tomadas:
+- Los destinos fuera del MVP (M1, L1, M9, B1, F1, G1, H1, I1, K3, K6, "Personalizar" y J) muestran el mensaje "… llega pronto" en vez de no hacer nada.
+- Mientras no existen F2 y F4, los rasgos "Al día" y el del peso abren la línea de tiempo filtrada por Vacunas o por Peso. "Microchip" abre D1.
+- "Próximo a vencer" abre el evento que generó la alerta (D4) mientras no existe J2. Las alertas vencidas van primero, en rojo, con "venció hace N días".
+- Se construyeron los estados: vacunas vencidas (rasgo rojo "Vencida"), sin microchip (sin rasgo), sin peso ("Registrar peso" abre E6) y nada por vencer ("Todo al día").
+- El círculo detrás de la foto en la tarjeta verde es `acento-suave`, como en Figma; en el resto de la app la foto va sobre `primario`.
