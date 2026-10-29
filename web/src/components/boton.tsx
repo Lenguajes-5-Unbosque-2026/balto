@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils"
 
 /** Botón en píldora de 56 px del kit, sobre el Button de shadcn/ui. */
 export const botonVariants = cva(
-  "h-14 w-full gap-2.5 rounded-completo px-6 texto-boton transition-colors disabled:opacity-50",
+  "h-14 w-full min-w-0 shrink gap-2.5 rounded-completo px-4 texto-boton transition-colors disabled:opacity-50",
   {
     variants: {
       variante: {
