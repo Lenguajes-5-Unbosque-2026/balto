@@ -35,19 +35,19 @@ type BloqueSoporteProps = {
   onCambio: (soportes: Adjunto[]) => void
   /** Si acepta PDF además de fotos (E7 y E11 solo aceptan fotos). */
   aceptaPdf?: boolean
-  /** "botones": tarjetas + Cámara / Galería / PDF (E2–E4). "area": área punteada que abre E8 (E5, E7, E11). */
-  modo?: "botones" | "area"
   etiqueta?: string
   textoArea?: string
   iconoArea?: string
 }
 
-/** Soporte del evento: adjuntar, revisar la foto (E12) y avisar si pesa más de 10 MB (E13). */
+/**
+ * Soporte del evento: área punteada que abre E8 (en todos los tipos, también E2–E4),
+ * revisión de la foto (E12) y aviso si pesa más de 10 MB (E13).
+ */
 export function BloqueSoporte({
   soportes,
   onCambio,
   aceptaPdf = true,
-  modo = "botones",
   etiqueta,
   textoArea = "Foto (opcional)",
   iconoArea = "add_a_photo",
@@ -133,29 +133,7 @@ export function BloqueSoporte({
         </div>
       ))}
 
-      {!lleno && modo === "botones" && (
-        <div className="flex gap-2">
-          {(
-            [
-              ["camara", "photo_camera", "Cámara"],
-              ["galeria", "photo_library", "Galería"],
-              ...(aceptaPdf ? [["pdf", "picture_as_pdf", "PDF"]] : []),
-            ] as [Origen, string, string][]
-          ).map(([origen, icono, texto]) => (
-            <button
-              key={origen}
-              type="button"
-              onClick={() => abrir(origen)}
-              className="flex h-10.5 items-center gap-1.5 rounded-completo border border-borde-fuerte bg-superficie px-4 texto-etiqueta-fuerte text-texto"
-            >
-              <Icono nombre={icono} className="icono-s text-primario" />
-              {texto}
-            </button>
-          ))}
-        </div>
-      )}
-
-      {!lleno && modo === "area" && (
+      {!lleno && (
         <button
           type="button"
           onClick={() => setHojaAbierta(true)}
@@ -168,7 +146,7 @@ export function BloqueSoporte({
 
       {/* E8 · Adjuntar soporte */}
       <Drawer open={hojaAbierta} onOpenChange={setHojaAbierta}>
-        <DrawerContent className="mx-auto max-w-lienzo rounded-t-xl border-0 bg-superficie px-6 pt-3 pb-9">
+        <DrawerContent className="mx-auto max-w-app rounded-t-xl border-0 bg-superficie px-6 pt-3 pb-9">
           <span aria-hidden className="mx-auto mb-4 h-1.5 w-11 rounded-completo bg-acento" />
           <DrawerTitle className="mb-4 texto-titulo-tarjeta text-texto">Adjuntar soporte</DrawerTitle>
           <div className="flex flex-col gap-2.5">
@@ -271,7 +249,7 @@ function Chip({ icono, texto, onClick, activo }: { icono: string; texto: string;
 /** Pantalla completa encima del formulario (E12, E13), con flecha para volver. */
 function Pantalla({ titulo, onAtras, children }: { titulo: string; onAtras: () => void; children: React.ReactNode }) {
   return (
-    <div role="dialog" aria-label={titulo} className="fixed inset-0 z-20 mx-auto flex max-w-lienzo flex-col gap-4 overflow-y-auto bg-fondo px-6 pt-14">
+    <div role="dialog" aria-label={titulo} className="fixed inset-0 z-20 mx-auto flex max-w-app flex-col gap-4 overflow-y-auto bg-fondo px-6 pt-14">
       <header className="relative mb-2 flex h-11 items-center justify-center">
         <button
           type="button"

@@ -183,6 +183,7 @@ No están como variables en Figma, pero se repiten en todo el kit. En código co
 | Token | Valor | Dónde se usa |
 |---|---|---|
 | `ancho-lienzo` | 390 | Ancho del teléfono de diseño |
+| `ancho-app` | 480 | Ancho máximo de la app en el navegador. Hasta ahí ocupa todo el ancho del teléfono (también los de más de 390); en pantallas más anchas queda centrada |
 | `alto-lienzo` | 844 | Alto del teléfono de diseño |
 | `ancho-contenido` | 342 | Ancho del contenido (390 − 2 × 24) |
 | `margen-pantalla` | 24 (= `espaciado-xl`) | Margen lateral de todas las pantallas |

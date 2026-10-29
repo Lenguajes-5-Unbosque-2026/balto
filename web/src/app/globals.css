@@ -5,6 +5,12 @@
 @import "material-symbols/rounded.css" layer(base);
 
 /*
+ * Balto no tiene modo oscuro. Sin esto, las clases dark: de shadcn/ui siguen
+ * el modo oscuro del teléfono y, por ejemplo, ponen grises los campos.
+ */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
  * Tema de Balto. Los valores salen de design/tokens.md: este es el único
  * lugar del código donde se escriben. Los componentes usan las clases que
  * generan (bg-primario, text-texto-secundario, rounded-bloque, shadow-tarjeta…).
@@ -155,6 +161,7 @@
 
   /* 6. Medidas de layout: clases max-w-* y w-* */
   --container-lienzo: 390px;
+  --container-app: 480px;
   --container-contenido: 342px;
   --container-navegacion: 358px;
 }
@@ -261,6 +268,7 @@
   }
   html {
     @apply font-sans;
+    color-scheme: light;
   }
   body {
     @apply bg-acento-suave text-texto;

@@ -131,7 +131,7 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
             <Campo etiqueta="Veterinaria" placeholder="Opcional" sugerencias={veterinarias} valor={v("veterinaria")} onCambio={set("veterinaria")} />
             <Campo etiqueta="Lote" placeholder="Opcional" valor={v("lote")} onCambio={set("lote")} />
           </div>
-          <BloqueSoporte etiqueta="Soporte · foto del carnet o PDF" soportes={soportes} onCambio={setSoportes} />
+          <BloqueSoporte etiqueta="Soporte" textoArea="Foto del carnet o PDF (opcional)" iconoArea="upload_file" soportes={soportes} onCambio={setSoportes} />
           <FilaInterruptor
             icono="notifications_active"
             titulo="Recordarme el refuerzo"
@@ -174,7 +174,7 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
           </div>
           <Campo etiqueta="Diagnóstico" icono="stethoscope" placeholder="Opcional" valor={v("diagnostico")} onCambio={set("diagnostico")} />
           <AreaTexto etiqueta="Recomendaciones" placeholder="Lo que indicó el veterinario" valor={v("recomendaciones")} onCambio={set("recomendaciones")} />
-          <BloqueSoporte etiqueta="Soporte · foto o PDF (opcional)" soportes={soportes} onCambio={setSoportes} />
+          <BloqueSoporte etiqueta="Soporte" textoArea="Foto o PDF (opcional)" iconoArea="upload_file" soportes={soportes} onCambio={setSoportes} />
         </>
       )}
 
@@ -199,7 +199,7 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
             <Campo etiqueta="Solicitado por" icono="person" placeholder="Opcional" valor={v("solicitado_por")} onCambio={set("solicitado_por")} />
             <Campo etiqueta="Próximo control" type="date" valor={v("proximo_control")} onCambio={set("proximo_control")} />
           </div>
-          <BloqueSoporte etiqueta="Soporte · foto o PDF (opcional)" soportes={soportes} onCambio={setSoportes} />
+          <BloqueSoporte etiqueta="Soporte" textoArea="Foto o PDF (opcional)" iconoArea="upload_file" soportes={soportes} onCambio={setSoportes} />
         </>
       )}
 
@@ -215,7 +215,7 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
             <Campo etiqueta="Duración" placeholder="7 días" valor={v("duracion_dias")} onCambio={set("duracion_dias")} />
           </div>
           <HorariosToma frecuencia={v("frecuencia")} />
-          <BloqueSoporte modo="area" textoArea="Foto de la fórmula (opcional)" iconoArea="receipt_long" soportes={soportes} onCambio={setSoportes} />
+          <BloqueSoporte textoArea="Foto de la fórmula (opcional)" iconoArea="receipt_long" soportes={soportes} onCambio={setSoportes} />
         </>
       )}
 
@@ -237,7 +237,7 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
             onCambio={set("que_cambio")}
           />
           <Campo etiqueta="Fecha" type="date" icono="event" valor={v("fecha")} onCambio={set("fecha")} />
-          <BloqueSoporte modo="area" aceptaPdf={false} soportes={soportes} onCambio={setSoportes} />
+          <BloqueSoporte aceptaPdf={false} soportes={soportes} onCambio={setSoportes} />
         </>
       )}
 
@@ -249,7 +249,7 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
             <Campo etiqueta="Lugar" icono="place" placeholder="Casa" valor={v("lugar")} onCambio={set("lugar")} />
           </div>
           <AreaTexto etiqueta="Detalle" placeholder="Describe lo que quieres recordar de este evento." valor={v("detalle")} onCambio={set("detalle")} />
-          <BloqueSoporte modo="area" aceptaPdf={false} soportes={soportes} onCambio={setSoportes} />
+          <BloqueSoporte aceptaPdf={false} soportes={soportes} onCambio={setSoportes} />
         </>
       )}
 
