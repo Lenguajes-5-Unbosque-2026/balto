@@ -10,7 +10,7 @@
 ## 2. Stack
 
 - **Next.js + TypeScript:** pantallas, rutas y lógica de servidor.
-- **Tailwind + shadcn/ui:** estilos y componentes. Aquí viven los tokens y el kit (fuente: `design/UI-KIT-BaltoOficial.md`).
+- **Tailwind + shadcn/ui:** estilos y componentes. Aquí viven los tokens y el kit (fuente: `design/ui-kit.md`).
 - **Supabase:** base de datos, login, fotos y soportes, y permisos.
 - **Vercel:** despliegue.
 
@@ -57,16 +57,13 @@ Carpetas de `design/flujos/`. Los IDs de pantalla son los de los nombres de arch
 
 ## 5. Cómo trabajamos
 
-- Cambios de experiencia (pantallas nuevas o eliminadas, accesos,
-conexiones entre pasos, estados, textos funcionales) se documentan
-primero en la spec del flujo y en Figma. No implementes un cambio
-de experiencia sin que esté en la spec; si te lo piden, avisa y
-propón actualizar la spec primero.
-- Ajustes visuales (color, espaciado, imagen decorativa, tamaños) se
-hacen directo en código, siempre con los tokens del UI kit. Nunca
-escribas valores sueltos como colores hex o tamaños en px.
-- Si un ajuste necesita un token que no existe, se agrega primero
-al kit.
+- Construimos por vibe coding, por bloques de pantallas. La referencia principal son las imágenes de design/flujos/.
+- Las specs de specs/ son apoyo para entender estados y datos. Si una spec y una pantalla no coinciden, gana la pantalla.
+- Alcance del MVP: Perfil de la mascota (pantalla de lectura: Inicio y D1 · Vista de acceso rápido), Registrar evento (acción de escritura: flujo E) y Línea de tiempo (complemento: D2–D4). No construyas flujos fuera de esta lista salvo que te lo pidamos.
+- Mobile-first: todo se diseña para celular.
+- Componentes: shadcn/ui según design/componentes.md; los custom se crean como componentes reutilizables.
+- Estilos: siempre con los tokens del tema. Nunca valores sueltos.
+- Datos: primero de data/mock/; después de Supabase.
 - Todo el código vive dentro de web/.
 
 ## Preguntas abiertas

@@ -1,0 +1,252 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "material-symbols/rounded.css";
+
+/*
+ * Tema de Balto. Los valores salen de design/tokens.md: este es el único
+ * lugar del código donde se escriben. Los componentes usan las clases que
+ * generan (bg-primario, text-texto-secundario, rounded-bloque, shadow-tarjeta…).
+ */
+
+:root {
+  /* 1. Colores · marca y neutros */
+  --primario: #2e5955;
+  --primario-relleno: var(--primario);
+  --acento: #c7d0d5;
+  --acento-suave: #dce2e5;
+  --texto: #262626;
+  --texto-secundario: #77737f;
+  --fondo: #f9f9f9;
+  --superficie: #ffffff;
+
+  /* 1. Colores · semánticos */
+  --exito: #2e8b57;
+  --exito-suave: #dff3e6;
+  --error: #c8475b;
+  --error-suave: #fbe3e7;
+
+  /* 1. Colores · alias */
+  --advertencia: var(--error);
+  --advertencia-suave: var(--error-suave);
+  --info: var(--primario);
+  --info-suave: var(--acento-suave);
+  --borde: var(--acento-suave);
+  --borde-fuerte: var(--acento);
+  --oscuro: var(--texto);
+
+  /* 1. Colores · translúcidos */
+  --fondo-modal: color-mix(in srgb, var(--texto) 45%, transparent);
+  --sobre-oscuro-secundario: color-mix(in srgb, var(--superficie) 70%, transparent);
+  --sobre-oscuro-icono: color-mix(in srgb, var(--superficie) 55%, transparent);
+  --sobre-oscuro-halo: color-mix(in srgb, var(--superficie) 22%, transparent);
+  --exito-borde: color-mix(in srgb, var(--exito) 28%, transparent);
+  --error-borde: color-mix(in srgb, var(--error) 28%, transparent);
+
+  /* Nombres que esperan los componentes de shadcn/ui */
+  --background: var(--fondo);
+  --foreground: var(--texto);
+  --card: var(--superficie);
+  --card-foreground: var(--texto);
+  --popover: var(--superficie);
+  --popover-foreground: var(--texto);
+  --primary: var(--primario-relleno);
+  --primary-foreground: var(--superficie);
+  --secondary: var(--acento-suave);
+  --secondary-foreground: var(--primario);
+  --muted: var(--acento-suave);
+  --muted-foreground: var(--texto-secundario);
+  --accent: var(--acento-suave);
+  --accent-foreground: var(--primario);
+  --destructive: var(--error);
+  --border: var(--borde);
+  --input: var(--borde);
+  --ring: var(--primario);
+  --chart-1: var(--primario);
+  --chart-2: var(--acento);
+  --chart-3: var(--acento-suave);
+  --chart-4: var(--texto-secundario);
+  --chart-5: var(--texto);
+  --radius: 20px;
+}
+
+@theme inline {
+  /* Colores: clases bg-*, text-*, border-* */
+  --color-primario: var(--primario);
+  --color-primario-relleno: var(--primario-relleno);
+  --color-acento: var(--acento);
+  --color-acento-suave: var(--acento-suave);
+  --color-texto: var(--texto);
+  --color-texto-secundario: var(--texto-secundario);
+  --color-fondo: var(--fondo);
+  --color-superficie: var(--superficie);
+  --color-exito: var(--exito);
+  --color-exito-suave: var(--exito-suave);
+  --color-error: var(--error);
+  --color-error-suave: var(--error-suave);
+  --color-advertencia: var(--advertencia);
+  --color-advertencia-suave: var(--advertencia-suave);
+  --color-info: var(--info);
+  --color-info-suave: var(--info-suave);
+  --color-borde: var(--borde);
+  --color-borde-fuerte: var(--borde-fuerte);
+  --color-oscuro: var(--oscuro);
+  --color-fondo-modal: var(--fondo-modal);
+  --color-sobre-oscuro-secundario: var(--sobre-oscuro-secundario);
+  --color-sobre-oscuro-icono: var(--sobre-oscuro-icono);
+  --color-sobre-oscuro-halo: var(--sobre-oscuro-halo);
+  --color-exito-borde: var(--exito-borde);
+  --color-error-borde: var(--error-borde);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* 2. Tipografía: familias (las cargan next/font y material-symbols) */
+  --font-sans: var(--font-texto);
+  --font-heading: var(--font-titulos);
+  --font-titulos: var(--font-outfit);
+  --font-texto: var(--font-plus-jakarta);
+  --font-iconos: "Material Symbols Rounded";
+
+  /* 2. Tipografía: pesos */
+  --font-weight-regular: 400;
+  --font-weight-medio: 500;
+  --font-weight-seminegrita: 600;
+  --font-weight-negrita: 700;
+
+  /* 4. Radios: clases rounded-* */
+  --radius-xs: 8px;
+  --radius-sm: 14px;
+  --radius-md: 20px;
+  --radius-bloque: 24px;
+  --radius-lg: 28px;
+  --radius-dialogo: 32px;
+  --radius-xl: 44px;
+  --radius-2xl: var(--radius-xl);
+  --radius-3xl: var(--radius-xl);
+  --radius-4xl: var(--radius-xl);
+  --radius-completo: 999px;
+
+  /* 5. Sombras: clases shadow-* */
+  --shadow-tarjeta: 0 8px 24px color-mix(in srgb, var(--texto) 8%, transparent);
+  --shadow-flotante: 0 12px 32px color-mix(in srgb, var(--texto) 22%, transparent);
+
+  /* 6. Medidas de layout: clases max-w-* y w-* */
+  --container-lienzo: 390px;
+  --container-contenido: 342px;
+  --container-navegacion: 358px;
+}
+
+/*
+ * 3. Espaciados: se usa la escala de Tailwind (múltiplos de 4 px con medios
+ * pasos), que coincide con la de design/tokens.md: 0.5 = 2, 1 = 4, 1.5 = 6,
+ * 2 = 8, 2.5 = 10, 3 = 12, 3.5 = 14, 4 = 16, 5 = 20, 6 = 24, 7 = 28, 8 = 32.
+ */
+
+/* 2. Tipografía: estilos de texto (clases texto-*) */
+@utility texto-display {
+  font-family: var(--font-titulos);
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 44px;
+  letter-spacing: -0.02em;
+}
+@utility texto-titulo-pantalla {
+  font-family: var(--font-titulos);
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 34px;
+  letter-spacing: -0.01em;
+}
+@utility texto-titulo-tarjeta {
+  font-family: var(--font-titulos);
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 28px;
+  letter-spacing: -0.005em;
+}
+@utility texto-titulo-seccion {
+  font-family: var(--font-titulos);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+}
+@utility texto-boton {
+  font-family: var(--font-texto);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+}
+@utility texto-cuerpo-fuerte {
+  font-family: var(--font-texto);
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 22px;
+}
+@utility texto-cuerpo {
+  font-family: var(--font-texto);
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 22px;
+}
+@utility texto-etiqueta-fuerte {
+  font-family: var(--font-texto);
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 18px;
+}
+@utility texto-etiqueta {
+  font-family: var(--font-texto);
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+}
+@utility texto-micro {
+  font-family: var(--font-texto);
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 14px;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+}
+
+/* 2. Tamaños de ícono (clases icono-*) */
+@utility icono-xs { font-size: 14px; }
+@utility icono-s { font-size: 18px; }
+@utility icono-m { font-size: 22px; }
+@utility icono-l { font-size: 24px; }
+@utility icono-xl { font-size: 32px; }
+@utility icono-estado { font-size: 48px; }
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+  }
+  body {
+    @apply bg-acento-suave text-texto;
+  }
+}
