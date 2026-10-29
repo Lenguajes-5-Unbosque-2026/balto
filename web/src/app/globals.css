@@ -1,7 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "material-symbols/rounded.css";
+/* En la capa base para que las clases icono-* del tema puedan cambiar su tamaño. */
+@import "material-symbols/rounded.css" layer(base);
 
 /*
  * Tema de Balto. Los valores salen de design/tokens.md: este es el único
@@ -238,6 +239,21 @@
 @utility icono-l { font-size: 24px; }
 @utility icono-xl { font-size: 32px; }
 @utility icono-estado { font-size: 48px; }
+
+/* Listas horizontales que se desplazan con el dedo, sin barra visible (chips de tipo). */
+@utility sin-barra-desplazamiento {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Campos de fecha: sin el ícono del navegador, que cortaba la fecha; el campo entero abre el calendario. */
+@utility campo-fecha {
+  &::-webkit-calendar-picker-indicator {
+    display: none;
+  }
+}
 
 @layer base {
   * {
