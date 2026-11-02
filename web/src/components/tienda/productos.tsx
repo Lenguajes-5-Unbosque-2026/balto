@@ -148,7 +148,7 @@ export function Vacunas(datos: PropsTienda) {
     })
 
   return (
-    <main className="flex flex-1 flex-col gap-3 px-pantalla pt-14 pb-10">
+    <div className="flex flex-1 flex-col gap-3 px-pantalla pt-14">
       <EncabezadoTienda actual="vacunas" cuenta={cuenta} />
       <Nota>Las vacunas se compran con la aplicación incluida en una veterinaria aliada.</Nota>
       {pronto.length > 0 && (
@@ -178,7 +178,7 @@ export function Vacunas(datos: PropsTienda) {
           return <TarjetaProducto key={x.producto.id} producto={x.producto} detalle={x.detalle} href={href} onAgregar={() => router.push(href)} />
         })}
       </div>
-    </main>
+    </div>
   )
 }
 

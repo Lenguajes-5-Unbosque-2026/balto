@@ -3,7 +3,6 @@
 import { useSearchParams } from "next/navigation"
 import { useState } from "react"
 
-import { BarraAccion } from "@/components/barra-accion"
 import { Boton, BotonEnlace } from "@/components/boton"
 import { Busqueda } from "@/components/busqueda"
 import { Chip } from "@/components/chip"
@@ -45,7 +44,7 @@ export function Alimentos(datos: PropsTienda) {
   const chip = (texto: string, activo: boolean, onClick: () => void, icono?: string) => <Chip texto={texto} icono={icono} activo={activo} onClick={onClick} />
 
   return (
-    <main className="flex flex-1 flex-col gap-4 px-pantalla pt-14 pb-10">
+    <div className="flex flex-1 flex-col gap-4 px-pantalla pt-14">
       <EncabezadoTienda actual="alimentos" cuenta={cuenta} />
       <Busqueda valor={busqueda} onCambio={setBusqueda} placeholder="Buscar alimento" onFiltros={() => setVerFiltros(true)} filtrosActivos={conFiltros} />
       <div className="sin-barra-desplazamiento -mx-pantalla flex gap-2 overflow-x-auto px-pantalla">
@@ -74,7 +73,7 @@ export function Alimentos(datos: PropsTienda) {
               Quitar los filtros
             </button>
           )}
-          <BarraAccion>
+          <div className="mt-auto flex gap-2.5 pt-4">
             <Boton
               onClick={() => {
                 quitarFiltros()
@@ -87,7 +86,7 @@ export function Alimentos(datos: PropsTienda) {
             <BotonEnlace href={`/ajustes/escribenos?tema=producto&q=${encodeURIComponent(busqueda)}`} variante="secundario" className="px-2 texto-cuerpo-fuerte">
               Pedir un producto
             </BotonEnlace>
-          </BarraAccion>
+          </div>
         </>
       ) : (
         <div className="grid grid-cols-2 gap-2.5">
@@ -141,6 +140,6 @@ export function Alimentos(datos: PropsTienda) {
           </div>
         </div>
       </Hoja>
-    </main>
+    </div>
   )
 }

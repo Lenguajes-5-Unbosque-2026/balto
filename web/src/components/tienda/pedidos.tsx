@@ -129,7 +129,7 @@ export function MisPedidos(datos: PropsTienda) {
   const actual = enCurso[0]
 
   return (
-    <main className="flex flex-1 flex-col gap-4 px-pantalla pt-14 pb-10">
+    <div className="flex flex-1 flex-col gap-4 px-pantalla pt-14">
       <EncabezadoTienda actual="pedidos" cuenta={cuenta} />
       <Selector
         etiqueta="Pedidos"
@@ -167,7 +167,7 @@ export function MisPedidos(datos: PropsTienda) {
           <Estado icono="history" titulo="Sin pedidos anteriores" />
         </div>
       )}
-    </main>
+    </div>
   )
 }
 

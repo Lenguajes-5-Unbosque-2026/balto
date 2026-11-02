@@ -36,10 +36,10 @@ export function InicioTienda(datos: PropsTienda) {
         <Busqueda valor={busqueda} onCambio={setBusqueda} placeholder="Buscar alimento o vacuna" />
       </form>
 
-      <SeccionesTienda />
+      <SeccionesTienda actual="alimentos" />
 
       <BotonEnlace href="/tienda/alimentos?todo=1">
-        Ver todo
+        Ver todos los alimentos
         <Icono nombre="arrow_forward" className="icono-m" />
       </BotonEnlace>
 
