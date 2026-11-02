@@ -15,15 +15,19 @@ import type { Dueno } from "@/lib/datos"
 import { useDueno } from "@/lib/usar-cuenta"
 import { useVolver } from "@/lib/usar-salud"
 
-const TEMAS = ["Problema con la app", "Pregunta sobre mi cuenta", "Tienda y pedidos", "Sugerencia"]
+const TEMAS = ["Problema con la app", "Pregunta sobre mi cuenta", "Tienda y pedidos", "Pedir un producto", "Sugerencia"]
 
 /** M19 · Escríbenos: tema, correo de respuesta, mensaje y adjuntos (/ajustes/escribenos?tema=problema). */
 export function Escribenos({ dueno: base }: { dueno: Dueno }) {
   const volver = useVolver("/ajustes/ayuda")
   const dueno = useDueno(base)
-  const [tema, setTema] = useState(useSearchParams().get("tema") === "problema" ? TEMAS[0] : "")
+  const p = useSearchParams()
+  // Desde M8 (problema), N11 (pedir un producto) o N15 (ayuda con un pedido).
+  const [tema, setTema] = useState(
+    { problema: TEMAS[0], producto: "Pedir un producto", pedido: `Ayuda con el pedido #${p.get("pedido") ?? ""}` }[p.get("tema") ?? ""] ?? "",
+  )
   const [correo, setCorreo] = useState<string | null>(null)
-  const [mensaje, setMensaje] = useState("")
+  const [mensaje, setMensaje] = useState(p.get("q") ? `Busco: ${p.get("q")}` : "")
   const [adjuntos, setAdjuntos] = useState<string[]>([])
   const camara = useRef<HTMLInputElement>(null)
   const galeria = useRef<HTMLInputElement>(null)

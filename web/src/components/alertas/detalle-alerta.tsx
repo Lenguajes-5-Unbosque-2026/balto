@@ -103,7 +103,7 @@ export function DetalleAlerta({ alertas, eventos, mascotas, marcas }: DetalleAle
         <BarraAccion>
           <Boton onClick={() => acciones.resolver(alerta)}>{alerta.tipo === "alimento_por_acabarse" ? "Ya compré" : "Ya lo resolví"}</Boton>
           {alerta.tipo === "alimento_por_acabarse" ? (
-            <Boton variante="secundario" onClick={acciones.comprar}>
+            <Boton variante="secundario" onClick={() => acciones.comprar(alerta)}>
               Comprar
             </Boton>
           ) : (
@@ -186,7 +186,7 @@ function Opciones({ alerta: a, vencida, acciones, onPosponer }: OpcionesProps) {
           icono={vencida ? "shopping_cart" : "storefront"}
           titulo={esVacuna ? "Comprar la vacuna" : "Comprar alimento"}
           detalle={esVacuna ? (vencida ? "Con aplicación incluida" : "Con aplicación en veterinaria aliada") : "Ver alimentos en la Tienda"}
-          onClick={acciones.comprar}
+          onClick={() => acciones.comprar(a)}
         />
       )}
       {!vencida && <FilaOpcion borde icono="snooze" titulo="Posponer aviso" onClick={onPosponer} />}

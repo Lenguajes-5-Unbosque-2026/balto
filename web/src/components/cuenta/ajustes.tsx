@@ -11,7 +11,6 @@ import { Encabezado } from "@/components/encabezado"
 import { FilaOpcion } from "@/components/fila-opcion"
 import type { Dueno } from "@/lib/datos"
 import { useMascotas } from "@/lib/mascota-activa"
-import { avisarPronto } from "@/lib/pronto"
 import { useDueno } from "@/lib/usar-cuenta"
 import { useVolver } from "@/lib/usar-salud"
 
@@ -30,7 +29,7 @@ export function Ajustes({ dueno: base, mascotas: todas }: { dueno: Dueno; mascot
       <FilaOpcion className="mt-1" icono="person" titulo={dueno.nombre} detalle={`${dueno.correo} · ${dueno.ciudad}`} href="/ajustes/datos" />
       <FilaOpcion borde icono="pets" titulo="Mis mascotas" detalle={`${mascotas.length} ${mascotas.length === 1 ? "registrada" : "registradas"}`} href="/ajustes/mascotas" />
       <FilaOpcion borde icono="notifications" titulo="Notificaciones" href="/ajustes/notificaciones" />
-      <FilaOpcion borde icono="local_shipping" titulo="Mis pedidos" detalle="Tienda" onClick={() => avisarPronto("Mis pedidos")} />
+      <FilaOpcion borde icono="local_shipping" titulo="Mis pedidos" detalle="Tienda" href="/tienda/pedidos" />
       <FilaOpcion borde icono="download" titulo="Exportar mis datos" href="/ajustes/exportar" />
       <FilaOpcion borde icono="help" titulo="Ayuda" href="/ajustes/ayuda" />
 
