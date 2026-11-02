@@ -48,12 +48,12 @@ export function TarjetaAlertaGrande({ alerta: a, oscura, onResolver, onPosponer,
           Aviso pospuesto al {sinAnio(a.pospuesta)}
         </span>
       )}
-      <div className="flex items-center gap-2.5">
+      <div className="flex items-center gap-2 movil-m:gap-2.5">
         <button
           type="button"
           onClick={onResolver}
           className={cn(
-            "flex h-12 min-w-0 flex-1 items-center justify-center gap-2 rounded-completo px-4 texto-boton",
+            "flex h-11 min-w-0 flex-1 items-center justify-center gap-1.5 rounded-completo px-3 texto-boton movil-m:h-12 movil-m:gap-2 movil-m:px-4",
             oscura ? "bg-acento text-primario" : "bg-oscuro text-superficie",
           )}
         >
@@ -73,7 +73,7 @@ function BotonRedondo({ icono, etiqueta, onClick }: { icono: string; etiqueta: s
       type="button"
       aria-label={etiqueta}
       onClick={onClick}
-      className="grid size-12 shrink-0 place-items-center rounded-completo bg-superficie text-oscuro"
+      className="grid size-11 shrink-0 place-items-center rounded-completo bg-superficie text-oscuro movil-m:size-12"
     >
       <Icono nombre={icono} className="icono-m" />
     </button>

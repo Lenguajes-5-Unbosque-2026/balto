@@ -145,9 +145,10 @@ function Grupo({ titulo }: { titulo: string }) {
 
 function Ficha({ numero, texto, tono }: { numero: number; texto: string; tono: "error" | "exito" }) {
   return (
-    <div className={cn("flex h-17 flex-col justify-center rounded-md px-3", tono === "error" ? "bg-error-suave text-error" : "bg-exito-suave text-exito")}>
+    // En 320 px "Esta semana" pasa a dos líneas en vez de cortarse.
+    <div className={cn("flex min-h-17 flex-col justify-center rounded-md px-2.5 py-2 movil-m:px-3", tono === "error" ? "bg-error-suave text-error" : "bg-exito-suave text-exito")}>
       <span className="texto-titulo-tarjeta">{numero}</span>
-      <span className="truncate texto-etiqueta">{texto}</span>
+      <span className="texto-etiqueta">{texto}</span>
     </div>
   )
 }

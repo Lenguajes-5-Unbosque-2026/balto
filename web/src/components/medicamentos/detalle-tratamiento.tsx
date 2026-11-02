@@ -87,7 +87,8 @@ export function DetalleTratamiento(datos: DatosMedicamentos) {
             <Icono nombre="medication" className="icono-l" />
           </span>
           <div className="flex min-w-0 flex-1 flex-col">
-            <h2 className="line-clamp-2 texto-titulo-tarjeta break-words text-superficie">{t.medicamento}</h2>
+            {/* En 320 px el nombre baja a 18 px para que las palabras largas no se partan. */}
+            <h2 className="line-clamp-2 texto-titulo-seccion font-semibold text-superficie movil-m:texto-titulo-tarjeta">{t.medicamento}</h2>
             <span className="truncate texto-etiqueta text-sobre-oscuro-secundario">{presentacionTratamiento(t)}</span>
           </div>
           <span className="shrink-0 self-start rounded-completo bg-acento px-2.5 py-1 texto-micro text-oscuro">
