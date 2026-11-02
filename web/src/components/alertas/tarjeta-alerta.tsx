@@ -22,11 +22,10 @@ type TarjetaGrandeProps = {
   oscura?: boolean
   onResolver: () => void
   onPosponer: () => void
-  onAgendar: () => void
 }
 
-/** Alerta vencida o de esta semana, con "Ya lo resolví", posponer y agendar (componente Tarjeta de alerta). */
-export function TarjetaAlertaGrande({ alerta: a, oscura, onResolver, onPosponer, onAgendar }: TarjetaGrandeProps) {
+/** Alerta vencida o de esta semana, con "Ya lo resolví", posponer y el calendario (componente Tarjeta de alerta). */
+export function TarjetaAlertaGrande({ alerta: a, oscura, onResolver, onPosponer }: TarjetaGrandeProps) {
   const vencida = a.grupo === "vencida"
   return (
     <article className={cn("flex flex-col gap-4 rounded-lg p-4 movil-m:p-5", oscura ? "bg-oscuro" : "bg-primario")}>
@@ -61,21 +60,23 @@ export function TarjetaAlertaGrande({ alerta: a, oscura, onResolver, onPosponer,
           <Icono nombre="check" className="icono-m" />
         </button>
         <BotonRedondo icono="snooze" etiqueta="Posponer aviso" onClick={onPosponer} />
-        <BotonRedondo icono="calendar_month" etiqueta="Agendar cita" onClick={onAgendar} />
+        {/* El calendario (K6) abierto en el día en que vence; agendar está en J2. */}
+        <BotonRedondo icono="calendar_month" etiqueta="Ver en el calendario" href={`/calendario?fecha=${a.fecha_vencimiento}`} />
       </div>
     </article>
   )
 }
 
-function BotonRedondo({ icono, etiqueta, onClick }: { icono: string; etiqueta: string; onClick: () => void }) {
-  return (
-    <button
-      type="button"
-      aria-label={etiqueta}
-      onClick={onClick}
-      className="grid size-11 shrink-0 place-items-center rounded-completo bg-superficie text-oscuro movil-m:size-12"
-    >
-      <Icono nombre={icono} className="icono-m" />
+function BotonRedondo({ icono, etiqueta, ...accion }: { icono: string; etiqueta: string } & ({ onClick: () => void } | { href: string })) {
+  const clase = "grid size-11 shrink-0 place-items-center rounded-completo bg-superficie text-oscuro movil-m:size-12"
+  const simbolo = <Icono nombre={icono} className="icono-m" />
+  return "href" in accion ? (
+    <Link href={accion.href} aria-label={etiqueta} className={clase}>
+      {simbolo}
+    </Link>
+  ) : (
+    <button type="button" aria-label={etiqueta} onClick={accion.onClick} className={clase}>
+      {simbolo}
     </button>
   )
 }

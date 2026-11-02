@@ -230,8 +230,11 @@ export function DetalleCita({ proveedores, mascotas, citas: base }: CitasProps) 
 export function CalendarioCitas({ proveedores, mascotas, citas: base }: CitasProps) {
   const volver = useVolver("/")
   const citas = useCitas(base).filter((c) => c.estado !== "cancelada")
-  const [mes, setMes] = useState(`${HOY.slice(0, 7)}-01`)
-  const [dia, setDia] = useState<string | null>(null)
+  // ?fecha=AAAA-MM-DD (desde una alerta de J1) abre ese mes con el día elegido.
+  const fecha = useSearchParams().get("fecha")
+  const inicial = fecha && /^\d{4}-\d{2}-\d{2}$/.test(fecha) ? fecha : null
+  const [mes, setMes] = useState(`${(inicial ?? HOY).slice(0, 7)}-01`)
+  const [dia, setDia] = useState<string | null>(inicial)
   const conCita = new Set(citas.map((c) => c.fecha_hora.slice(0, 10)))
   const lista = dia ? citas.filter((c) => c.fecha_hora.startsWith(dia)) : citas.filter((c) => c.fecha_hora.slice(0, 10) >= HOY)
 

@@ -42,7 +42,7 @@ Caso: el refuerzo de la antirrábica de Luna vence el 25 sep. Samuel la registr�
 - **"Más tarde" en la notificación (J6).** Pospone el aviso hasta mañana a la misma hora, igual que J3 con "Mañana".
 - **Comprar la vacuna.** Abre **N5 · Detalle de vacuna y aplicación** con esa vacuna (flujo N).
 - **Vencida (J4).** Si pasa la fecha de vencimiento sin resolverla, la alerta cambia a J4 y cuenta como "Urgente". Llega una notificación el día siguiente al vencimiento. Las acciones son las mismas de J2, sin Posponer.
-- **Ícono de calendario en la tarjeta.** Hace lo mismo que "Agendar cita".
+- **Ícono de calendario en la tarjeta.** Abre **K6 · Calendario unificado** en el día en que vence la alerta. "Agendar cita" sigue en J2 y J4.
 - **Filtros (J8).** El botón de filtros de J1 abre **J8**, con Mascota (Todas, Luna, Toby…) y Tipo (vacunas, desparasitación, controles, alimento, salud). "Aplicar" filtra J1 y "Limpiar" quita los filtros.
 - **Sin pendientes (J7).** "Ver alertas resueltas" abre la pestaña Resueltas. "Próxima: …" abre el J2 de esa alerta.
 
