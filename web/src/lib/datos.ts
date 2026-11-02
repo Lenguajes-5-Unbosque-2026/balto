@@ -128,6 +128,65 @@ export function obtenerTodasAlertas(duenoId = DUENO_ACTUAL): Alerta[] {
   return (leer("alertas") as unknown as Alerta[]).filter((a) => ids.has(a.mascota_id))
 }
 
+export type Condicion = {
+  id: string
+  mascota_id: string
+  nombre: string
+  fecha_diagnostico: string
+  diagnosticada_por: string
+}
+
+/** Condiciones diagnosticadas de las mascotas del dueño (F5). */
+export function obtenerCondiciones(duenoId = DUENO_ACTUAL): Condicion[] {
+  const ids = new Set(obtenerMascotas(duenoId).map((m) => m.id))
+  return (leer("condiciones") as Condicion[]).filter((c) => ids.has(c.mascota_id))
+}
+
+/** Una fila de data/mock/tratamientos.csv (G). */
+export type Tratamiento = {
+  id: string
+  mascota_id: string
+  evento_id: string
+  medicamento: string
+  presentacion: string
+  via: string
+  dosis: string
+  frecuencia: string
+  /** "martes;viernes" cuando la frecuencia es por días. */
+  dias_semana: string
+  fecha_inicio: string
+  duracion_dias: string
+  fecha_fin: string
+  prescrito_por: string
+  estado: "vigente" | "finalizado"
+  finalizado_antes: string
+  recordatorio: string
+}
+
+export type HorarioToma = { id: string; tratamiento_id: string; hora: string }
+
+export type Toma = {
+  id: string
+  tratamiento_id: string
+  fecha_hora_programada: string
+  estado: "tomada" | "omitida" | "pendiente"
+  hora_real: string
+  aviso_reprogramado: string
+}
+
+export function obtenerTratamientos(duenoId = DUENO_ACTUAL): Tratamiento[] {
+  const ids = new Set(obtenerMascotas(duenoId).map((m) => m.id))
+  return (leer("tratamientos") as Tratamiento[]).filter((t) => ids.has(t.mascota_id))
+}
+
+export function obtenerHorarios(): HorarioToma[] {
+  return leer("horarios_toma") as HorarioToma[]
+}
+
+export function obtenerTomas(): Toma[] {
+  return leer("tomas") as Toma[]
+}
+
 export type PlanAlimentacion = {
   id: string
   mascota_id: string

@@ -1,17 +1,21 @@
 "use client"
 
+import Link from "next/link"
+
 import { Icono } from "@/components/icono"
 import { avisarPronto } from "@/lib/pronto"
 
-/** Accesos por defecto de la spec de Inicio; sus flujos (F, G, H, I, K) vienen después del MVP. */
+/** Accesos por defecto de la spec de Inicio. Los que no tienen ruta todavía avisan que vienen pronto. */
 const ACCESOS = [
-  { nombre: "Salud", icono: "favorite" },
-  { nombre: "Medicamentos", icono: "medication" },
+  { nombre: "Salud", icono: "favorite", href: "/salud" },
+  { nombre: "Medicamentos", icono: "medication", href: "/medicamentos" },
   { nombre: "Alimentación", icono: "restaurant" },
   { nombre: "Hábitos", icono: "pets" },
   { nombre: "Veterinarias", icono: "local_hospital" },
   { nombre: "Calendario", icono: "calendar_month" },
 ]
+
+const mosaico = "flex h-24 w-26.75 flex-col items-center justify-center gap-2 rounded-md bg-superficie px-1"
 
 /** "Accesos rápidos" con "Personalizar" y los mosaicos en fila deslizable (componente Acceso rápido). */
 export function AccesosRapidos() {
@@ -24,20 +28,29 @@ export function AccesosRapidos() {
         </button>
       </div>
       <ul className="sin-barra-desplazamiento -mx-pantalla flex gap-2.5 overflow-x-auto px-pantalla">
-        {ACCESOS.map((a) => (
-          <li key={a.nombre}>
-            <button
-              type="button"
-              onClick={() => avisarPronto(a.nombre)}
-              className="flex h-24 w-26.75 flex-col items-center justify-center gap-2 rounded-md bg-superficie px-1"
-            >
+        {ACCESOS.map((a) => {
+          const contenido = (
+            <>
               <span className="grid size-10 place-items-center rounded-completo bg-acento-suave text-primario">
                 <Icono nombre={a.icono} className="icono-m" />
               </span>
               <span className="w-full truncate text-center texto-etiqueta text-texto">{a.nombre}</span>
-            </button>
-          </li>
-        ))}
+            </>
+          )
+          return (
+            <li key={a.nombre}>
+              {a.href ? (
+                <Link href={a.href} className={mosaico}>
+                  {contenido}
+                </Link>
+              ) : (
+                <button type="button" onClick={() => avisarPronto(a.nombre)} className={mosaico}>
+                  {contenido}
+                </button>
+              )}
+            </li>
+          )
+        })}
       </ul>
     </section>
   )

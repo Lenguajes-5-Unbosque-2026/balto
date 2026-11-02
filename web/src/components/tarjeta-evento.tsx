@@ -12,11 +12,15 @@ type TarjetaEventoProps = {
   anterior?: Evento
   /** "borde" en la línea de tiempo (D2); "sombra" en E9 y en los resultados de búsqueda (D9). */
   variante?: "sombra" | "borde"
+  /** Textos propios de una pantalla: "Antirrábica" y "Refuerzo: 12/09/2027" en F2, "1 PDF" en F3. */
+  titulo?: string
+  detalle?: string
+  textoSoportes?: string
   className?: string
 }
 
 /** Evento con ícono, título, detalle, fecha y soportes (componente Tarjeta de evento). */
-export function TarjetaEvento({ evento, href, anterior, variante = "sombra", className }: TarjetaEventoProps) {
+export function TarjetaEvento({ evento, href, anterior, variante = "sombra", titulo, detalle, textoSoportes: pie, className }: TarjetaEventoProps) {
   const soportes = evento.soportes?.length ?? 0
   return (
     <Link
@@ -31,14 +35,14 @@ export function TarjetaEvento({ evento, href, anterior, variante = "sombra", cla
         <Icono nombre={iconoEvento(evento)} className="icono-m movil-m:icono-l" />
       </span>
       <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-        <span className="truncate texto-cuerpo-fuerte text-texto">{tituloEvento(evento)}</span>
-        <span className="truncate texto-etiqueta text-texto-secundario">{detalleEvento(evento, anterior)}</span>
+        <span className="truncate texto-cuerpo-fuerte text-texto">{titulo ?? tituloEvento(evento)}</span>
+        <span className="truncate texto-etiqueta text-texto-secundario">{detalle ?? detalleEvento(evento, anterior)}</span>
         {/* Fecha y soportes en una sola línea, también en celulares angostos. */}
         <span className="flex min-w-0 items-center gap-2 texto-micro whitespace-nowrap normal-case">
           <span className="shrink-0 text-primario uppercase">{fechaTarjeta(evento.fecha)}</span>
           <span className="flex min-w-0 items-center gap-0.5 text-texto-secundario">
             <Icono nombre="attach_file" className="icono-xs" />
-            <span className="truncate">{textoSoportes(soportes)}</span>
+            <span className="truncate">{pie ?? textoSoportes(soportes)}</span>
           </span>
         </span>
       </span>

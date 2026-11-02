@@ -23,7 +23,10 @@ import {
 } from "@/lib/perfil"
 import { avisarPronto } from "@/lib/pronto"
 import { useEventos } from "@/lib/usar-eventos"
+import { useSalud } from "@/lib/usar-salud"
 import { cn } from "@/lib/utils"
+
+const SIN_CONDICIONES: never[] = []
 
 type VistaRapidaProps = {
   mascotas: PerfilMascota[]
@@ -40,6 +43,8 @@ export function VistaRapida({ mascotas, eventos: base, dueno }: VistaRapidaProps
   const medicacion = medicacionVigente(eventos)
   const vacunas = ultimasVacunas(eventos)
   const alergico = mascota.sexo === "hembra" ? "Alérgica" : "Alérgico"
+  // Con las alergias editadas en F6.
+  const { alergias } = useSalud(mascota, SIN_CONDICIONES)
 
   return (
     <main className="flex flex-1 flex-col gap-4 px-pantalla pt-14 pb-10">
@@ -70,9 +75,9 @@ export function VistaRapida({ mascotas, eventos: base, dueno }: VistaRapidaProps
         {peso && <Dato etiqueta="Peso" valor={`${textoKg(peso.peso_kg!)} (${fechaDiaMes(peso.fecha)})`} />}
       </dl>
 
-      {mascota.alergias.length > 0 ? (
+      {alergias.length > 0 ? (
         <Nota tono="error" icono="warning">
-          {alergico} a: {mascota.alergias.map(enMinuscula).join(", ")}
+          {alergico} a: {alergias.map(enMinuscula).join(", ")}
         </Nota>
       ) : (
         <Nota icono="check_circle">Sin alergias registradas</Nota>
