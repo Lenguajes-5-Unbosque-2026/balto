@@ -153,7 +153,9 @@ export function CargaInicial({ mascotas }: { mascotas: { id: string; nombre: str
           <Boton
             onClick={() => {
               guardarMascotaActiva(mascota.id)
-              router.push("/")
+              // O5 la primera vez que se llega a Inicio, si el navegador aún no dio permiso.
+              const pedir = typeof Notification !== "undefined" && Notification.permission === "default"
+              router.push(pedir ? "/permisos/notificaciones?siguiente=/" : "/")
             }}
           >
             Ir al perfil de {nombre}

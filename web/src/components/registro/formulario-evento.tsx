@@ -23,6 +23,7 @@ import type { MascotaBasica, Medicion } from "@/components/registro/tipos"
 import { tipoEvento, type Evento, type TipoEvento } from "@/lib/eventos"
 import { HOY, fechaCorta, sumarDias } from "@/lib/fecha"
 import { useMascotaActiva } from "@/lib/mascota-activa"
+import { marcarPendiente } from "@/lib/conexion"
 import { guardarEvento } from "@/lib/registro-local"
 import { resolverAlerta } from "@/lib/usar-alertas"
 
@@ -147,6 +148,12 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
     }
     if (tipo !== "examen") delete evento.resultado
     guardarEvento(evento)
+    if (!original && !navigator.onLine) {
+      // O8: sin conexión el evento queda en el celular y se sube cuando vuelva el internet (O3).
+      marcarPendiente(evento.id, { titulo: tipoEvento(tipo)!.nombre, detalle: "Guardado en el celular · pendiente", icono: tipoEvento(tipo)!.icono, eventoId: evento.id })
+      router.push(`/no-se-pudo-guardar?evento=${evento.id}&titulo=${encodeURIComponent(tipoEvento(tipo)!.nombre)}&icono=${tipoEvento(tipo)!.icono}`)
+      return
+    }
     if (original) {
       toast.success("Cambios guardados")
       salir()

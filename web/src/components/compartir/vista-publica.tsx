@@ -61,7 +61,7 @@ export function VistaPublica({ token, mascotas, eventos: base, envios, dueno: du
         </div>
         <Nota icono="refresh">Pídele a quien te lo envió que genere uno nuevo desde la app.</Nota>
         <BarraAccion>
-          <BotonEnlace href="/">Entendido</BotonEnlace>
+          <BotonEnlace href="/bienvenida">Entendido</BotonEnlace>
         </BarraAccion>
       </main>
     )

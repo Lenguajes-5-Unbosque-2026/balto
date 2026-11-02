@@ -65,6 +65,10 @@ export function Ayuda() {
           <FilaOpcion icono="chat" titulo="Escríbenos" detalle="Respondemos en 1 día hábil" href="/ajustes/escribenos" />
           <FilaOpcion icono="description" titulo="Términos y política de datos" detalle="Versión 23 sep 2026" onClick={() => setHoja("terminos")} />
           <FilaOpcion icono="bug_report" titulo="Reportar un problema" detalle="Adjunta una captura si puedes" href="/ajustes/escribenos?tema=problema" />
+          <span className="mt-2 texto-micro text-texto-secundario">Permisos de la app</span>
+          <FilaOpcion icono="notifications" titulo="Notificaciones" detalle="Avisos de vacunas, tomas y citas" href="/permisos/notificaciones?siguiente=/ajustes/ayuda" />
+          <FilaOpcion icono="photo_camera" titulo="Cámara" detalle="Para fotografiar documentos" href="/permisos/camara" />
+          <FilaOpcion icono="photo_library" titulo="Fotos" detalle="Para adjuntar lo que ya tienes" href="/permisos/fotos" />
         </>
       )}
       <Nota icono="emergency">Si es una urgencia de salud, llama directo a tu veterinaria.</Nota>

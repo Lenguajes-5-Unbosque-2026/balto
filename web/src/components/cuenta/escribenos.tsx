@@ -27,7 +27,7 @@ export function Escribenos({ dueno: base }: { dueno: Dueno }) {
     { problema: TEMAS[0], producto: "Pedir un producto", pedido: `Ayuda con el pedido #${p.get("pedido") ?? ""}` }[p.get("tema") ?? ""] ?? "",
   )
   const [correo, setCorreo] = useState<string | null>(null)
-  const [mensaje, setMensaje] = useState(p.get("q") ? `Busco: ${p.get("q")}` : "")
+  const [mensaje, setMensaje] = useState(p.get("q") ? `Busco: ${p.get("q")}` : p.get("codigo") ? `Código del error: ${p.get("codigo")}. ` : "")
   const [adjuntos, setAdjuntos] = useState<string[]>([])
   const camara = useRef<HTMLInputElement>(null)
   const galeria = useRef<HTMLInputElement>(null)

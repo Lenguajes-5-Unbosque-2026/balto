@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next"
 import { Outfit, Plus_Jakarta_Sans } from "next/font/google"
 
+import { Vigilante } from "@/components/estados/vigilante"
 import { Toaster } from "@/components/ui/sonner"
 
 import "./globals.css"
@@ -34,6 +35,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full">
         {/* Mobile-first: en pantallas anchas la app se ve centrada con el ancho de un celular. */}
         <div className="relative mx-auto flex min-h-dvh w-full max-w-app flex-col bg-fondo">
+          <Vigilante />
           {children}
         </div>
         <Toaster />

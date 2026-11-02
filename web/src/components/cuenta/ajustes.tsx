@@ -11,6 +11,7 @@ import { Encabezado } from "@/components/encabezado"
 import { FilaOpcion } from "@/components/fila-opcion"
 import type { Dueno } from "@/lib/datos"
 import { useMascotas } from "@/lib/mascota-activa"
+import { cerrarSesion } from "@/lib/acceso"
 import { useDueno } from "@/lib/usar-cuenta"
 import { useVolver } from "@/lib/usar-salud"
 
@@ -51,8 +52,9 @@ export function Ajustes({ dueno: base, mascotas: todas }: { dueno: Dueno; mascot
         <Boton
           onClick={() => {
             setCerrar(false)
+            cerrarSesion()
             toast.success("Sesión cerrada")
-            router.push("/")
+            router.push("/ingresar")
           }}
         >
           Cerrar sesión
