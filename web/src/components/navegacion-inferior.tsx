@@ -6,8 +6,8 @@ import { usePathname } from "next/navigation"
 import { Icono } from "@/components/icono"
 import { cn } from "@/lib/utils"
 
-/** Pantallas con barra que pertenecen a Inicio aunque tengan otra ruta (F1, G1). */
-const DE_INICIO = ["/salud", "/medicamentos"]
+/** Pantallas con barra que pertenecen a Inicio aunque tengan otra ruta (F1). */
+const DE_INICIO = ["/salud"]
 
 const secciones = [
   { href: "/", nombre: "Inicio", icono: "home" },

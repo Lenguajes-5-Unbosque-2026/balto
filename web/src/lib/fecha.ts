@@ -5,6 +5,9 @@
  */
 export const HOY = "2026-10-27"
 
+/** Hora de "ahora" para las tomas de hoy (G1, G2), fija por la misma razón que HOY. */
+export const AHORA = "09:41"
+
 const MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]
 
 function partes(iso: string) {
