@@ -8,7 +8,6 @@ import { Busqueda } from "@/components/busqueda"
 import { Icono } from "@/components/icono"
 import { agregarAlimento, BotonCarrito, TarjetaProducto, useRecomendados, type PropsTienda } from "@/components/tienda/comun"
 import { useTienda } from "@/lib/usar-tienda"
-import { cn } from "@/lib/utils"
 
 /** N1 · Tienda: búsqueda, categorías y lo recomendado para la mascota activa. */
 export function InicioTienda(datos: PropsTienda) {
@@ -38,7 +37,7 @@ export function InicioTienda(datos: PropsTienda) {
       </form>
 
       <div className="grid grid-cols-3 gap-2.5">
-        <Categoria href="/tienda/alimentos" icono="restaurant" texto="Alimentos" activa />
+        <Categoria href="/tienda/alimentos" icono="restaurant" texto="Alimentos" />
         <Categoria href="/tienda/vacunas" icono="vaccines" texto="Vacunas" />
         <Categoria href="/tienda/pedidos" icono="local_shipping" texto="Mis pedidos" />
       </div>
@@ -76,14 +75,12 @@ export function InicioTienda(datos: PropsTienda) {
   )
 }
 
-function Categoria({ href, icono, texto, activa }: { href: string; icono: string; texto: string; activa?: boolean }) {
+/** Acceso a una sección de la Tienda. Los tres se ven iguales: son enlaces, no un filtro elegido. */
+function Categoria({ href, icono, texto }: { href: string; icono: string; texto: string }) {
   return (
     <Link
       href={href}
-      className={cn(
-        "flex h-24 flex-col items-center justify-center gap-2 rounded-lg border px-1",
-        activa ? "border-primario bg-primario text-superficie" : "border-borde-fuerte bg-superficie text-texto",
-      )}
+      className="flex h-24 flex-col items-center justify-center gap-2 rounded-lg border border-borde-fuerte bg-superficie px-1 text-texto transition-colors active:bg-acento-suave"
     >
       <span className="grid size-10 place-items-center rounded-completo bg-acento-suave text-primario">
         <Icono nombre={icono} className="icono-m" />
