@@ -1,5 +1,6 @@
 "use client"
 
+import { BotonVolver } from "@/components/boton-volver"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState, type FormEvent, type ReactNode } from "react"
@@ -37,6 +38,7 @@ export function Ingresar() {
   return (
     <main className="flex flex-1 flex-col">
       <div className="relative h-80 shrink-0 overflow-hidden rounded-b-lg bg-primario">
+        <BotonVolver respaldo="/bienvenida" className="absolute top-14 left-pantalla z-10" />
         <span aria-hidden className="absolute -top-26 left-1/2 size-118 -translate-x-1/2 rounded-completo bg-acento-suave" />
         <Logo tono="oscuro" className="relative mx-auto mt-14 w-40" />
       </div>

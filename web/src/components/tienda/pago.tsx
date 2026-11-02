@@ -6,6 +6,7 @@ import { useState } from "react"
 import { BarraAccion } from "@/components/barra-accion"
 import { Boton, BotonEnlace } from "@/components/boton"
 import { BotonIcono } from "@/components/boton-icono"
+import { BotonVolver } from "@/components/boton-volver"
 import { Campo } from "@/components/campo"
 import { Chip } from "@/components/chip"
 import { Encabezado } from "@/components/encabezado"
@@ -18,6 +19,7 @@ import { OpcionRadio } from "@/components/opcion-radio"
 import { Pasos } from "@/components/pasos"
 import type { PropsTienda } from "@/components/tienda/comun"
 import { Totales } from "@/components/tienda/carrito"
+import { puedeVolver } from "@/lib/navegacion"
 import { DUENO_ACTUAL_ID } from "@/lib/cuenta-actual"
 import type { Direccion } from "@/lib/datos"
 import { AHORA, HOY, fechaCorta, sumarDias } from "@/lib/fecha"
@@ -93,7 +95,8 @@ export function Pago(datos: PropsTienda) {
   if (pagado) return null
   if (carrito.length === 0 && paso !== "rechazado") {
     return (
-      <main className="flex flex-1 flex-col justify-center gap-6 px-pantalla">
+      <main className="flex flex-1 flex-col gap-6 px-pantalla pt-14">
+        <Encabezado titulo="Pago" izquierda={<BotonVolver respaldo="/tienda/carrito" />} />
         <Estado icono="shopping_cart" titulo="Tu carrito está vacío" />
         <BotonEnlace href="/tienda">Ir a la tienda</BotonEnlace>
       </main>
@@ -141,7 +144,7 @@ export function Pago(datos: PropsTienda) {
 
   return (
     <main className="flex flex-1 flex-col gap-4 px-pantalla pt-14">
-      <Encabezado titulo="Pago" izquierda={<BotonIcono icono="arrow_back" etiqueta="Volver" onClick={() => router.back()} />} />
+      <Encabezado titulo="Pago" izquierda={<BotonIcono icono="arrow_back" etiqueta="Volver" onClick={() => (puedeVolver() ? router.back() : router.push("/tienda/carrito"))} />} />
       <Pasos paso={2} total={2} nombre="Entrega y pago" />
       {conAlimento && direccion && (
         <>

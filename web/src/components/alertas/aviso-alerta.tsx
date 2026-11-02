@@ -1,5 +1,6 @@
 "use client"
 
+import { BotonVolver } from "@/components/boton-volver"
 import { useRouter, useSearchParams } from "next/navigation"
 import { toast } from "sonner"
 
@@ -39,7 +40,8 @@ export function AvisoAlerta({ alertas, eventos, mascotas, marcas }: AvisoAlertaP
   }
 
   return (
-    <main className="flex flex-1 flex-col gap-5 px-pantalla pt-16">
+    <main className="flex flex-1 flex-col gap-5 px-pantalla pt-14">
+      <BotonVolver respaldo="/alertas" />
       <div className="flex flex-col items-center gap-1 pb-4">
         <span className="texto-display text-texto">9:41</span>
         <span className="texto-cuerpo text-texto-secundario">{fechaLarga(HOY)}</span>

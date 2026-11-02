@@ -48,7 +48,8 @@ export function TarjetaMascota({ mascota, eventos }: { mascota: PerfilMascota; e
           <Icono nombre="pets" className="absolute top-28 right-24 icono-estado text-primario movil-m:top-34 movil-m:right-28" />
         )}
       </span>
-      <span aria-hidden className="absolute -right-20 -bottom-20 -z-10 size-40 rounded-completo bg-acento-suave" />
+      {/* Cuarto de círculo gris de la esquina, con espacio para que la flecha quede adentro sin tocar su borde. */}
+      <span aria-hidden className="absolute -right-24 -bottom-24 -z-10 size-48 rounded-completo bg-acento-suave movil-m:-right-26 movil-m:-bottom-26 movil-m:size-52" />
 
       <div className="flex w-3/5 flex-col items-start">
         <span className="rounded-completo bg-sobre-oscuro-halo px-2.5 py-1 texto-micro text-superficie">{especieYRaza(mascota)}</span>
@@ -83,7 +84,7 @@ export function TarjetaMascota({ mascota, eventos }: { mascota: PerfilMascota; e
       <Link
         href="/vista-rapida"
         aria-label={`Vista rápida de ${mascota.nombre}`}
-        className="absolute right-3 bottom-3 grid size-11 place-items-center rounded-completo bg-primario-relleno text-superficie movil-m:right-4 movil-m:bottom-4 movil-m:size-12"
+        className="absolute right-4 bottom-4 grid size-11 place-items-center rounded-completo bg-primario-relleno text-superficie movil-m:right-4.5 movil-m:bottom-4.5 movil-m:size-12"
       >
         <Icono nombre="north_east" className="icono-m" />
       </Link>

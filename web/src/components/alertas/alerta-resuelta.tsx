@@ -1,5 +1,6 @@
 "use client"
 
+import { BotonIconoEnlace } from "@/components/boton-icono"
 import { useSearchParams } from "next/navigation"
 
 import { BarraAccion } from "@/components/barra-accion"
@@ -33,7 +34,7 @@ export function AlertaResuelta({ alertas, eventos: base, mascotas, marcas, antic
 
   return (
     <main className="flex flex-1 flex-col gap-5 px-pantalla pt-14">
-      <Encabezado titulo="Alerta" />
+      <Encabezado titulo="Alerta" derecha={<BotonIconoEnlace href="/alertas" icono="close" etiqueta="Cerrar" />} />
       <div className="pt-6">
         <Estado tono="exito" icono="check_circle" titulo="Alerta resuelta" mensaje={mensaje(alerta, evento, !!proxima)} />
       </div>

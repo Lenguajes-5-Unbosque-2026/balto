@@ -16,6 +16,7 @@ import { FotoMascota } from "@/components/foto-mascota"
 import { Icono } from "@/components/icono"
 import { Interruptor } from "@/components/interruptor"
 import { Selector } from "@/components/selector"
+import { puedeVolver } from "@/lib/navegacion"
 import type { Mascota } from "@/lib/datos"
 import { aplicarCambios, completarNueva, guardarCambiosMascota, useCambiosMascotas, useMascotasNuevas } from "@/lib/mascota-activa"
 import { microchipLegible } from "@/lib/perfil"
@@ -70,7 +71,7 @@ function Formulario({ mascota, unica }: { mascota: Mascota; unica: boolean }) {
   const esterilizada = m.esterilizada === "true"
 
   function volver() {
-    if (window.history.length > 1) router.back()
+    if (puedeVolver()) router.back()
     else router.push("/ajustes/mascotas")
   }
 

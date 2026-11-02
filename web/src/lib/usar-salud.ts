@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation"
 
+import { puedeVolver } from "@/lib/navegacion"
 import { guardarEnMapa, useMapaLocal } from "@/lib/almacen-local"
 import type { Condicion } from "@/lib/datos"
 import type { Evento } from "@/lib/eventos"
@@ -19,7 +20,7 @@ export function useMascotaYEventos<T extends { id: string }>(mascotas: T[], base
 export function useVolver(respaldo: string) {
   const router = useRouter()
   return () => {
-    if (window.history.length > 1) router.back()
+    if (puedeVolver()) router.back()
     else router.push(respaldo)
   }
 }

@@ -16,6 +16,7 @@ import { Icono } from "@/components/icono"
 import { Nota } from "@/components/nota"
 import { OpcionCasilla } from "@/components/opcion-casilla"
 import { Pasos } from "@/components/pasos"
+import { puedeVolver } from "@/lib/navegacion"
 import { correoValido, crearCuenta, existeCuenta, iniciarSesion, nuevoCodigo, reglasClave, verificarCuenta } from "@/lib/acceso"
 import { DUENO_ACTUAL_ID } from "@/lib/cuenta-actual"
 import { guardarDueno } from "@/lib/usar-cuenta"
@@ -97,7 +98,10 @@ export function Registro() {
   }
 
   const volver = () => {
-    if (paso === "cuenta") router.back()
+    if (paso === "cuenta") {
+      if (puedeVolver()) router.back()
+      else router.push("/bienvenida")
+    }
     else if (paso === "datos") setPaso("codigo")
     else setPaso("cuenta")
   }

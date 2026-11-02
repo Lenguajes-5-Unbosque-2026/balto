@@ -1,5 +1,6 @@
 "use client"
 
+import { BotonVolver } from "@/components/boton-volver"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useState } from "react"
 
@@ -24,7 +25,8 @@ export function AvisoToma({ mascotas, ...datos }: AvisoTomaProps) {
   const mascota = mascotas.find((m) => m.id === t?.mascota_id)
 
   return (
-    <main className="-mb-px flex flex-1 flex-col gap-6 bg-primario px-pantalla pt-20">
+    <main className="-mb-px flex flex-1 flex-col gap-6 bg-primario px-pantalla pt-14">
+      <BotonVolver respaldo="/medicamentos" />
       <div className="flex flex-col items-center gap-1 pb-6 text-superficie">
         <span className="texto-reloj">9:41</span>
         <span className="texto-cuerpo text-sobre-oscuro-secundario">{fechaLarga(HOY)}</span>

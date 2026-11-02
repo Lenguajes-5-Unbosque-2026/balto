@@ -6,13 +6,14 @@ import { toast } from "sonner"
 
 import { BarraAccion } from "@/components/barra-accion"
 import { Boton, BotonEnlace } from "@/components/boton"
-import { BotonIcono } from "@/components/boton-icono"
+import { BotonIcono, BotonIconoEnlace } from "@/components/boton-icono"
 import { Encabezado } from "@/components/encabezado"
 import { Estado } from "@/components/estado"
 import { FilaOpcion } from "@/components/fila-opcion"
 import { Icono } from "@/components/icono"
 import { Nota } from "@/components/nota"
 import { OpcionRadio } from "@/components/opcion-radio"
+import { puedeVolver } from "@/lib/navegacion"
 import { guardarEnMapa } from "@/lib/almacen-local"
 import { useEnLinea, usePendientes } from "@/lib/conexion"
 import { guardarPreferencia } from "@/lib/usar-cuenta"
@@ -34,8 +35,9 @@ export function SinConexion() {
       <BarraAccion>
         <Boton
           onClick={() => {
-            if (navigator.onLine) router.back()
-            else toast("Todavía no hay internet")
+            if (!navigator.onLine) toast("Todavía no hay internet")
+            else if (puedeVolver()) router.back()
+            else router.push("/")
           }}
         >
           Reintentar
@@ -138,7 +140,7 @@ export function PermisoNotificaciones() {
 
   return (
     <main className="flex flex-1 flex-col gap-3 px-pantalla pt-14">
-      <Encabezado titulo="Notificaciones" />
+      <Encabezado titulo="Notificaciones" izquierda={<BotonIcono icono="arrow_back" etiqueta="Volver" onClick={() => router.replace(siguiente)} />} />
       <div className="pt-2">
         <Estado icono="notifications_active" titulo="¿Te avisamos lo importante?" mensaje="Vacunas por vencer, dosis de medicamentos y citas. Tú eliges qué recibir." />
       </div>
@@ -237,7 +239,7 @@ export function PermisoFotos() {
 export function AlgoSalioMal({ codigo = "BAL-500", onReintentar }: { codigo?: string; onReintentar?: () => void }) {
   return (
     <main className="flex flex-1 flex-col gap-4 px-pantalla pt-14">
-      <Encabezado titulo="Balto" />
+      <Encabezado titulo="Balto" derecha={<BotonIconoEnlace href="/" icono="close" etiqueta="Ir a Inicio" />} />
       <div className="pt-2">
         <Estado tono="error" icono="error" titulo="Algo salió mal" mensaje="Tuvimos un problema inesperado. Tus datos están a salvo." />
       </div>

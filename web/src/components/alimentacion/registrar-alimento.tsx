@@ -28,6 +28,7 @@ import {
   type Comida,
   type Plan,
 } from "@/lib/alimentacion"
+import { puedeVolver } from "@/lib/navegacion"
 import type { Evento } from "@/lib/eventos"
 import { HOY } from "@/lib/fecha"
 import { useMascotaActiva } from "@/lib/mascota-activa"
@@ -82,7 +83,7 @@ function Formulario({ mascotas, eventos: base, ...datos }: RegistrarProps) {
   }
 
   function volver() {
-    if (window.history.length > 1) router.back()
+    if (puedeVolver()) router.back()
     else router.push("/alimentacion")
   }
 

@@ -28,6 +28,7 @@ import {
   textoSecciones,
   type Seccion,
 } from "@/lib/compartir"
+import { puedeVolver } from "@/lib/navegacion"
 import type { Envio } from "@/lib/datos"
 import { enMinuscula, type Evento } from "@/lib/eventos"
 import { AHORA, HOY, fechaNumerica, fechaTarjeta, sumarDias } from "@/lib/fecha"
@@ -71,7 +72,7 @@ export function CompartirPerfil({ mascotas, eventos: base, envios: enviosBase }:
   const rango = modo === "filtrado" ? { desde, hasta } : { desde: "", hasta: "" }
 
   function salir() {
-    if (window.history.length > 1) router.back()
+    if (puedeVolver()) router.back()
     else router.push("/vista-rapida")
   }
 
@@ -189,7 +190,7 @@ export function CompartirPerfil({ mascotas, eventos: base, envios: enviosBase }:
     const [icono, titulo] = canales[resultado.canal] ?? canales.compartir
     return (
       <main className="flex flex-1 flex-col gap-4 px-pantalla pt-14">
-        <Encabezado titulo="Compartir perfil" derecha={!correo && <BotonIcono icono="close" etiqueta="Cerrar" onClick={salir} />} />
+        <Encabezado titulo="Compartir perfil" derecha={<BotonIcono icono="close" etiqueta="Cerrar" onClick={salir} />} />
         <Pasos paso={3} total={3} nombre="Enviado" />
         <div className="pt-4">
           <Estado tono="exito" icono={correo ? "mark_email_read" : "check_circle"} titulo={correo ? "Reporte enviado" : "Reporte listo"} mensaje={archivo} />

@@ -83,7 +83,8 @@ export function PedidoConfirmado(datos: PropsTienda) {
   const vacunas = p.items.filter((i) => i.cita_id)
 
   return (
-    <main className="flex flex-1 flex-col gap-4 px-pantalla pt-16">
+    <main className="flex flex-1 flex-col gap-4 px-pantalla pt-14">
+      <Encabezado titulo="Pedido" derecha={<BotonIconoEnlace href="/tienda" icono="close" etiqueta="Cerrar" />} />
       <Estado tono="exito" icono="check_circle" titulo="¡Pedido confirmado!" mensaje={`Pedido #${p.numero}`} />
       {alimento && (
         <FilaOpcion

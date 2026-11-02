@@ -14,6 +14,7 @@ import { Encabezado } from "@/components/encabezado"
 import { Icono } from "@/components/icono"
 import { Nota } from "@/components/nota"
 import { BloqueSoporte, type Adjunto } from "@/components/registro/bloque-soporte"
+import { puedeVolver } from "@/lib/navegacion"
 import { HOY } from "@/lib/fecha"
 import { CONSISTENCIAS, TIPOS_HABITO, type TipoHabito } from "@/lib/habitos"
 import { useMascotaActiva } from "@/lib/mascota-activa"
@@ -48,7 +49,7 @@ export function RegistrarHabito({ mascotas }: { mascotas: { id: string; nombre: 
   const tocado = !!duracion || !!observacion || fotos.length > 0
 
   function volver() {
-    if (window.history.length > 1) router.back()
+    if (puedeVolver()) router.back()
     else router.push("/habitos")
   }
 

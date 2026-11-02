@@ -30,7 +30,8 @@ export function SelectorMascotas({ mascotas, activa, onCambio }: SelectorMascota
                   elegida ? "bg-primario-relleno text-superficie" : "bg-superficie text-texto",
                 )}
               >
-                <FotoMascota nombre={m.nombre} imagen={m.imagen} prioritaria className="size-10" />
+                {/* Fondo gris: la píldora elegida es verde, como el fondo de las fotos. */}
+                <FotoMascota nombre={m.nombre} imagen={m.imagen} prioritaria className="size-10 bg-acento" />
                 {m.nombre}
               </button>
             </li>

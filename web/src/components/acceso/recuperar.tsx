@@ -6,13 +6,14 @@ import { toast } from "sonner"
 
 import { BarraAccion } from "@/components/barra-accion"
 import { Boton, BotonEnlace } from "@/components/boton"
-import { BotonIcono } from "@/components/boton-icono"
+import { BotonIcono, BotonIconoEnlace } from "@/components/boton-icono"
 import { Campo } from "@/components/campo"
 import { ReglasClave } from "@/components/acceso/comunes"
 import { Encabezado } from "@/components/encabezado"
 import { Estado } from "@/components/estado"
 import { Icono } from "@/components/icono"
 import { Nota } from "@/components/nota"
+import { puedeVolver } from "@/lib/navegacion"
 import { cambiarClave, correoValido, reglasClave } from "@/lib/acceso"
 
 type Paso = "correo" | "enviado" | "nueva" | "lista" | "vencido"
@@ -25,7 +26,7 @@ export function Recuperar() {
   const [clave, setClave] = useState("")
   const [confirmar, setConfirmar] = useState("")
 
-  const volver = () => (paso === "correo" ? router.back() : setPaso("correo"))
+  const volver = () => (paso === "correo" ? (puedeVolver() ? router.back() : router.push("/ingresar")) : setPaso("correo"))
   const encabezado = (titulo: string) => <Encabezado titulo={titulo} izquierda={<BotonIcono icono="arrow_back" etiqueta="Volver" onClick={volver} />} />
 
   if (paso === "vencido") {
@@ -50,7 +51,7 @@ export function Recuperar() {
   if (paso === "lista") {
     return (
       <main className="flex flex-1 flex-col gap-4 px-pantalla pt-14">
-        <Encabezado titulo="Contraseña" />
+        <Encabezado titulo="Contraseña" derecha={<BotonIconoEnlace href="/ingresar" icono="close" etiqueta="Cerrar" />} />
         <div className="pt-4">
           <Estado tono="exito" icono="check_circle" titulo="Contraseña actualizada" mensaje="Ya puedes entrar con tu nueva contraseña. Cerramos las otras sesiones abiertas." />
         </div>

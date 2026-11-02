@@ -20,6 +20,7 @@ import { ChipsTipo } from "@/components/registro/chips-tipo"
 import { EncabezadoRegistro } from "@/components/registro/encabezado-registro"
 import { GraficaPeso } from "@/components/registro/grafica-peso"
 import type { MascotaBasica, Medicion } from "@/components/registro/tipos"
+import { puedeVolver } from "@/lib/navegacion"
 import { tipoEvento, type Evento, type TipoEvento } from "@/lib/eventos"
 import { HOY, fechaCorta, sumarDias } from "@/lib/fecha"
 import { useMascotaActiva } from "@/lib/mascota-activa"
@@ -118,7 +119,7 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
   /** En D6 se vuelve a D4; si se abrió el enlace directo, a la línea de tiempo. */
   function salir() {
     if (!original) router.push("/")
-    else if (window.history.length > 1) router.back()
+    else if (puedeVolver()) router.back()
     else router.replace(`/evento?id=${original.id}`)
   }
 

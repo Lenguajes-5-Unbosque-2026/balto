@@ -15,6 +15,7 @@ import { PasoHorarios, type Horarios } from "@/components/medicamentos/paso-hora
 import { Nota } from "@/components/nota"
 import { Pasos } from "@/components/pasos"
 import { BloqueSoporte, textoTamano, type Adjunto } from "@/components/registro/bloque-soporte"
+import { puedeVolver } from "@/lib/navegacion"
 import { HOY, diasEntre, sumarDias } from "@/lib/fecha"
 import { useMascotaActiva } from "@/lib/mascota-activa"
 import { nombreTratamiento } from "@/lib/medicamentos"
@@ -52,7 +53,7 @@ export function AgregarMedicamento({ mascotas }: { mascotas: { id: string; nombr
   }
 
   function salir() {
-    if (window.history.length > 1) router.back()
+    if (puedeVolver()) router.back()
     else router.push("/medicamentos")
   }
 

@@ -1,5 +1,6 @@
 "use client"
 
+import { BotonVolver } from "@/components/boton-volver"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useRef, useState, type ReactNode } from "react"
 
@@ -107,7 +108,7 @@ export function CargaInicial({ mascotas }: { mascotas: { id: string; nombre: str
   if (indice === -1) {
     return (
       <main className="flex flex-1 flex-col gap-3 px-pantalla pt-14">
-        <Encabezado titulo="Información inicial" />
+        <Encabezado titulo="Información inicial" izquierda={<BotonVolver respaldo="/" />} />
         <h1 className="texto-titulo-pantalla text-texto">¿Qué información de {nombre} tienes a la mano?</h1>
         <p className="-mt-1 texto-cuerpo text-texto-secundario">Elige todo lo que aplique. Puedes subir más después.</p>
         {OPCIONES.map((o) => (
@@ -129,7 +130,7 @@ export function CargaInicial({ mascotas }: { mascotas: { id: string; nombre: str
     const soportes = guardados.reduce((s, e) => s + (e.soportes?.length ?? 0), 0)
     return (
       <main className="flex flex-1 flex-col gap-4 px-pantalla pt-14">
-        <Encabezado titulo="Resumen" />
+        <Encabezado titulo="Resumen" derecha={<BotonVolver respaldo="/" cerrar />} />
         <Estado tono="exito" icono="check_circle" titulo={guardados.length ? `¡El perfil de ${nombre} ya tiene historia!` : `${nombre} quedó listo`} />
         <div className="grid grid-cols-3 gap-2">
           <Ficha numero={guardados.length} texto="Eventos" className="bg-primario text-superficie" />

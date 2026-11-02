@@ -1,5 +1,6 @@
 "use client"
 
+import { BotonIconoEnlace } from "@/components/boton-icono"
 import { useSearchParams } from "next/navigation"
 
 import { BarraAccion } from "@/components/barra-accion"
@@ -31,7 +32,7 @@ export function CedulaMascota(props: Props) {
   if (!m) return <NoEncontrada />
   return (
     <main className="flex flex-1 flex-col gap-4 px-pantalla pt-14">
-      <Encabezado titulo={`Cédula de ${m.nombre}`} />
+      <Encabezado titulo={`Cédula de ${m.nombre}`} derecha={<BotonIconoEnlace href="/" icono="close" etiqueta="Ir a Inicio" />} />
       <section className="flex flex-col gap-3 rounded-lg border border-borde-fuerte bg-superficie p-4 movil-m:p-5">
         <span className="texto-micro text-primario">Cédula animal · Balto</span>
         <h1 className="texto-titulo-pantalla break-all text-texto">{m.cedula}</h1>
@@ -58,7 +59,8 @@ export function PerfilCreado(props: Props) {
   const m = useMascota(props)
   if (!m) return <NoEncontrada />
   return (
-    <main className="flex flex-1 flex-col gap-4 px-pantalla pt-16">
+    <main className="flex flex-1 flex-col gap-4 px-pantalla pt-14">
+      <Encabezado titulo="Perfil creado" izquierda={<BotonIconoEnlace href={`/mascotas/cedula?id=${m.id}`} icono="arrow_back" etiqueta="Volver a la cédula" />} />
       <Estado tono="exito" icono="check_circle" titulo={`¡Perfil de ${m.nombre} creado!`} mensaje="Su información queda respaldada. Ahora sube lo que ya tienes: carnet, exámenes o fórmulas." />
       <Nota>Este paso es obligatorio. Si no tienes documentos, registra al menos el peso y las alergias.</Nota>
       <BarraAccion>

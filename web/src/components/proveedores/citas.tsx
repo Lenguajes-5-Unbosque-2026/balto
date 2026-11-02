@@ -73,7 +73,7 @@ export function CitaAgendada({ proveedores, mascotas, citas: base }: CitasProps)
 
   return (
     <main className="flex flex-1 flex-col gap-4 px-pantalla pt-14">
-      <Encabezado titulo="Cita" />
+      <Encabezado titulo="Cita" derecha={<BotonIconoEnlace href="/calendario" icono="close" etiqueta="Cerrar" />} />
       <div className="pt-4">
         <Estado tono="exito" icono="event_available" titulo="Cita agendada" mensaje={cuandoLargo(c)} />
       </div>

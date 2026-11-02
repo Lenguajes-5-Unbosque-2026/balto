@@ -12,6 +12,7 @@ import { DialogoSalir } from "@/components/dialogo-salir"
 import { Encabezado } from "@/components/encabezado"
 import { Icono } from "@/components/icono"
 import { Nota } from "@/components/nota"
+import { puedeVolver } from "@/lib/navegacion"
 import type { Condicion } from "@/lib/datos"
 import { normalizar } from "@/lib/eventos"
 import { HOY } from "@/lib/fecha"
@@ -64,7 +65,7 @@ function Formulario({ mascotas, condiciones: base, veterinarias }: EditarSaludPr
   }
 
   function salir() {
-    if (window.history.length > 1) router.back()
+    if (puedeVolver()) router.back()
     else router.push("/salud/alergias")
   }
 

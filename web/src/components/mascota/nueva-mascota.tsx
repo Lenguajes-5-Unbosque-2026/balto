@@ -16,6 +16,7 @@ import { Icono } from "@/components/icono"
 import { Interruptor } from "@/components/interruptor"
 import { Pasos } from "@/components/pasos"
 import { Selector } from "@/components/selector"
+import { puedeVolver } from "@/lib/navegacion"
 import { DUENO_ACTUAL_ID } from "@/lib/cuenta-actual"
 import { HOY } from "@/lib/fecha"
 import { guardarMascotaNueva, useMascotasNuevas } from "@/lib/mascota-activa"
@@ -54,7 +55,7 @@ export function NuevaMascota({ siguienteCedula }: { siguienteCedula: number }) {
   }
 
   function volver() {
-    if (window.history.length > 1) router.back()
+    if (puedeVolver()) router.back()
     else router.push("/")
   }
 

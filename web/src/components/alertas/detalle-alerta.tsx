@@ -23,6 +23,7 @@ import {
   veterinariaAlerta,
   type AlertaVista,
 } from "@/lib/alertas"
+import { puedeVolver } from "@/lib/navegacion"
 import type { Evento } from "@/lib/eventos"
 import { HOY, diasEntre, fechaCorta } from "@/lib/fecha"
 import { nombreVacuna, type Alerta } from "@/lib/perfil"
@@ -46,7 +47,7 @@ export function DetalleAlerta({ alertas, eventos, mascotas, marcas }: DetalleAle
   const acciones = useAccionesAlerta()
 
   function volver() {
-    if (window.history.length > 1) router.back()
+    if (puedeVolver()) router.back()
     else router.push("/alertas")
   }
 

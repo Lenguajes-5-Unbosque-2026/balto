@@ -1,5 +1,7 @@
 "use client"
 
+import { BotonIcono } from "@/components/boton-icono"
+import { BotonVolver } from "@/components/boton-volver"
 import { useSearchParams } from "next/navigation"
 import { useEffect } from "react"
 
@@ -34,6 +36,10 @@ export function PdfPerfil({ mascotas: base, eventos: eventosBase, dueno: duenoBa
 
   return (
     <main className="flex flex-1 flex-col gap-4 px-pantalla py-10 print:py-4">
+      <div className="flex justify-between print:hidden">
+        <BotonVolver respaldo="/compartir" />
+        <BotonIcono icono="print" etiqueta="Imprimir o guardar en PDF" onClick={() => window.print()} />
+      </div>
       <CabeceraPublica detalle={`Reporte del ${fechaCorta(HOY)}`} candado={false} />
       {elegidas.map((mascota) => (
         <section key={mascota.id} className="flex flex-col gap-4 break-before-page first-of-type:break-before-auto">
