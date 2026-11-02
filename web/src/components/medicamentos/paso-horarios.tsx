@@ -9,6 +9,7 @@ import { Chip } from "@/components/chip"
 import { Encabezado } from "@/components/encabezado"
 import { FilaInterruptor } from "@/components/fila-interruptor"
 import { Icono } from "@/components/icono"
+import { Pasos } from "@/components/pasos"
 import { Selector } from "@/components/selector"
 import { DIAS_SEMANA, FRECUENCIAS, horasDesde, restarMinutos } from "@/lib/medicamentos"
 import { cn } from "@/lib/utils"
@@ -24,21 +25,6 @@ type PasoHorariosProps = {
   textoBoton?: string
   onVolver: () => void
   onGuardar: (h: Horarios) => void
-}
-
-/** "PASO 1 DE 2 · MEDICAMENTO" con las dos barras de progreso (G3, G4, G7). */
-export function Pasos({ paso, nombre }: { paso: 1 | 2; nombre: string }) {
-  return (
-    <div className="flex flex-col gap-2">
-      <span className="texto-micro text-primario">
-        Paso {paso} de 2 · {nombre}
-      </span>
-      <div className="flex gap-1.5">
-        <span className="h-1.5 flex-1 rounded-completo bg-primario" />
-        <span className={cn("h-1.5 flex-1 rounded-completo", paso === 2 ? "bg-primario" : "bg-acento")} />
-      </div>
-    </div>
-  )
 }
 
 const iconoHora = (hora: string) => {

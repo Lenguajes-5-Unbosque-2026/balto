@@ -3,7 +3,7 @@
 import Link from "next/link"
 import type { ReactNode } from "react"
 
-import { BotonIcono, BotonIconoEnlace } from "@/components/boton-icono"
+import { BotonIconoEnlace } from "@/components/boton-icono"
 import { Encabezado } from "@/components/encabezado"
 import { FotoMascota } from "@/components/foto-mascota"
 import { Icono } from "@/components/icono"
@@ -21,7 +21,6 @@ import {
   ultimoPeso,
   type PerfilMascota,
 } from "@/lib/perfil"
-import { avisarPronto } from "@/lib/pronto"
 import { useEventos } from "@/lib/usar-eventos"
 import { useSalud } from "@/lib/usar-salud"
 import { cn } from "@/lib/utils"
@@ -33,7 +32,6 @@ type VistaRapidaProps = {
   eventos: Evento[]
   dueno: { nombre: string; telefono: string }
 }
-
 
 /** D1 · Vista de acceso rápido: lo que se muestra desde el celular en una consulta o una emergencia. */
 export function VistaRapida({ mascotas, eventos: base, dueno }: VistaRapidaProps) {
@@ -51,7 +49,7 @@ export function VistaRapida({ mascotas, eventos: base, dueno }: VistaRapidaProps
       <Encabezado
         titulo="Vista rápida"
         izquierda={<BotonIconoEnlace href="/" icono="close" etiqueta="Cerrar" />}
-        derecha={<BotonIcono icono="ios_share" etiqueta="Compartir perfil" onClick={() => avisarPronto("Compartir perfil")} />}
+        derecha={<BotonIconoEnlace href="/compartir" icono="ios_share" etiqueta="Compartir perfil" />}
       />
 
       <div className="flex items-center gap-3.5">

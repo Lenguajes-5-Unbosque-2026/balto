@@ -110,6 +110,7 @@ export function obtenerPerfiles(duenoId = DUENO_ACTUAL): PerfilMascota[] {
     sexo: m.sexo,
     edad: edad(m.fecha_nacimiento),
     microchip: m.microchip,
+    cedula: m.cedula,
     alergias: alergias.filter((a) => a.mascota_id === m.id).map((a) => a.alergia),
   }))
 }
@@ -185,6 +186,30 @@ export function obtenerHorarios(): HorarioToma[] {
 
 export function obtenerTomas(): Toma[] {
   return leer("tomas") as Toma[]
+}
+
+/** Un PDF enviado o un enlace compartido (L). */
+export type Envio = {
+  id: string
+  mascota_id: string
+  formato: "pdf" | "enlace"
+  /** "identificacion;vacunas;medicacion" o "completo". */
+  secciones: string
+  desde: string
+  hasta: string
+  canal: "whatsapp" | "correo" | "imprimir" | "guardar" | "enlace" | "compartir"
+  destinatario: string
+  token: string
+  vencimiento: "" | "24_horas" | "7_dias" | "sin_vencimiento"
+  expira_en: string
+  activo: string
+  visitas: string
+  fecha: string
+}
+
+export function obtenerEnvios(duenoId = DUENO_ACTUAL): Envio[] {
+  const ids = new Set(obtenerMascotas(duenoId).map((m) => m.id))
+  return (leer("envios") as Envio[]).filter((e) => ids.has(e.mascota_id))
 }
 
 export type PlanAlimentacion = {

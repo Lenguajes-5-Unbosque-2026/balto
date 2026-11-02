@@ -12,6 +12,8 @@ export type PerfilMascota = {
   /** "3 años" */
   edad: string
   microchip: string
+  /** "BAL-0001-LUNA" (cédula animal Balto, B6). */
+  cedula: string
   alergias: string[]
 }
 

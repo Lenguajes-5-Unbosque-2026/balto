@@ -24,7 +24,6 @@ import {
   type Soporte,
 } from "@/lib/eventos"
 import { fechaCorta } from "@/lib/fecha"
-import { avisarPronto } from "@/lib/pronto"
 import { eliminarEvento } from "@/lib/registro-local"
 import { useEventos } from "@/lib/usar-eventos"
 import { cn } from "@/lib/utils"
@@ -162,7 +161,8 @@ export function DetalleEvento({ eventos: base, dueno }: { eventos: Evento[]; due
               titulo="Compartir este evento"
               onClick={() => {
                 setMenu(false)
-                avisarPronto("Compartir")
+                // L1 con la sección del evento ya marcada.
+                router.push(evento.tipo === "examen" ? "/compartir?contenido=examen" : evento.tipo === "vacuna" || evento.tipo === "desparasitacion" ? "/compartir?contenido=vacunas" : "/compartir")
               }}
             />
             <OpcionMenu

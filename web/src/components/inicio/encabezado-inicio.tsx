@@ -1,6 +1,6 @@
 "use client"
 
-import { BotonIcono } from "@/components/boton-icono"
+import { BotonIcono, BotonIconoEnlace } from "@/components/boton-icono"
 import { iniciales } from "@/lib/perfil"
 import { avisarPronto } from "@/lib/pronto"
 
@@ -21,7 +21,7 @@ export function EncabezadoInicio({ nombre }: { nombre: string }) {
         <span className="truncate texto-titulo-seccion text-texto movil-m:texto-titulo-tarjeta">Hola, {primerNombre}</span>
         <span className="truncate texto-etiqueta text-texto-secundario">Todo en un solo lugar</span>
       </span>
-      <BotonIcono icono="ios_share" etiqueta="Compartir perfil" onClick={() => avisarPronto("Compartir perfil")} />
+      <BotonIconoEnlace href="/compartir" icono="ios_share" etiqueta="Compartir perfil" />
       <BotonIcono icono="notifications" etiqueta="Notificaciones" punto onClick={() => avisarPronto("Notificaciones")} />
     </header>
   )
