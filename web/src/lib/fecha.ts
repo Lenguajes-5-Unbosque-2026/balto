@@ -65,6 +65,20 @@ export function mesAnio(iso: string) {
   return `${MESES_LARGOS[m - 1]} ${a}`
 }
 
+const DIAS = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]
+
+/** "2026-09-23" → "Miércoles, 23 de septiembre" (J6). */
+export function fechaLarga(iso: string) {
+  const { m, d } = partes(iso)
+  return `${DIAS[diaSemana(iso)]}, ${d} de ${MESES_LARGOS[m - 1].toLowerCase()}`
+}
+
+/** Día de la semana de una fecha ISO (0 = domingo). */
+export function diaSemana(iso: string) {
+  const { a, m, d } = partes(iso)
+  return new Date(Date.UTC(a, m - 1, d)).getUTCDay()
+}
+
 /** "2026-08-01" → "agosto". */
 export function nombreMes(iso: string) {
   return MESES_LARGOS[partes(iso).m - 1].toLowerCase()

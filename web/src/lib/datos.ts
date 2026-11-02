@@ -122,6 +122,30 @@ export function obtenerAlertas(duenoId = DUENO_ACTUAL): Alerta[] {
   )
 }
 
+/** Todas las alertas del dueño, también las resueltas (J1 · pestaña Resueltas). */
+export function obtenerTodasAlertas(duenoId = DUENO_ACTUAL): Alerta[] {
+  const ids = new Set(obtenerMascotas(duenoId).map((m) => m.id))
+  return (leer("alertas") as unknown as Alerta[]).filter((a) => ids.has(a.mascota_id))
+}
+
+export type PlanAlimentacion = {
+  id: string
+  mascota_id: string
+  tipo: "concentrado" | "casero"
+  marca: string
+  tipo_alimento: string
+  presentacion_kg: string
+  gramos_dia: string
+  actividad: string
+  fecha_bolsa_abierta: string
+  activo: string
+}
+
+export function obtenerPlanes(duenoId = DUENO_ACTUAL): PlanAlimentacion[] {
+  const ids = new Set(obtenerMascotas(duenoId).map((m) => m.id))
+  return (leer("planes_alimentacion") as PlanAlimentacion[]).filter((p) => ids.has(p.mascota_id))
+}
+
 /** Eventos de todas las mascotas activas del dueño. */
 export function obtenerEventosDueno(duenoId = DUENO_ACTUAL) {
   const ids = new Set(obtenerMascotas(duenoId).map((m) => m.id))

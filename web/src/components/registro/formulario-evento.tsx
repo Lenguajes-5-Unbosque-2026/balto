@@ -1,6 +1,6 @@
 "use client"
 
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useState } from "react"
 import { toast } from "sonner"
 
@@ -24,6 +24,7 @@ import { tipoEvento, type Evento, type TipoEvento } from "@/lib/eventos"
 import { HOY, fechaCorta, sumarDias } from "@/lib/fecha"
 import { useMascotaActiva } from "@/lib/mascota-activa"
 import { guardarEvento } from "@/lib/registro-local"
+import { resolverAlerta } from "@/lib/usar-alertas"
 
 /** Campos obligatorios de cada tipo (tabla "Campos por tipo" de la spec de E). */
 const OBLIGATORIOS: Record<TipoEvento, string[]> = {
@@ -43,6 +44,9 @@ const COMUNES = ["fecha", "que_cambio"]
 
 /** Columnas del evento que no son campos del formulario. */
 const NO_EDITABLES = ["id", "mascota_id", "tipo", "soportes", "recordatorio", "fecha_creacion", "fecha_edicion", "eliminado_en"]
+
+/** Campos que llegan llenos en la URL desde "Ya lo resolví" de una alerta (J). */
+const PRELLENABLES = ["vacuna", "veterinaria", "producto", "via", "tipo_examen", "laboratorio", "proximo_refuerzo", "proxima_dosis", "proximo_control"]
 
 /** Valores del formulario de un evento guardado (D6): solo texto, con el peso escrito con coma. */
 function valoresDe(evento: Evento): Record<string, string> {
@@ -66,14 +70,20 @@ type FormularioEventoProps = {
 
 export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinarias, anticipacion, evento: original }: FormularioEventoProps) {
   const router = useRouter()
+  const parametros = useSearchParams()
+  const alertaId = original ? null : parametros.get("alerta")
   const [activa, cambiarMascota] = useMascotaActiva(mascotas)
   const mascota = (original && mascotas.find((m) => m.id === original.mascota_id)) || activa
   const [tipo, setTipo] = useState<TipoEvento>(original?.tipo ?? tipoInicial)
-  const [inicial] = useState(() => ({
-    valores: original ? valoresDe(original) : { fecha: HOY, resultado: "normal" },
-    soportes: (original?.soportes ?? []) as Adjunto[],
-    recordatorio: original?.recordatorio === "true",
-  }))
+  const [inicial] = useState(() => {
+    const prellenado = Object.fromEntries(PRELLENABLES.flatMap((c) => (parametros.get(c) ? [[c, parametros.get(c)!]] : [])))
+    return {
+      valores: original ? valoresDe(original) : { fecha: HOY, resultado: "normal", ...prellenado },
+      soportes: (original?.soportes ?? []) as Adjunto[],
+      // Al resolver una alerta, el recordatorio de la siguiente queda encendido.
+      recordatorio: original ? original.recordatorio === "true" : !!alertaId,
+    }
+  })
   const [valores, setValores] = useState<Record<string, string>>(inicial.valores)
   const [soportes, setSoportes] = useState<Adjunto[]>(inicial.soportes)
   const [recordatorio, setRecordatorio] = useState(inicial.recordatorio)
@@ -83,7 +93,8 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
   const set = (campo: string) => (valor: string) => setValores((x) => ({ ...x, [campo]: valor }))
 
   const sinVacios = (x: Record<string, string>) => Object.entries(x).filter(([, val]) => val !== "")
-  const tocado = original
+  const tocado =
+    original || alertaId
     ? JSON.stringify(sinVacios(valores)) !== JSON.stringify(sinVacios(inicial.valores)) ||
       soportes !== inicial.soportes ||
       recordatorio !== inicial.recordatorio
@@ -135,6 +146,10 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
     if (original) {
       toast.success("Cambios guardados")
       salir()
+    } else if (alertaId) {
+      // Desde "Ya lo resolví" se muestra J5 en lugar de E9.
+      resolverAlerta(alertaId, evento.id)
+      router.push(`/alertas/resuelta?id=${alertaId}&evento=${evento.id}`)
     } else {
       router.push(`/registrar/guardado?id=${evento.id}`)
     }

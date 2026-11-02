@@ -21,8 +21,13 @@ export type Alerta = {
   mascota_id: string
   tipo: "refuerzo_vacuna" | "proxima_desparasitacion" | "control_examen" | "control_peso" | "alimento_por_acabarse"
   evento_id: string
+  plan_id?: string
   fecha_vencimiento: string
-  estado: "proxima" | "vencida"
+  fecha_aviso?: string
+  fecha_aviso_pospuesto?: string
+  estado: "proxima" | "vencida" | "resuelta"
+  fecha_resuelta?: string
+  evento_resolucion_id?: string
 }
 
 const mayuscula = (t: string) => t.charAt(0).toUpperCase() + t.slice(1)
@@ -113,7 +118,7 @@ export function tituloAlerta(a: Alerta, evento?: Evento) {
     case "refuerzo_vacuna":
       return `Refuerzo ${evento ? enMinuscula(nombreVacuna(evento)) : "de vacuna"}`
     case "proxima_desparasitacion":
-      return "Próxima desparasitación"
+      return evento ? tituloEvento(evento) : "Próxima desparasitación"
     case "control_examen":
       return `Control de ${enMinuscula(evento?.tipo_examen ?? "examen")}`
     case "control_peso":
@@ -134,7 +139,7 @@ export function cuandoVence(fecha: string) {
 }
 
 /** La alerta pendiente más cercana de la mascota (las vencidas primero). */
-export function proximaAlerta(alertas: Alerta[], mascotaId: string) {
+export function proximaAlerta<T extends Alerta>(alertas: T[], mascotaId: string): T | undefined {
   return alertas
     .filter((a) => a.mascota_id === mascotaId)
     .sort((a, b) => a.fecha_vencimiento.localeCompare(b.fecha_vencimiento))[0]
