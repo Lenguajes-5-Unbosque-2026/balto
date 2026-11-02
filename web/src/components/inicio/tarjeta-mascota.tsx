@@ -35,7 +35,9 @@ export function TarjetaMascota({ mascota, eventos }: { mascota: PerfilMascota; e
       >
         {mascota.imagen ? (
           <Image
-            src={`/mascotas/retrato/${mascota.imagen}`}
+            // Una foto nueva de M18 (data URL) se muestra tal cual; las de data/mock/ tienen su retrato recortado.
+            src={mascota.imagen.startsWith("data:") ? mascota.imagen : `/mascotas/retrato/${mascota.imagen}`}
+            unoptimized={mascota.imagen.startsWith("data:")}
             alt=""
             width={360}
             height={480}

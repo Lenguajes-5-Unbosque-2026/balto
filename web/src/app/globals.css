@@ -196,6 +196,14 @@
   line-height: 44px;
   letter-spacing: -0.02em;
 }
+/* Hora grande de las notificaciones de ejemplo (G5). */
+@utility texto-reloj {
+  font-family: var(--font-titulos);
+  font-weight: 600;
+  font-size: 72px;
+  line-height: 76px;
+  letter-spacing: -0.03em;
+}
 @utility texto-titulo-pantalla {
   font-family: var(--font-titulos);
   font-weight: 600;

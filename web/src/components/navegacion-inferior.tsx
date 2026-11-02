@@ -6,6 +6,9 @@ import { usePathname } from "next/navigation"
 import { Icono } from "@/components/icono"
 import { cn } from "@/lib/utils"
 
+/** Pantallas con barra que pertenecen a Inicio aunque tengan otra ruta (F1). */
+const DE_INICIO = ["/salud"]
+
 const secciones = [
   { href: "/", nombre: "Inicio", icono: "home" },
   { href: "/linea-de-tiempo", nombre: "Línea de tiempo", icono: "view_timeline" },
@@ -24,7 +27,7 @@ export function NavegacionInferior() {
       className="fixed inset-x-4 bottom-4 z-10 mx-auto flex h-18 max-w-navegacion items-center justify-between rounded-completo bg-oscuro px-3 shadow-flotante"
     >
       {secciones.map((s) => {
-        const activa = s.href === "/" ? ruta === "/" : ruta.startsWith(s.href)
+        const activa = s.href === "/" ? ruta === "/" || DE_INICIO.some((r) => ruta.startsWith(r)) : ruta.startsWith(s.href)
         return (
           <Link
             key={s.href}

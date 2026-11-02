@@ -5,7 +5,7 @@ import { obtenerAlertas, obtenerDueno, obtenerEventosDueno, obtenerPerfiles } fr
 export default function InicioPage() {
   return (
     <PanelInicio
-      dueno={obtenerDueno().nombre}
+      dueno={obtenerDueno()}
       mascotas={obtenerPerfiles()}
       eventos={obtenerEventosDueno()}
       alertas={obtenerAlertas()}

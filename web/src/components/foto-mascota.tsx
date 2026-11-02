@@ -22,7 +22,16 @@ export function FotoMascota({ nombre, imagen, className, prioritaria }: FotoMasc
       )}
     >
       {imagen ? (
-        <Image src={`/mascotas/${imagen}`} alt={`Foto de ${nombre}`} fill sizes="160px" loading={prioritaria ? "eager" : undefined} className="object-cover" />
+        <Image
+          // Una foto nueva de M18 llega como data URL; las de data/mock/ están en public/mascotas/.
+          src={imagen.startsWith("data:") ? imagen : `/mascotas/${imagen}`}
+          unoptimized={imagen.startsWith("data:")}
+          alt={`Foto de ${nombre}`}
+          fill
+          sizes="160px"
+          loading={prioritaria ? "eager" : undefined}
+          className="object-cover"
+        />
       ) : (
         <Icono nombre="pets" className="icono-m" />
       )}

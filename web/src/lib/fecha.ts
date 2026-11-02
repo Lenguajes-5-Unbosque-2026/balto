@@ -5,6 +5,9 @@
  */
 export const HOY = "2026-10-27"
 
+/** Hora de "ahora" para las tomas de hoy (G1, G2), fija por la misma razón que HOY. */
+export const AHORA = "09:41"
+
 const MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]
 
 function partes(iso: string) {
@@ -63,6 +66,29 @@ export function fechaDiaMes(iso: string) {
 export function mesAnio(iso: string) {
   const { a, m } = partes(iso)
   return `${MESES_LARGOS[m - 1]} ${a}`
+}
+
+/** "Samuel Páez" → "samuel_paez", para nombres de archivo. */
+export function normalizarNombreArchivo(texto: string) {
+  return texto
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "_")
+}
+
+const DIAS = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]
+
+/** "2026-09-23" → "Miércoles, 23 de septiembre" (J6). */
+export function fechaLarga(iso: string) {
+  const { m, d } = partes(iso)
+  return `${DIAS[diaSemana(iso)]}, ${d} de ${MESES_LARGOS[m - 1].toLowerCase()}`
+}
+
+/** Día de la semana de una fecha ISO (0 = domingo). */
+export function diaSemana(iso: string) {
+  const { a, m, d } = partes(iso)
+  return new Date(Date.UTC(a, m - 1, d)).getUTCDay()
 }
 
 /** "2026-08-01" → "agosto". */

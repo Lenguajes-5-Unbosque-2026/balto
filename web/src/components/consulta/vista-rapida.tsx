@@ -3,7 +3,7 @@
 import Link from "next/link"
 import type { ReactNode } from "react"
 
-import { BotonIcono, BotonIconoEnlace } from "@/components/boton-icono"
+import { BotonIconoEnlace } from "@/components/boton-icono"
 import { Encabezado } from "@/components/encabezado"
 import { FotoMascota } from "@/components/foto-mascota"
 import { Icono } from "@/components/icono"
@@ -21,32 +21,38 @@ import {
   ultimoPeso,
   type PerfilMascota,
 } from "@/lib/perfil"
-import { avisarPronto } from "@/lib/pronto"
 import { useEventos } from "@/lib/usar-eventos"
+import { useDueno } from "@/lib/usar-cuenta"
+import { useSalud } from "@/lib/usar-salud"
 import { cn } from "@/lib/utils"
+
+const SIN_CONDICIONES: never[] = []
 
 type VistaRapidaProps = {
   mascotas: PerfilMascota[]
   eventos: Evento[]
-  dueno: { nombre: string; telefono: string }
+  dueno: { id: string; nombre: string; telefono: string }
 }
 
-
 /** D1 · Vista de acceso rápido: lo que se muestra desde el celular en una consulta o una emergencia. */
-export function VistaRapida({ mascotas, eventos: base, dueno }: VistaRapidaProps) {
+export function VistaRapida({ mascotas, eventos: base, dueno: duenoBase }: VistaRapidaProps) {
+  // Con el teléfono editado en M2.
+  const dueno = useDueno(duenoBase)
   const [mascota] = useMascotaActiva(mascotas)
   const eventos = useEventos(base).filter((e) => e.mascota_id === mascota.id)
   const peso = ultimoPeso(eventos)
   const medicacion = medicacionVigente(eventos)
   const vacunas = ultimasVacunas(eventos)
   const alergico = mascota.sexo === "hembra" ? "Alérgica" : "Alérgico"
+  // Con las alergias editadas en F6.
+  const { alergias } = useSalud(mascota, SIN_CONDICIONES)
 
   return (
     <main className="flex flex-1 flex-col gap-4 px-pantalla pt-14 pb-10">
       <Encabezado
         titulo="Vista rápida"
         izquierda={<BotonIconoEnlace href="/" icono="close" etiqueta="Cerrar" />}
-        derecha={<BotonIcono icono="ios_share" etiqueta="Compartir perfil" onClick={() => avisarPronto("Compartir perfil")} />}
+        derecha={<BotonIconoEnlace href="/compartir" icono="ios_share" etiqueta="Compartir perfil" />}
       />
 
       <div className="flex items-center gap-3.5">
@@ -70,9 +76,9 @@ export function VistaRapida({ mascotas, eventos: base, dueno }: VistaRapidaProps
         {peso && <Dato etiqueta="Peso" valor={`${textoKg(peso.peso_kg!)} (${fechaDiaMes(peso.fecha)})`} />}
       </dl>
 
-      {mascota.alergias.length > 0 ? (
+      {alergias.length > 0 ? (
         <Nota tono="error" icono="warning">
-          {alergico} a: {mascota.alergias.map(enMinuscula).join(", ")}
+          {alergico} a: {alergias.map(enMinuscula).join(", ")}
         </Nota>
       ) : (
         <Nota icono="check_circle">Sin alergias registradas</Nota>

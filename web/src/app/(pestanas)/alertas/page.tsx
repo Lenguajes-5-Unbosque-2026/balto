@@ -1,9 +1,19 @@
 import type { Metadata } from "next"
 
-import { TituloSeccion } from "@/components/titulo-seccion"
+import { CentroAlertas } from "@/components/alertas/centro-alertas"
+import { marcasDePlanes, mascotasAlerta } from "@/lib/alertas-servidor"
+import { obtenerEventosDueno, obtenerTodasAlertas } from "@/lib/datos"
 
 export const metadata: Metadata = { title: "Alertas · Balto" }
 
+/** J1 · Centro de alertas: lo que vence pronto para todas las mascotas del dueño. */
 export default function AlertasPage() {
-  return <TituloSeccion titulo="Alertas" />
+  return (
+    <CentroAlertas
+      alertas={obtenerTodasAlertas()}
+      eventos={obtenerEventosDueno()}
+      mascotas={mascotasAlerta()}
+      marcas={marcasDePlanes()}
+    />
+  )
 }
