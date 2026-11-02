@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
 
+import { EmpezarDeCero } from "@/components/empezar-de-cero"
 import { FormularioEvento } from "@/components/registro/formulario-evento"
 import { anticipacionAvisos, obtenerMascotasBasicas, obtenerMediciones, obtenerVeterinarias } from "@/lib/datos"
 import { TIPOS_EVENTO, tipoEvento } from "@/lib/eventos"
@@ -21,9 +22,11 @@ export async function generateMetadata({ params }: PageProps<"/registrar/[tipo]"
  */
 export default function FormularioPage({ params }: PageProps<"/registrar/[tipo]">) {
   return (
-    <Suspense>
-      <Formulario params={params} />
-    </Suspense>
+    <EmpezarDeCero>
+      <Suspense>
+        <Formulario params={params} />
+      </Suspense>
+    </EmpezarDeCero>
   )
 }
 
