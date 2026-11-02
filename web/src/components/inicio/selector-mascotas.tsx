@@ -1,9 +1,9 @@
 "use client"
 
+import Link from "next/link"
 import { FotoMascota } from "@/components/foto-mascota"
 import { Icono } from "@/components/icono"
 import type { PerfilMascota } from "@/lib/perfil"
-import { avisarPronto } from "@/lib/pronto"
 import { cn } from "@/lib/utils"
 
 type SelectorMascotasProps = {
@@ -37,14 +37,13 @@ export function SelectorMascotas({ mascotas, activa, onCambio }: SelectorMascota
           )
         })}
         <li>
-          <button
-            type="button"
+          <Link
+            href="/mascotas/nueva"
             aria-label="Agregar mascota"
-            onClick={() => avisarPronto("Agregar mascota")}
             className="grid size-12 place-items-center rounded-completo border border-dashed border-primario text-primario"
           >
             <Icono nombre="add" className="icono-m" />
-          </button>
+          </Link>
         </li>
       </ul>
     </nav>

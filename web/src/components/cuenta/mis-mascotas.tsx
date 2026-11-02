@@ -2,17 +2,16 @@
 
 import { toast } from "sonner"
 
-import { Boton } from "@/components/boton"
-import { BotonIcono } from "@/components/boton-icono"
+import { BotonEnlace } from "@/components/boton"
+import { BotonIcono, BotonIconoEnlace } from "@/components/boton-icono"
 import { Encabezado } from "@/components/encabezado"
 import { FilaOpcion } from "@/components/fila-opcion"
 import { Icono } from "@/components/icono"
 import { Nota } from "@/components/nota"
 import type { Mascota } from "@/lib/datos"
 import { edad } from "@/lib/fecha"
-import { aplicarCambios, guardarCambiosMascota, useCambiosMascotas } from "@/lib/mascota-activa"
+import { aplicarCambios, completarNueva, guardarCambiosMascota, useCambiosMascotas, useMascotasNuevas } from "@/lib/mascota-activa"
 import { razaCorta } from "@/lib/perfil"
-import { avisarPronto } from "@/lib/pronto"
 import { useVolver } from "@/lib/usar-salud"
 
 const mayuscula = (t: string) => t.charAt(0).toUpperCase() + t.slice(1)
@@ -24,7 +23,8 @@ const detalle = (m: Mascota) => [mayuscula(m.especie), razaCorta(m.raza), edad(m
 export function MisMascotas({ mascotas: base }: { mascotas: Mascota[] }) {
   const volver = useVolver("/ajustes")
   const cambios = useCambiosMascotas()
-  const mascotas = base.map((m) => aplicarCambios(m, cambios[m.id]))
+  const nuevas = useMascotasNuevas()
+  const mascotas = [...base, ...Object.values(nuevas).map((m) => completarNueva(m) as unknown as Mascota)].map((m) => aplicarCambios(m, cambios[m.id]))
   const activas = mascotas.filter((m) => !cambios[m.id]?.archivada)
   const archivadas = mascotas.filter((m) => cambios[m.id]?.archivada)
 
@@ -33,15 +33,15 @@ export function MisMascotas({ mascotas: base }: { mascotas: Mascota[] }) {
       <Encabezado
         titulo="Mis mascotas"
         izquierda={<BotonIcono icono="arrow_back" etiqueta="Volver" onClick={volver} />}
-        derecha={<BotonIcono icono="add" etiqueta="Agregar mascota" onClick={() => avisarPronto("Agregar mascota")} />}
+        derecha={<BotonIconoEnlace href="/mascotas/nueva" icono="add" etiqueta="Agregar mascota" />}
       />
       {activas.map((m) => (
         <FilaOpcion key={m.id} borde icono="pets" titulo={m.nombre} detalle={detalle(m)} href={`/ajustes/mascotas/editar?id=${m.id}`} />
       ))}
-      <Boton variante="secundario" className="mt-1" onClick={() => avisarPronto("Agregar mascota")}>
+      <BotonEnlace href="/mascotas/nueva" variante="secundario" className="mt-1">
         Agregar mascota
         <Icono nombre="add" className="icono-m" />
-      </Boton>
+      </BotonEnlace>
       <Nota icono="inventory_2">Archivar una mascota guarda su historial sin borrarlo.</Nota>
 
       {archivadas.length > 0 && (

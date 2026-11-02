@@ -17,13 +17,13 @@ import { Icono } from "@/components/icono"
 import { Interruptor } from "@/components/interruptor"
 import { Selector } from "@/components/selector"
 import type { Mascota } from "@/lib/datos"
-import { aplicarCambios, guardarCambiosMascota, useCambiosMascotas } from "@/lib/mascota-activa"
+import { aplicarCambios, completarNueva, guardarCambiosMascota, useCambiosMascotas, useMascotasNuevas } from "@/lib/mascota-activa"
 import { microchipLegible } from "@/lib/perfil"
 
 const sinSuscripcion = () => () => {}
 
 /** Reduce la foto a 480 px de lado para guardarla en el navegador sin ocupar demasiado. */
-async function reducirFoto(archivo: File) {
+export async function reducirFoto(archivo: File) {
   const imagen = await createImageBitmap(archivo)
   const escala = Math.min(1, 480 / Math.max(imagen.width, imagen.height))
   const lienzo = document.createElement("canvas")
@@ -38,7 +38,8 @@ export function EditarMascota({ mascotas }: { mascotas: Mascota[] }) {
   const listo = useSyncExternalStore(sinSuscripcion, () => true, () => false)
   const id = useSearchParams().get("id")
   const cambios = useCambiosMascotas()
-  const base = mascotas.find((m) => m.id === id)
+  const nuevas = useMascotasNuevas()
+  const base = mascotas.find((m) => m.id === id) ?? (id && nuevas[id] ? (completarNueva(nuevas[id]) as unknown as Mascota) : undefined)
 
   if (!listo) return null
   if (!base) {
@@ -51,7 +52,7 @@ export function EditarMascota({ mascotas }: { mascotas: Mascota[] }) {
       </main>
     )
   }
-  const activas = mascotas.filter((m) => !cambios[m.id]?.archivada).length
+  const activas = [...mascotas.map((m) => m.id), ...Object.keys(nuevas)].filter((x) => !cambios[x]?.archivada).length
   return <Formulario mascota={aplicarCambios(base, cambios[base.id])} unica={activas <= 1} />
 }
 

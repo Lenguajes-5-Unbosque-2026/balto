@@ -74,6 +74,11 @@ export function obtenerMascotas(duenoId = DUENO_ACTUAL): Mascota[] {
 
 const mayuscula = (t: string) => t.charAt(0).toUpperCase() + t.slice(1)
 
+/** Número de la próxima cédula animal: BAL-0006-… (B6). */
+export function siguienteCedula() {
+  return Math.max(...(leer("mascotas") as Mascota[]).map((m) => Number(m.cedula.split("-")[1]) || 0)) + 1
+}
+
 /** Mascotas con la línea de detalle que muestran los selectores ("Perro · Golden Retriever · Hembra · 3 años"). */
 export function obtenerMascotasBasicas(duenoId = DUENO_ACTUAL) {
   return obtenerMascotas(duenoId).map((m) => ({
