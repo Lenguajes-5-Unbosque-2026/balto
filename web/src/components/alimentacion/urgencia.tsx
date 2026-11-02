@@ -18,7 +18,6 @@ import type { Veterinaria } from "@/lib/datos"
 import { enMinuscula, textoKg, veterinariaCorta, type Evento } from "@/lib/eventos"
 import { useMascotaActiva } from "@/lib/mascota-activa"
 import { medicacionVigente, razaCorta, ultimoPeso, type PerfilMascota } from "@/lib/perfil"
-import { avisarPronto } from "@/lib/pronto"
 import { useEventos } from "@/lib/usar-eventos"
 import { useSalud, useVolver } from "@/lib/usar-salud"
 import { cn } from "@/lib/utils"
@@ -26,6 +25,8 @@ import { cn } from "@/lib/utils"
 type UrgenciaProps = { mascotas: PerfilMascota[]; eventos: Evento[]; veterinarias: Veterinaria[] }
 
 const SIN_CONDICIONES: never[] = []
+/** K3 con "Urgencias 24 h" y "Abierto ahora" (spec de H). */
+const VER_URGENCIAS = "/veterinarias?urgencias=1&abierto=1"
 const mayuscula = (t: string) => t.charAt(0).toUpperCase() + t.slice(1)
 
 /** H6 · Urgencia (ya lo comió) → H7 · Llamando a la veterinaria (/alimentacion/urgencia?alimento=Uvas). */
@@ -98,7 +99,7 @@ export function Urgencia({ mascotas, eventos: base, veterinarias }: UrgenciaProp
           <Icono nombre="call" className="icono-m text-texto-secundario" />
         </a>
       )}
-      <FilaOpcion icono="local_hospital" titulo="Ver veterinarias abiertas ahora" detalle="Cerca de ti" onClick={() => avisarPronto("Veterinarias")} />
+      <FilaOpcion icono="local_hospital" titulo="Ver veterinarias abiertas ahora" detalle="Cerca de ti" href={VER_URGENCIAS} />
       <dl className="flex flex-col gap-2.5 rounded-lg border border-borde-fuerte bg-superficie px-4 py-4 movil-m:px-5">
         <Dato etiqueta="Qué comió" valor={que} />
         <div className="flex items-baseline justify-between gap-3">
@@ -119,9 +120,9 @@ export function Urgencia({ mascotas, eventos: base, veterinarias }: UrgenciaProp
             Llamar ahora
           </a>
         )}
-        <Boton variante="secundario" onClick={() => avisarPronto("Veterinarias")}>
+        <BotonEnlace href={VER_URGENCIAS} variante="secundario">
           Ver veterinarias
-        </Boton>
+        </BotonEnlace>
       </BarraAccion>
 
       <Hoja abierta={eligiendo} onCerrar={() => setEligiendo(false)} titulo="¿Hace cuánto lo comió?">

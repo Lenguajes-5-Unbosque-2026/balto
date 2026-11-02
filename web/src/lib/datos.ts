@@ -1,6 +1,7 @@
 import fs from "node:fs"
 import path from "node:path"
 
+import { DUENO_ACTUAL_ID } from "@/lib/cuenta-actual"
 import { parsearCsv } from "@/lib/csv"
 import type { Evento, Soporte } from "@/lib/eventos"
 import { edad } from "@/lib/fecha"
@@ -18,8 +19,7 @@ function leer(archivo: string) {
   return parsearCsv(fs.readFileSync(path.join(CARPETA_MOCK, `${archivo}.csv`), "utf8"))
 }
 
-/** El dueño de las pantallas de Figma (Samuel). */
-export const DUENO_ACTUAL = "d01"
+export const DUENO_ACTUAL = DUENO_ACTUAL_ID
 
 export type Mascota = {
   id: string
@@ -111,6 +111,29 @@ export function obtenerEventos(mascotaId?: string): Evento[] {
 
 export function obtenerVeterinarias(): Veterinaria[] {
   return (leer("veterinarias") as Veterinaria[]).filter((v) => v.tipo === "veterinaria")
+}
+
+/** Veterinarias y demás proveedores (estética, guardería, paseo) del buscador de K. */
+export function obtenerProveedores(): Veterinaria[] {
+  return leer("veterinarias") as Veterinaria[]
+}
+
+export type Cita = {
+  id: string
+  dueno_id: string
+  mascota_id: string
+  proveedor_id: string
+  servicio: string
+  /** "2026-10-29 09:30" */
+  fecha_hora: string
+  duracion_min: string
+  estado: "confirmada" | "por_confirmar" | "cancelada" | "realizada"
+  alerta_id: string
+  pedido_id: string
+}
+
+export function obtenerCitas(duenoId = DUENO_ACTUAL): Cita[] {
+  return (leer("citas") as Cita[]).filter((c) => c.dueno_id === duenoId)
 }
 
 /** Días de anticipación del aviso de vacunas y desparasitaciones (M3). */

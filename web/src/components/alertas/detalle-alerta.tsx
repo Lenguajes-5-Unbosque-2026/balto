@@ -107,7 +107,7 @@ export function DetalleAlerta({ alertas, eventos, mascotas, marcas }: DetalleAle
               Comprar
             </Boton>
           ) : (
-            <Boton variante="secundario" onClick={acciones.agendar}>
+            <Boton variante="secundario" onClick={() => acciones.agendar(alerta)}>
               Agendar cita
             </Boton>
           )}
@@ -178,7 +178,7 @@ function Opciones({ alerta: a, vencida, acciones, onPosponer }: OpcionesProps) {
         onClick={() => acciones.resolver(a)}
       />
       {!esAlimento && a.tipo !== "control_peso" && (
-        <FilaOpcion borde={!vencida} icono="calendar_month" titulo="Agendar cita" detalle="Buscar veterinaria" onClick={acciones.agendar} />
+        <FilaOpcion borde={!vencida} icono="calendar_month" titulo="Agendar cita" detalle="Buscar veterinaria" onClick={() => acciones.agendar(a)} />
       )}
       {(esVacuna || esAlimento) && (
         <FilaOpcion

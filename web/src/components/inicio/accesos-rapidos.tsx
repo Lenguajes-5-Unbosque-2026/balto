@@ -11,8 +11,8 @@ const ACCESOS = [
   { nombre: "Medicamentos", icono: "medication", href: "/medicamentos" },
   { nombre: "Alimentación", icono: "restaurant", href: "/alimentacion" },
   { nombre: "Hábitos", icono: "pets", href: "/habitos" },
-  { nombre: "Veterinarias", icono: "local_hospital" },
-  { nombre: "Calendario", icono: "calendar_month" },
+  { nombre: "Veterinarias", icono: "local_hospital", href: "/veterinarias" },
+  { nombre: "Calendario", icono: "calendar_month", href: "/calendario" },
 ]
 
 const mosaico = "flex h-24 w-26.75 flex-col items-center justify-center gap-2 rounded-md bg-superficie px-1"

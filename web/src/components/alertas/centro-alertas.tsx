@@ -108,7 +108,7 @@ export function CentroAlertas({ alertas: base, eventos, mascotas, marcas }: Cent
                 oscura={i === 0}
                 onResolver={() => acciones.resolver(a)}
                 onPosponer={() => setPosponiendo(a.id)}
-                onAgendar={acciones.agendar}
+                onAgendar={() => acciones.agendar(a)}
               />
             </div>
           ))}

@@ -23,9 +23,11 @@ export function useAccionesAlerta() {
       guardarMascotaActiva(a.mascota_id)
       router.push(ruta)
     },
-    /** "Agendar cita": K3 filtrado por el servicio (flujo K). */
-    agendar() {
-      avisarPronto("Agendar cita")
+    /** "Agendar cita": K3 filtrado por el servicio, con la alerta para resolverla después (spec de J). */
+    agendar(a: AlertaVista) {
+      guardarMascotaActiva(a.mascota_id)
+      const servicio = a.tipo === "refuerzo_vacuna" || a.tipo === "proxima_desparasitacion" ? "vacunacion" : "consulta"
+      router.push(`/veterinarias?servicio=${servicio}&alerta=${a.id}`)
     },
     /** "Comprar la vacuna" (N5) o el alimento (N2). */
     comprar() {
