@@ -5,28 +5,25 @@ import { useState } from "react"
 
 import { BarraAccion } from "@/components/barra-accion"
 import { Boton, BotonEnlace } from "@/components/boton"
-import { BotonIcono } from "@/components/boton-icono"
 import { Busqueda } from "@/components/busqueda"
 import { Chip } from "@/components/chip"
-import { Encabezado } from "@/components/encabezado"
 import { Estado } from "@/components/estado"
 import { Hoja } from "@/components/hoja"
 import { Selector } from "@/components/selector"
-import { agregarAlimento, BotonCarrito, TarjetaProducto, useRecomendados, type PropsTienda } from "@/components/tienda/comun"
+import { agregarAlimento, EncabezadoTienda, TarjetaProducto, useRecomendados, type PropsTienda } from "@/components/tienda/comun"
 import { normalizar } from "@/lib/eventos"
 import { paraEspecie } from "@/lib/tienda"
 import { useTienda } from "@/lib/usar-tienda"
-import { useVolver } from "@/lib/usar-salud"
 
 type Filtro = { especie: "" | "perro" | "gato"; etapa: "" | "adulto" | "cachorro" }
 
 /** N2 · Alimentos con búsqueda y filtros, y N11 · Búsqueda sin resultados (/tienda/alimentos?q=…). */
 export function Alimentos(datos: PropsTienda) {
-  const volver = useVolver("/tienda")
   const { carrito, cuenta } = useTienda(datos)
   const { mascota, alimento } = useRecomendados(datos)
   const [busqueda, setBusqueda] = useState(useSearchParams().get("q") ?? "")
-  const [paraMascota, setParaMascota] = useState(true)
+  // "Ver todo" de N1 abre el catálogo sin el filtro de la mascota.
+  const [paraMascota, setParaMascota] = useState(useSearchParams().get("todo") !== "1")
   const [filtro, setFiltro] = useState<Filtro>({ especie: "", etapa: "" })
   const [verFiltros, setVerFiltros] = useState(false)
 
@@ -49,7 +46,7 @@ export function Alimentos(datos: PropsTienda) {
 
   return (
     <main className="flex flex-1 flex-col gap-4 px-pantalla pt-14 pb-10">
-      <Encabezado titulo="Alimentos" izquierda={<BotonIcono icono="arrow_back" etiqueta="Volver" onClick={volver} />} derecha={<BotonCarrito cuenta={cuenta} />} />
+      <EncabezadoTienda actual="alimentos" cuenta={cuenta} />
       <Busqueda valor={busqueda} onCambio={setBusqueda} placeholder="Buscar alimento" onFiltros={() => setVerFiltros(true)} filtrosActivos={conFiltros} />
       <div className="sin-barra-desplazamiento -mx-pantalla flex gap-2 overflow-x-auto px-pantalla">
         {chip(`Para ${mascota.nombre}`, paraMascota, () => setParaMascota((x) => !x), "pets")}
@@ -93,7 +90,7 @@ export function Alimentos(datos: PropsTienda) {
           </BarraAccion>
         </>
       ) : (
-        <div className="grid grid-cols-2 items-start gap-2.5">
+        <div className="grid grid-cols-2 gap-2.5">
           {lista.map((p) => (
             <TarjetaProducto
               key={p.id}

@@ -4,6 +4,7 @@ import Link from "next/link"
 import { toast } from "sonner"
 
 import { BotonIconoEnlace } from "@/components/boton-icono"
+import { Encabezado } from "@/components/encabezado"
 import { Icono } from "@/components/icono"
 import type { AlertaVista } from "@/lib/alertas"
 import { diasRestantes } from "@/lib/alimentacion"
@@ -19,6 +20,55 @@ import { agregarAlCarrito, claveItem, useTienda } from "@/lib/usar-tienda"
 import { cn } from "@/lib/utils"
 
 export type { PropsTienda }
+
+const SECCIONES = [
+  { slug: "alimentos", href: "/tienda/alimentos", icono: "restaurant", texto: "Alimentos" },
+  { slug: "vacunas", href: "/tienda/vacunas", icono: "vaccines", texto: "Vacunas" },
+  { slug: "pedidos", href: "/tienda/pedidos", icono: "local_shipping", texto: "Mis pedidos" },
+] as const
+
+export type SeccionTienda = (typeof SECCIONES)[number]["slug"]
+
+/** Las tres casillas de la Tienda: en N1 ninguna va marcada; en cada sección, la actual va en verde. */
+export function SeccionesTienda({ actual }: { actual?: SeccionTienda }) {
+  return (
+    <nav aria-label="Secciones de la Tienda" className="grid grid-cols-3 gap-2.5">
+      {SECCIONES.map((s) => {
+        const activa = s.slug === actual
+        return (
+          <Link
+            key={s.slug}
+            href={s.href}
+            aria-current={activa ? "page" : undefined}
+            className={cn(
+              "flex h-24 flex-col items-center justify-center gap-2 rounded-lg border px-1 transition-colors",
+              activa ? "border-primario bg-primario text-superficie" : "border-borde-fuerte bg-superficie text-texto active:bg-acento-suave",
+            )}
+          >
+            <span className="grid size-10 place-items-center rounded-completo bg-acento-suave text-primario">
+              <Icono nombre={s.icono} className="icono-m" />
+            </span>
+            <span className="w-full truncate text-center texto-etiqueta">{s.texto}</span>
+          </Link>
+        )
+      })}
+    </nav>
+  )
+}
+
+/** Encabezado común de Alimentos, Vacunas y Mis pedidos: "Tienda", volver a N1, carrito y las tres casillas. */
+export function EncabezadoTienda({ actual, cuenta }: { actual: SeccionTienda; cuenta: number }) {
+  return (
+    <>
+      <Encabezado
+        titulo="Tienda"
+        izquierda={<BotonIconoEnlace href="/tienda" icono="arrow_back" etiqueta="Volver a la Tienda" />}
+        derecha={<BotonCarrito cuenta={cuenta} />}
+      />
+      <SeccionesTienda actual={actual} />
+    </>
+  )
+}
 
 /** Ícono del carrito con el contador (encabezados de N). */
 export function BotonCarrito({ cuenta }: { cuenta: number }) {
@@ -87,7 +137,7 @@ type TarjetaProductoProps = {
 export function TarjetaProducto({ producto: p, rotulo, detalle, href, onAgregar }: TarjetaProductoProps) {
   const sinStock = agotado(p)
   return (
-    <div className="flex flex-col gap-2 rounded-lg border border-borde-fuerte bg-superficie p-2.5 movil-m:p-3">
+    <div className="flex h-full flex-col gap-2 rounded-lg border border-borde-fuerte bg-superficie p-2.5 movil-m:p-3">
       <Link href={href} className="flex flex-col gap-2">
         <span className="grid h-24 place-items-center rounded-md bg-acento-suave text-primario movil-m:h-28">
           <Icono nombre={iconoProducto(p)} className="icono-xl" />

@@ -14,7 +14,7 @@ import { Icono } from "@/components/icono"
 import { Nota } from "@/components/nota"
 import { Pasos } from "@/components/pasos"
 import { Selector } from "@/components/selector"
-import type { PropsTienda } from "@/components/tienda/comun"
+import { EncabezadoTienda, type PropsTienda } from "@/components/tienda/comun"
 import { Totales, cuandoAplicacion } from "@/components/tienda/carrito"
 import { veterinariaCorta } from "@/lib/eventos"
 import { HOY, fechaCorta, sumarDias } from "@/lib/fecha"
@@ -122,8 +122,7 @@ export function PedidoConfirmado(datos: PropsTienda) {
 
 /** N9 · Mis pedidos y seguimiento, con En curso y Anteriores. */
 export function MisPedidos(datos: PropsTienda) {
-  const volver = useVolver("/tienda")
-  const { pedidos } = useTienda(datos)
+  const { pedidos, cuenta } = useTienda(datos)
   const [pestana, setPestana] = useState<"curso" | "anteriores">("curso")
   const enCurso = pedidos.filter((p) => p.estado_pago === "aprobado" && p.estado_entrega && p.estado_entrega !== "entregado")
   const anteriores = pedidos.filter((p) => !enCurso.includes(p))
@@ -131,7 +130,7 @@ export function MisPedidos(datos: PropsTienda) {
 
   return (
     <main className="flex flex-1 flex-col gap-4 px-pantalla pt-14 pb-10">
-      <Encabezado titulo="Mis pedidos" izquierda={<BotonIcono icono="arrow_back" etiqueta="Volver" onClick={volver} />} />
+      <EncabezadoTienda actual="pedidos" cuenta={cuenta} />
       <Selector
         etiqueta="Pedidos"
         valor={pestana}

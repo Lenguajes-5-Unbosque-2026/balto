@@ -1,12 +1,12 @@
 "use client"
 
-import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
 import { Busqueda } from "@/components/busqueda"
 import { Icono } from "@/components/icono"
-import { agregarAlimento, BotonCarrito, TarjetaProducto, useRecomendados, type PropsTienda } from "@/components/tienda/comun"
+import { BotonEnlace } from "@/components/boton"
+import { agregarAlimento, BotonCarrito, SeccionesTienda, TarjetaProducto, useRecomendados, type PropsTienda } from "@/components/tienda/comun"
 import { useTienda } from "@/lib/usar-tienda"
 
 /** N1 · Tienda: búsqueda, categorías y lo recomendado para la mascota activa. */
@@ -36,19 +36,15 @@ export function InicioTienda(datos: PropsTienda) {
         <Busqueda valor={busqueda} onCambio={setBusqueda} placeholder="Buscar alimento o vacuna" />
       </form>
 
-      <div className="grid grid-cols-3 gap-2.5">
-        <Categoria href="/tienda/alimentos" icono="restaurant" texto="Alimentos" />
-        <Categoria href="/tienda/vacunas" icono="vaccines" texto="Vacunas" />
-        <Categoria href="/tienda/pedidos" icono="local_shipping" texto="Mis pedidos" />
-      </div>
+      <SeccionesTienda />
 
-      <div className="mt-1 flex items-center justify-between">
-        <h2 className="texto-titulo-seccion font-semibold text-texto">{masVendidos.length ? "Los más vendidos" : `Recomendado para ${mascota.nombre}`}</h2>
-        <Link href="/tienda/alimentos" className="texto-etiqueta-fuerte text-primario">
-          Ver todo
-        </Link>
-      </div>
-      <div className="grid grid-cols-2 items-start gap-2.5">
+      <BotonEnlace href="/tienda/alimentos?todo=1">
+        Ver todo
+        <Icono nombre="arrow_forward" className="icono-m" />
+      </BotonEnlace>
+
+      <h2 className="mt-1 texto-titulo-seccion font-semibold text-texto">{masVendidos.length ? "Los más vendidos" : `Recomendado para ${mascota.nombre}`}</h2>
+      <div className="grid grid-cols-2 gap-2.5">
         {alimento && (
           <TarjetaProducto
             producto={alimento.producto}
@@ -72,20 +68,5 @@ export function InicioTienda(datos: PropsTienda) {
         ))}
       </div>
     </div>
-  )
-}
-
-/** Acceso a una sección de la Tienda. Los tres se ven iguales: son enlaces, no un filtro elegido. */
-function Categoria({ href, icono, texto }: { href: string; icono: string; texto: string }) {
-  return (
-    <Link
-      href={href}
-      className="flex h-24 flex-col items-center justify-center gap-2 rounded-lg border border-borde-fuerte bg-superficie px-1 text-texto transition-colors active:bg-acento-suave"
-    >
-      <span className="grid size-10 place-items-center rounded-completo bg-acento-suave text-primario">
-        <Icono nombre={icono} className="icono-m" />
-      </span>
-      <span className="w-full truncate text-center texto-etiqueta">{texto}</span>
-    </Link>
   )
 }

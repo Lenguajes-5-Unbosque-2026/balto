@@ -9,12 +9,11 @@ import { Boton } from "@/components/boton"
 import { BotonIcono } from "@/components/boton-icono"
 import { Encabezado } from "@/components/encabezado"
 import { Estado } from "@/components/estado"
-import { FilaOpcion } from "@/components/fila-opcion"
 import { Icono } from "@/components/icono"
 import { Nota } from "@/components/nota"
 import { OpcionRadio } from "@/components/opcion-radio"
 import { Rasgo } from "@/components/rasgo"
-import { agregarAlimento, BotonCarrito, productoParaAlerta, useRecomendados, type PropsTienda } from "@/components/tienda/comun"
+import { agregarAlimento, BotonCarrito, EncabezadoTienda, productoParaAlerta, TarjetaProducto, useRecomendados, type PropsTienda } from "@/components/tienda/comun"
 import { frecuenciaAlerta } from "@/lib/alertas"
 import { HOY, fechaCorta, fechaLarga, sumarDias } from "@/lib/fecha"
 import { useMascotas } from "@/lib/mascota-activa"
@@ -117,7 +116,7 @@ export function DetalleAlimento(datos: PropsTienda) {
 
 /** N4 · Vacunas: las que les tocan pronto a las mascotas y las demás que sirven para su especie. */
 export function Vacunas(datos: PropsTienda) {
-  const volver = useVolver("/tienda")
+  const router = useRouter()
   const { cuenta } = useTienda(datos)
   const { alertas } = useRecomendados(datos)
   const mascotas = useMascotas(datos.mascotas)
@@ -150,23 +149,35 @@ export function Vacunas(datos: PropsTienda) {
 
   return (
     <main className="flex flex-1 flex-col gap-3 px-pantalla pt-14 pb-10">
-      <Encabezado titulo="Vacunas" izquierda={<BotonIcono icono="arrow_back" etiqueta="Volver" onClick={volver} />} derecha={<BotonCarrito cuenta={cuenta} />} />
+      <EncabezadoTienda actual="vacunas" cuenta={cuenta} />
       <Nota>Las vacunas se compran con la aplicación incluida en una veterinaria aliada.</Nota>
-      {pronto.length > 0 && <h2 className="mt-2 texto-titulo-seccion font-semibold text-texto">Le tocan pronto</h2>}
-      {pronto.map((x) => (
-        <FilaOpcion
-          key={x.alerta.id}
-          borde
-          icono={iconoProducto(x.producto)}
-          titulo={`${x.producto.nombre} · ${x.mascota.nombre}`}
-          detalle={`${x.rotulo} · ${precio(x.producto.precio_cop)}`}
-          href={`/tienda/vacuna?id=${x.producto.id}&mascota=${x.mascota.id}&alerta=${x.alerta.id}`}
-        />
-      ))}
-      <h2 className="mt-2 texto-titulo-seccion font-semibold text-texto">Otras vacunas</h2>
-      {otras.map((x) => (
-        <FilaOpcion key={x.producto.id} borde icono="vaccines" titulo={x.producto.nombre} detalle={x.detalle} href={`/tienda/vacuna?id=${x.producto.id}&mascota=${x.mascota.id}`} />
-      ))}
+      {pronto.length > 0 && (
+        <>
+          <h2 className="mt-1 texto-titulo-seccion font-semibold text-texto">Le tocan pronto</h2>
+          <div className="grid grid-cols-2 gap-2.5">
+            {pronto.map((x) => {
+              const href = `/tienda/vacuna?id=${x.producto.id}&mascota=${x.mascota.id}&alerta=${x.alerta.id}`
+              return (
+                <TarjetaProducto
+                  key={x.alerta.id}
+                  producto={{ ...x.producto, nombre: `${x.producto.nombre} · ${x.mascota.nombre}` }}
+                  rotulo={x.rotulo}
+                  detalle="Aplicación incluida"
+                  href={href}
+                  onAgregar={() => router.push(href)}
+                />
+              )
+            })}
+          </div>
+        </>
+      )}
+      <h2 className="mt-1 texto-titulo-seccion font-semibold text-texto">Otras vacunas</h2>
+      <div className="grid grid-cols-2 gap-2.5">
+        {otras.map((x) => {
+          const href = `/tienda/vacuna?id=${x.producto.id}&mascota=${x.mascota.id}`
+          return <TarjetaProducto key={x.producto.id} producto={x.producto} detalle={x.detalle} href={href} onAgregar={() => router.push(href)} />
+        })}
+      </div>
     </main>
   )
 }
