@@ -116,6 +116,7 @@ export function useRecomendados(datos: PropsTienda) {
   return {
     mascota,
     plan,
+    restantes,
     alimento: alimento && { producto: alimento, rotulo: restantes !== null ? `Se acaba ${dias(restantes)}` : "Según su plan" },
     vacuna: proxima && productoParaAlerta(datos.productos, proxima, mascota.especie),
     alertas,

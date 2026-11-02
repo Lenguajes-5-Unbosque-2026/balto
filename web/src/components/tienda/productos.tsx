@@ -7,6 +7,7 @@ import { toast } from "sonner"
 import { BarraAccion } from "@/components/barra-accion"
 import { Boton } from "@/components/boton"
 import { BotonIcono } from "@/components/boton-icono"
+import { Busqueda } from "@/components/busqueda"
 import { Encabezado } from "@/components/encabezado"
 import { Estado } from "@/components/estado"
 import { Icono } from "@/components/icono"
@@ -15,6 +16,7 @@ import { OpcionRadio } from "@/components/opcion-radio"
 import { Rasgo } from "@/components/rasgo"
 import { agregarAlimento, BotonCarrito, EncabezadoTienda, productoParaAlerta, TarjetaProducto, useRecomendados, type PropsTienda } from "@/components/tienda/comun"
 import { frecuenciaAlerta } from "@/lib/alertas"
+import { normalizar } from "@/lib/eventos"
 import { HOY, fechaCorta, fechaLarga, sumarDias } from "@/lib/fecha"
 import { useMascotas } from "@/lib/mascota-activa"
 import { cuposDel, distanciaKm, proximosConCupo, puntoDe, textoKm } from "@/lib/proveedores"
@@ -120,6 +122,7 @@ export function Vacunas(datos: PropsTienda) {
   const { cuenta } = useTienda(datos)
   const { alertas } = useRecomendados(datos)
   const mascotas = useMascotas(datos.mascotas)
+  const [busqueda, setBusqueda] = useState("")
 
   const pronto = alertas
     .filter((a) => a.grupo !== "resuelta" && (a.tipo === "refuerzo_vacuna" || a.tipo === "proxima_desparasitacion") && a.grupo !== "adelante")
@@ -147,15 +150,21 @@ export function Vacunas(datos: PropsTienda) {
       return [{ producto: p, mascota: m, detalle: refuerzo ? `Refuerzo de ${m.nombre} en ${sinAnio(refuerzo.fecha_vencimiento).split(" ")[1]} ${refuerzo.fecha_vencimiento.slice(0, 4)}` : `Para ${m.nombre}` }]
     })
 
+  const q = normalizar(busqueda)
+  const coincide = (nombre: string, mascota: string) => !q || q.split(/\s+/).every((palabra) => normalizar(`${nombre} ${mascota}`).includes(palabra))
+  const prontoVisibles = pronto.filter((x) => coincide(x.producto.nombre, x.mascota.nombre))
+  const otrasVisibles = otras.filter((x) => coincide(x.producto.nombre, x.mascota.nombre))
+
   return (
     <div className="flex flex-1 flex-col gap-3 px-pantalla pt-14">
       <EncabezadoTienda actual="vacunas" cuenta={cuenta} />
+      <Busqueda valor={busqueda} onCambio={setBusqueda} placeholder="Buscar vacuna o mascota" />
       <Nota>Las vacunas se compran con la aplicación incluida en una veterinaria aliada.</Nota>
-      {pronto.length > 0 && (
+      {prontoVisibles.length > 0 && (
         <>
           <h2 className="mt-1 texto-titulo-seccion font-semibold text-texto">Le tocan pronto</h2>
           <div className="grid grid-cols-2 gap-2.5">
-            {pronto.map((x) => {
+            {prontoVisibles.map((x) => {
               const href = `/tienda/vacuna?id=${x.producto.id}&mascota=${x.mascota.id}&alerta=${x.alerta.id}`
               return (
                 <TarjetaProducto
@@ -171,9 +180,14 @@ export function Vacunas(datos: PropsTienda) {
           </div>
         </>
       )}
-      <h2 className="mt-1 texto-titulo-seccion font-semibold text-texto">Otras vacunas</h2>
+      {prontoVisibles.length === 0 && otrasVisibles.length === 0 && (
+        <div className="pt-4">
+          <Estado tono="error" icono="search_off" titulo="No encontramos esa vacuna" mensaje="Prueba con otro nombre." />
+        </div>
+      )}
+      {otrasVisibles.length > 0 && <h2 className="mt-1 texto-titulo-seccion font-semibold text-texto">Otras vacunas</h2>}
       <div className="grid grid-cols-2 gap-2.5">
-        {otras.map((x) => {
+        {otrasVisibles.map((x) => {
           const href = `/tienda/vacuna?id=${x.producto.id}&mascota=${x.mascota.id}`
           return <TarjetaProducto key={x.producto.id} producto={x.producto} detalle={x.detalle} href={href} onAgregar={() => router.push(href)} />
         })}
