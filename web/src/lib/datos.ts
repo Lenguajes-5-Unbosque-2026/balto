@@ -4,6 +4,7 @@ import path from "node:path"
 import { parsearCsv } from "@/lib/csv"
 import type { Evento, Soporte } from "@/lib/eventos"
 import { edad } from "@/lib/fecha"
+import type { Habito } from "@/lib/habitos"
 import type { Alerta, PerfilMascota } from "@/lib/perfil"
 
 /**
@@ -35,7 +36,37 @@ export type Mascota = {
   imagen: string
 }
 
-export type Veterinaria = { id: string; nombre: string; tipo: string; barrio: string }
+export type Veterinaria = {
+  id: string
+  nombre: string
+  tipo: string
+  /** "urgencias;consulta;vacunacion" */
+  servicios: string
+  direccion: string
+  barrio: string
+  latitud: string
+  longitud: string
+  telefono: string
+  horario: string
+  urgencias_24h: string
+  calificacion: string
+  num_resenas: string
+  agenda_en_linea: string
+  aliada: string
+}
+
+/** Bitácora de hábitos de las mascotas del dueño (I). */
+export function obtenerHabitos(duenoId = DUENO_ACTUAL): Habito[] {
+  const ids = new Set(obtenerMascotas(duenoId).map((m) => m.id))
+  return (leer("habitos") as Habito[]).filter((h) => ids.has(h.mascota_id))
+}
+
+/** Comidas programadas de los planes (H4). */
+export type ComidaProgramada = { id: string; plan_id: string; nombre: string; hora: string; gramos: string }
+
+export function obtenerComidas(): ComidaProgramada[] {
+  return leer("comidas_programadas") as ComidaProgramada[]
+}
 
 export function obtenerMascotas(duenoId = DUENO_ACTUAL): Mascota[] {
   return (leer("mascotas") as Mascota[]).filter((m) => m.dueno_id === duenoId && m.estado === "activa")

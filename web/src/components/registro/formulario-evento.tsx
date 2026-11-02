@@ -46,7 +46,11 @@ const COMUNES = ["fecha", "que_cambio"]
 const NO_EDITABLES = ["id", "mascota_id", "tipo", "soportes", "recordatorio", "fecha_creacion", "fecha_edicion", "eliminado_en"]
 
 /** Campos que llegan llenos en la URL desde "Ya lo resolví" de una alerta (J). */
-const PRELLENABLES = ["vacuna", "veterinaria", "producto", "via", "tipo_examen", "laboratorio", "proximo_refuerzo", "proxima_dosis", "proximo_control"]
+const PRELLENABLES = [
+  "vacuna", "veterinaria", "producto", "via", "tipo_examen", "laboratorio", "proximo_refuerzo", "proxima_dosis", "proximo_control",
+  // Desde H7 · "Registrar lo que pasó" (E11 lleno).
+  "titulo", "lugar", "detalle",
+]
 
 /** Valores del formulario de un evento guardado (D6): solo texto, con el peso escrito con coma. */
 function valoresDe(evento: Evento): Record<string, string> {

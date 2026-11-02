@@ -14,6 +14,7 @@ import { Hoja } from "@/components/hoja"
 import { Icono } from "@/components/icono"
 import { Interruptor } from "@/components/interruptor"
 import { FilaTomaDetalle, HojaOmitir } from "@/components/medicamentos/tomas"
+import { RasgoOscuro } from "@/components/rasgo"
 import { HOY, fechaLarga, sumarDias } from "@/lib/fecha"
 import {
   diaTratamiento,
@@ -218,15 +219,6 @@ export function DetalleTratamiento(datos: DatosMedicamentos) {
 
       <HojaOmitir toma={omitiendo} onCerrar={() => setOmitiendo(null)} />
     </main>
-  )
-}
-
-function RasgoOscuro({ icono, texto }: { icono: string; texto: string }) {
-  return (
-    <span className="flex size-19 shrink-0 flex-col items-center justify-center gap-1 rounded-md bg-primario px-0.5 text-center text-superficie">
-      <Icono nombre={icono} className="icono-m" />
-      <span className="line-clamp-2 w-full texto-micro normal-case">{texto}</span>
-    </span>
   )
 }
 

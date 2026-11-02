@@ -11,6 +11,16 @@ type RasgoProps = {
   className?: string
 }
 
+/** Rasgo verde sobre una tarjeta oscura (G2, H1). */
+export function RasgoOscuro({ icono, texto }: { icono: string; texto: string }) {
+  return (
+    <span className="flex size-19 shrink-0 flex-col items-center justify-center gap-1 rounded-md bg-primario px-0.5 text-center text-superficie">
+      <Icono nombre={icono} className="icono-m" />
+      <span className="line-clamp-2 w-full texto-micro normal-case">{texto}</span>
+    </span>
+  )
+}
+
 /** Cuadro de 76 px con ícono y dato corto: "Al día", "28 kg", "1 soporte" (componente Rasgo). */
 export function Rasgo({ icono, texto, alerta, exito, className }: RasgoProps) {
   return (

@@ -9,8 +9,8 @@ import { avisarPronto } from "@/lib/pronto"
 const ACCESOS = [
   { nombre: "Salud", icono: "favorite", href: "/salud" },
   { nombre: "Medicamentos", icono: "medication", href: "/medicamentos" },
-  { nombre: "Alimentación", icono: "restaurant" },
-  { nombre: "Hábitos", icono: "pets" },
+  { nombre: "Alimentación", icono: "restaurant", href: "/alimentacion" },
+  { nombre: "Hábitos", icono: "pets", href: "/habitos" },
   { nombre: "Veterinarias", icono: "local_hospital" },
   { nombre: "Calendario", icono: "calendar_month" },
 ]
