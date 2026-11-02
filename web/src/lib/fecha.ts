@@ -68,6 +68,15 @@ export function mesAnio(iso: string) {
   return `${MESES_LARGOS[m - 1]} ${a}`
 }
 
+/** "Samuel Páez" → "samuel_paez", para nombres de archivo. */
+export function normalizarNombreArchivo(texto: string) {
+  return texto
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "_")
+}
+
 const DIAS = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]
 
 /** "2026-09-23" → "Miércoles, 23 de septiembre" (J6). */

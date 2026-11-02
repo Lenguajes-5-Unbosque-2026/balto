@@ -13,6 +13,7 @@ import type { Envio } from "@/lib/datos"
 import type { Evento } from "@/lib/eventos"
 import { HOY, fechaCorta } from "@/lib/fecha"
 import type { PerfilMascota } from "@/lib/perfil"
+import { useDueno } from "@/lib/usar-cuenta"
 import { useEnvios } from "@/lib/usar-envios"
 import { useEventos } from "@/lib/usar-eventos"
 
@@ -21,11 +22,12 @@ type VistaPublicaProps = {
   mascotas: PerfilMascota[]
   eventos: Evento[]
   envios: Envio[]
-  dueno: { nombre: string; telefono: string }
+  dueno: { id: string; nombre: string; telefono: string }
 }
 
 /** L5 · Vista pública del perfil (balto.app/p/<token>) y L6 · Enlace expirado. Quien la abre no necesita cuenta. */
-export function VistaPublica({ token, mascotas, eventos: base, envios, dueno }: VistaPublicaProps) {
+export function VistaPublica({ token, mascotas, eventos: base, envios, dueno: duenoBase }: VistaPublicaProps) {
+  const dueno = useDueno(duenoBase)
   const router = useRouter()
   const previa = useSearchParams().get("vista") === "previa"
   const enlace = useEnvios(envios).find((e) => e.formato === "enlace" && e.token === token)

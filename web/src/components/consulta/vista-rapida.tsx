@@ -22,6 +22,7 @@ import {
   type PerfilMascota,
 } from "@/lib/perfil"
 import { useEventos } from "@/lib/usar-eventos"
+import { useDueno } from "@/lib/usar-cuenta"
 import { useSalud } from "@/lib/usar-salud"
 import { cn } from "@/lib/utils"
 
@@ -30,11 +31,13 @@ const SIN_CONDICIONES: never[] = []
 type VistaRapidaProps = {
   mascotas: PerfilMascota[]
   eventos: Evento[]
-  dueno: { nombre: string; telefono: string }
+  dueno: { id: string; nombre: string; telefono: string }
 }
 
 /** D1 · Vista de acceso rápido: lo que se muestra desde el celular en una consulta o una emergencia. */
-export function VistaRapida({ mascotas, eventos: base, dueno }: VistaRapidaProps) {
+export function VistaRapida({ mascotas, eventos: base, dueno: duenoBase }: VistaRapidaProps) {
+  // Con el teléfono editado en M2.
+  const dueno = useDueno(duenoBase)
   const [mascota] = useMascotaActiva(mascotas)
   const eventos = useEventos(base).filter((e) => e.mascota_id === mascota.id)
   const peso = ultimoPeso(eventos)

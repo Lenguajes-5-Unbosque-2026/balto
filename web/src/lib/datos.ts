@@ -91,11 +91,24 @@ export function anticipacionAvisos(duenoId = DUENO_ACTUAL): number {
   return Number.parseInt(pref.anticipacion, 10) || 0
 }
 
-export type Dueno = { id: string; nombre: string; telefono: string }
+export type Dueno = { id: string; nombre: string; correo: string; ciudad: string; telefono: string }
 
 export function obtenerDueno(duenoId = DUENO_ACTUAL): Dueno {
   const d = leer("duenos").find((x) => x.id === duenoId)!
-  return { id: d.id, nombre: d.nombre, telefono: d.telefono }
+  return { id: d.id, nombre: d.nombre, correo: d.correo, ciudad: d.ciudad, telefono: d.telefono }
+}
+
+/** Preferencias de notificación del dueño (M3). */
+export function obtenerPreferencias(duenoId = DUENO_ACTUAL) {
+  return leer("preferencias_notificacion")
+    .filter((p) => p.dueno_id === duenoId)
+    .map((p) => ({ tipo: p.tipo, activo: p.activo, anticipacion: p.anticipacion }))
+}
+
+export type Pedido = { id: string; numero: string; estado_pago: string; estado_entrega: string; ventana_entrega: string; total: string; fecha: string }
+
+export function obtenerPedidos(duenoId = DUENO_ACTUAL): Pedido[] {
+  return (leer("pedidos") as (Pedido & { dueno_id: string })[]).filter((p) => p.dueno_id === duenoId)
 }
 
 /** Mascotas activas con lo que muestran Inicio y D1, y sus alergias (B4, F5). */
