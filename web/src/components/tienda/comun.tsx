@@ -29,8 +29,11 @@ const SECCIONES = [
 
 export type SeccionTienda = (typeof SECCIONES)[number]["slug"]
 
-/** Las tres casillas de la Tienda: en N1 ninguna va marcada; en cada sección, la actual va en verde. */
-export function SeccionesTienda({ actual }: { actual?: SeccionTienda }) {
+/**
+ * Las tres casillas de la Tienda. En N1 ninguna va marcada y cada una muestra un dato de su sección
+ * (`detalles`); en cada sección, la actual va en verde.
+ */
+export function SeccionesTienda({ actual, detalles }: { actual?: SeccionTienda; detalles?: Partial<Record<SeccionTienda, string>> }) {
   return (
     <nav aria-label="Secciones de la Tienda" className="grid grid-cols-3 gap-2.5">
       {SECCIONES.map((s) => {
@@ -41,14 +44,17 @@ export function SeccionesTienda({ actual }: { actual?: SeccionTienda }) {
             href={s.href}
             aria-current={activa ? "page" : undefined}
             className={cn(
-              "flex h-24 flex-col items-center justify-center gap-2 rounded-lg border px-1 transition-colors",
+              "flex min-h-24 flex-col items-center justify-center gap-2 rounded-lg border px-1 py-3 transition-colors",
               activa ? "border-primario bg-primario text-superficie" : "border-borde-fuerte bg-superficie text-texto active:bg-acento-suave",
             )}
           >
             <span className="grid size-10 place-items-center rounded-completo bg-acento-suave text-primario">
               <Icono nombre={s.icono} className="icono-m" />
             </span>
-            <span className="w-full truncate text-center texto-etiqueta">{s.texto}</span>
+            <span className="flex w-full flex-col items-center">
+              <span className="w-full truncate text-center texto-etiqueta-fuerte">{s.texto}</span>
+              {detalles?.[s.slug] && <span className="w-full truncate text-center texto-micro normal-case text-texto-secundario">{detalles[s.slug]}</span>}
+            </span>
           </Link>
         )
       })}

@@ -27,7 +27,7 @@ import { cn } from "@/lib/utils"
 const sinAnio = (iso: string) => fechaCorta(iso).replace(/ \d{4}$/, "")
 
 /** "Llega mañana entre 8 a. m. y 12 m." a partir de "28 oct · 8 a. m.–12 m.". */
-function textoEntrega(p: PedidoLocal) {
+export function textoEntrega(p: PedidoLocal) {
   const [dia, rango = ""] = p.ventana_entrega.split(" · ")
   if (p.estado_entrega === "entregado") return `Entregado el ${dia}`
   const cuando = dia === sinAnio(HOY) ? "hoy" : dia === sinAnio(sumarDias(HOY, 1)) ? "mañana" : `el ${dia}`
