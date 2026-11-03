@@ -14,7 +14,7 @@ Importa porque convierte el registro en prevención: una vacuna que no se vence 
 
 | ID | Nombre | Qué muestra |
 |---|---|---|
-| J1 | Centro de alertas | "Alertas" con el contador, pestañas Próximas (3) / Resueltas, fichas 1 Urgente / 2 Esta semana / 5 Al día, y las alertas agrupadas ("Esta semana", "Más adelante"). Cada alerta muestra cuándo vence, el título y la mascota, más "Ya lo resolví", posponer y agendar. Arriba, el botón de filtros. Lleva la barra de navegación inferior. |
+| J1 | Centro de alertas | "Alertas" con el contador, pestañas Próximas (3) / Resueltas, fichas 1 Urgente / 2 Esta semana / 5 Al día, y las alertas agrupadas ("Esta semana", "Más adelante"). Cada alerta muestra cuándo vence, el título y la mascota, más "Marcar resuelta" ("Marcar comprado" en el alimento), posponer y agregar al calendario. "Ya lo resolví" se leía como si la alerta ya estuviera resuelta. Arriba, el botón de filtros. Lleva la barra de navegación inferior. |
 | J2 | Detalle de alerta | Cabecera con el título, la mascota, la fecha de vencimiento y fichas (fecha, frecuencia, veterinaria). Texto de la última dosis y "¿Qué quieres hacer?": Ya lo resolví, Agendar cita, Comprar la vacuna, Posponer aviso. |
 | J3 | Posponer aviso | Hoja inferior: Mañana / En 3 días / Elegir fecha y "Posponer". |
 | J4 | Alerta vencida | "Refuerzo antirrábica vencido. Venció hace 3 días, el 25 sep." Nota legal "La antirrábica es obligatoria en Colombia (Ley 576)." Opciones Ya lo resolví / Agendar cita / Comprar la vacuna, y botones "Ya lo resolví" / "Agendar cita". |
@@ -42,7 +42,7 @@ Caso: el refuerzo de la antirrábica de Luna vence el 25 sep. Samuel la registr�
 - **"Más tarde" en la notificación (J6).** Pospone el aviso hasta mañana a la misma hora, igual que J3 con "Mañana".
 - **Comprar la vacuna.** Abre **N5 · Detalle de vacuna y aplicación** con esa vacuna (flujo N).
 - **Vencida (J4).** Si pasa la fecha de vencimiento sin resolverla, la alerta cambia a J4 y cuenta como "Urgente". Llega una notificación el día siguiente al vencimiento. Las acciones son las mismas de J2, sin Posponer.
-- **Ícono de calendario en la tarjeta.** Abre **K6 · Calendario unificado** en el día en que vence la alerta. "Agendar cita" sigue en J2 y J4.
+- **Ícono de calendario en la tarjeta.** Abre la hoja "Agregar al calendario": Google Calendar (pestaña nueva) o "Calendario del celular" (descarga un .ics para Apple, Outlook u otro). Es un evento de día completo el día en que vence, con aviso un día antes. "Agendar cita" sigue en J2 y J4.
 - **Filtros (J8).** El botón de filtros de J1 abre **J8**, con Mascota (Todas, Luna, Toby…) y Tipo (vacunas, desparasitación, controles, alimento, salud). "Aplicar" filtra J1 y "Limpiar" quita los filtros.
 - **Sin pendientes (J7).** "Ver alertas resueltas" abre la pestaña Resueltas. "Próxima: …" abre el J2 de esa alerta.
 
