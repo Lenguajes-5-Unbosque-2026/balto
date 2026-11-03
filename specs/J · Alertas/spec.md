@@ -15,9 +15,9 @@ Importa porque convierte el registro en prevención: una vacuna que no se vence 
 | ID | Nombre | Qué muestra |
 |---|---|---|
 | J1 | Centro de alertas | "Alertas" con el contador, pestañas Próximas (3) / Resueltas, fichas 1 Urgente / 2 Esta semana / 5 Al día, y las alertas agrupadas ("Esta semana", "Más adelante"). Cada alerta muestra cuándo vence, el título y la mascota, más "Marcar resuelta" ("Marcar comprado" en el alimento), posponer y agregar al calendario. "Ya lo resolví" se leía como si la alerta ya estuviera resuelta. Arriba, el botón de filtros. Lleva la barra de navegación inferior. |
-| J2 | Detalle de alerta | Cabecera con el título, la mascota, la fecha de vencimiento y fichas (fecha, frecuencia, veterinaria). Texto de la última dosis y "¿Qué quieres hacer?": Ya lo resolví, Agendar cita, Comprar la vacuna, Posponer aviso. |
+| J2 | Detalle de alerta | Cabecera con el título, la mascota, la fecha de vencimiento y fichas (fecha, frecuencia, veterinaria). Texto de la última dosis y "¿Qué quieres hacer?": Marcar resuelta, Agendar cita, Comprar la vacuna, Posponer aviso. |
 | J3 | Posponer aviso | Hoja inferior: Mañana / En 3 días / Elegir fecha y "Posponer". |
-| J4 | Alerta vencida | "Refuerzo antirrábica vencido. Venció hace 3 días, el 25 sep." Nota legal "La antirrábica es obligatoria en Colombia (Ley 576)." Opciones Ya lo resolví / Agendar cita / Comprar la vacuna, y botones "Ya lo resolví" / "Agendar cita". |
+| J4 | Alerta vencida | "Refuerzo antirrábica vencido. Venció hace 3 días, el 25 sep." Nota legal "La antirrábica es obligatoria en Colombia (Ley 576)." Opciones Marcar resuelta / Agendar cita / Comprar la vacuna, y botones "Marcar resuelta" / "Agendar cita". |
 | J5 | Alerta resuelta | "Alerta resuelta. La antirrábica quedó registrada y programamos el próximo refuerzo.", la tarjeta del evento, el aviso del próximo refuerzo y los botones "Volver a alertas" / "Ver línea de tiempo". |
 | J6 | Aviso de vacuna | Notificación: "A Luna le toca el refuerzo · Antirrábica · vence en 2 días (25 sep)", con "Ver alerta" / "Más tarde". La nota "Puedes cambiar cuándo te avisamos en Ajustes › Notificaciones" y "Abrir la app". |
 | J7 | Sin alertas pendientes | "Todo al día. Luna y Toby no tienen nada pendiente esta semana.", "Ver alertas resueltas · 8 este año" y "Próxima: control de peso · 5 oct". |
@@ -31,7 +31,7 @@ Caso: el refuerzo de la antirrábica de Luna vence el 25 sep. Samuel la registr�
 2. **Detalle (J2).** Ve "vence el 25 sep (en 2 días) · Anual · Vet. Norte" y "La última dosis fue el 25 sep 2025 en Clínica Veterinaria Norte".
 3. **Agendar (K).** Toca **Agendar cita** → **K3 · Listado de proveedores**, filtrado por el servicio "Vacunación" y con Vet. Norte primero. Agenda la cita (K5 → K9).
 4. **Resolver (E2 → J5).**
-   - El día de la cita vuelve a J1 y toca **Ya lo resolví** en la tarjeta. Se abre **E2** con la vacuna (Antirrábica), la mascota (Luna) y la fecha (hoy) ya llenos.
+   - El día de la cita vuelve a J1 y toca **Marcar resuelta** en la tarjeta. Se abre **E2** con la vacuna (Antirrábica), la mascota (Luna) y la fecha (hoy) ya llenos.
    - Samuel adjunta la foto del carnet y toca **Guardar evento**.
    - En lugar de E9 se muestra **J5**: "Alerta resuelta", la tarjeta del evento y "Te avisaremos 7 días antes del refuerzo, el 18 sep 2027".
 5. **Después.** "Volver a alertas" → J1, donde la alerta ya está en la pestaña Resueltas. "Ver línea de tiempo" → **D2**.
@@ -42,20 +42,20 @@ Caso: el refuerzo de la antirrábica de Luna vence el 25 sep. Samuel la registr�
 - **"Más tarde" en la notificación (J6).** Pospone el aviso hasta mañana a la misma hora, igual que J3 con "Mañana".
 - **Comprar la vacuna.** Abre **N5 · Detalle de vacuna y aplicación** con esa vacuna (flujo N).
 - **Vencida (J4).** Si pasa la fecha de vencimiento sin resolverla, la alerta cambia a J4 y cuenta como "Urgente". Llega una notificación el día siguiente al vencimiento. Las acciones son las mismas de J2, sin Posponer.
-- **Ícono de calendario en la tarjeta.** Abre la hoja "Agregar al calendario": Google Calendar (pestaña nueva) o "Calendario del celular" (descarga un .ics para Apple, Outlook u otro). Es un evento de día completo el día en que vence, con aviso un día antes. "Agendar cita" sigue en J2 y J4.
+- **Ícono de calendario en la tarjeta.** Agrega la alerta a **K6 · Calendario** de Balto y avisa arriba ("Agregada al calendario de Balto"). Luego abre la hoja "Agregar al calendario" con "En el calendario de Balto" (abre K6 en ese día) y, para llevarla también a otro calendario, Google Calendar (pestaña nueva) o "Calendario del celular" (descarga un .ics con aviso un día antes). En K6 las alertas agregadas salen marcadas en el mes y en "Alertas agregadas". Si ya estaba agregada, el aviso dice "Ya está en el calendario de Balto" y el ícono cambia. "Agendar cita" sigue en J2 y J4.
 - **Filtros (J8).** El botón de filtros de J1 abre **J8**, con Mascota (Todas, Luna, Toby…) y Tipo (vacunas, desparasitación, controles, alimento, salud). "Aplicar" filtra J1 y "Limpiar" quita los filtros.
 - **Sin pendientes (J7).** "Ver alertas resueltas" abre la pestaña Resueltas. "Próxima: …" abre el J2 de esa alerta.
 
 ## Tipos de alerta
 
-| Tipo | Se crea desde | "Ya lo resolví" hace |
+| Tipo | Se crea desde | "Marcar resuelta" hace |
 |---|---|---|
 | Refuerzo de vacuna | E2 / C8, con próximo refuerzo y recordatorio encendido | Abre E2 con los datos llenos |
 | Próxima desparasitación | E10 / C8, con próxima dosis y recordatorio encendido | Abre E10 con los datos llenos |
 | Próximo control de examen | E4 / F7, con "Próximo control" | Abre E4 con el tipo de examen lleno |
 | Control de peso | Automática: la última medición tiene más de 30 días | Abre E6 |
 | Cambio brusco de peso | F4: variación de más del 10 % en un mes | "Entendido" (solo marca como vista) |
-| Alimento por acabarse | H: 5 días o menos de alimento | "Ya compré" (reinicia la bolsa en H) o "Comprar" (N2) |
+| Alimento por acabarse | H: 5 días o menos de alimento | "Marcar comprado" (reinicia la bolsa en H) o "Comprar" (N2) |
 
 ## Estados
 
@@ -75,7 +75,7 @@ Caso: el refuerzo de la antirrábica de Luna vence el 25 sep. Samuel la registr�
 
 ## Qué pasa después
 
-- **Ya lo resolví** → formulario de E del tipo, con los datos llenos → al guardar, **J5** en vez de E9. Si el nuevo evento tiene próxima fecha y recordatorio, crea la alerta siguiente.
+- **Marcar resuelta** → formulario de E del tipo, con los datos llenos → al guardar, **J5** en vez de E9. Si el nuevo evento tiene próxima fecha y recordatorio, crea la alerta siguiente.
 - **Agendar cita** → **K3** filtrado por el servicio → **K5 / K9**. La cita queda en **K6 · Calendario unificado**.
 - **Comprar la vacuna** → **N5**.
 - **Editar o eliminar** el evento de origen en **D** actualiza o borra su alerta.
@@ -118,7 +118,7 @@ Caso: el refuerzo de la antirrábica de Luna vence el 25 sep. Samuel la registr�
 Decisiones tomadas:
 - J1 es la pestaña de alertas de la barra inferior y muestra las alertas de todas las mascotas.
 - Fichas: Urgente = vencidas; Esta semana = 7 días o menos; Al día = más adelante.
-- "Ya lo resolví" abre el formulario de E del tipo con los datos llenos y, al guardar, muestra J5.
+- "Marcar resuelta" abre el formulario de E del tipo con los datos llenos y, al guardar, muestra J5.
 - "Agendar cita" lleva a K3 filtrado por el servicio. "Comprar la vacuna" lleva a N5.
 - Posponer mueve el aviso, no el vencimiento. "Más tarde" en J6 = mañana.
 - El control de peso mensual es una alerta automática si no hay medición en 30 días.

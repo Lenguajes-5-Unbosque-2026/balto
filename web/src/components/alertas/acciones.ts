@@ -11,7 +11,7 @@ import { resolverAlerta } from "@/lib/usar-alertas"
 export function useAccionesAlerta() {
   const router = useRouter()
   return {
-    /** "Ya lo resolví": abre el formulario de E lleno, con la mascota de la alerta. */
+    /** "Marcar resuelta": abre el formulario de E lleno, con la mascota de la alerta. */
     resolver(a: AlertaVista) {
       const ruta = rutaResolver(a)
       if (!ruta) {

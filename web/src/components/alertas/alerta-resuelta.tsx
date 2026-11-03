@@ -24,7 +24,7 @@ type AlertaResueltaProps = {
   anticipacion: number
 }
 
-/** J5 · Alerta resuelta: se muestra en lugar de E9 al guardar desde "Ya lo resolví". */
+/** J5 · Alerta resuelta: se muestra en lugar de E9 al guardar desde "Marcar resuelta". */
 export function AlertaResuelta({ alertas, eventos: base, mascotas, marcas, anticipacion }: AlertaResueltaProps) {
   const parametros = useSearchParams()
   const eventos = useEventos(base)

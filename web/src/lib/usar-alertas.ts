@@ -14,9 +14,9 @@ import { useEventos } from "@/lib/usar-eventos"
 const CLAVE = "balto:alertas"
 
 /** Lo que cambió el dueño en una alerta desde este navegador. */
-type CambioAlerta = { resuelta?: string; evento_resolucion_id?: string; pospuesta?: string }
+type CambioAlerta = { resuelta?: string; evento_resolucion_id?: string; pospuesta?: string; en_calendario?: string }
 
-/** "Ya lo resolví" (J5): la alerta pasa a Resueltas con el evento que la resolvió. */
+/** "Marcar resuelta" (J5): la alerta pasa a Resueltas con el evento que la resolvió. */
 export function resolverAlerta(id: string, eventoId?: string) {
   guardarEnMapa<CambioAlerta>(CLAVE, id, { resuelta: HOY, evento_resolucion_id: eventoId ?? "" })
 }
@@ -24,6 +24,11 @@ export function resolverAlerta(id: string, eventoId?: string) {
 /** J3: mueve el aviso, no el vencimiento. */
 export function posponerAlerta(id: string, fecha: string) {
   guardarEnMapa<CambioAlerta>(CLAVE, id, { pospuesta: fecha })
+}
+
+/** Ícono de calendario de J1: la alerta queda en K6 · Calendario de Balto. */
+export function agregarAlertaAlCalendario(id: string) {
+  guardarEnMapa<CambioAlerta>(CLAVE, id, { en_calendario: HOY })
 }
 
 export type MascotaAlerta = { id: string; nombre: string; imagen: string }
@@ -77,6 +82,7 @@ export function useAlertas(base: Alerta[], eventosBase: Evento[], mascotas: Masc
           mascota,
           grupo: resuelta ? "resuelta" : grupoAlerta(a.fecha_vencimiento),
           pospuesta: c?.pospuesta || a.fecha_aviso_pospuesto || undefined,
+          en_calendario: !!c?.en_calendario,
         },
       ]
     })

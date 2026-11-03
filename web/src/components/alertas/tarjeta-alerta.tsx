@@ -63,7 +63,11 @@ export function TarjetaAlertaGrande({ alerta: a, oscura, onResolver, onPosponer,
           <Icono nombre="check" className="hidden icono-m movil-m:inline-block" />
         </button>
         <BotonRedondo icono="snooze" etiqueta="Posponer aviso" onClick={onPosponer} />
-        <BotonRedondo icono="calendar_add_on" etiqueta="Agregar al calendario" onClick={onCalendario} />
+        <BotonRedondo
+          icono={a.en_calendario ? "event_available" : "calendar_add_on"}
+          etiqueta={a.en_calendario ? "En el calendario de Balto" : "Agregar al calendario"}
+          onClick={onCalendario}
+        />
       </div>
     </article>
   )

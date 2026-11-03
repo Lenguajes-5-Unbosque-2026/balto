@@ -14,12 +14,16 @@ import { Estado } from "@/components/estado"
 import { FilaOpcion } from "@/components/fila-opcion"
 import { Icono } from "@/components/icono"
 import { Rasgo } from "@/components/rasgo"
+import { ICONOS_ALERTA, tituloAlertaVista } from "@/lib/alertas"
 import type { Cita, Veterinaria } from "@/lib/datos"
+import type { Evento } from "@/lib/eventos"
 import { veterinariaCorta } from "@/lib/eventos"
 import { HOY, fechaCorta, fechaLarga } from "@/lib/fecha"
 import { hora12 } from "@/lib/medicamentos"
 import { archivoIcs, distanciaKm, iconoServicio, puntoDe, rutaMapa, textoKm } from "@/lib/proveedores"
 import { guardarCita, puntoReferencia, useCitas, useUbicacion } from "@/lib/usar-proveedores"
+import type { Alerta } from "@/lib/perfil"
+import { useAlertas, type MascotaAlerta } from "@/lib/usar-alertas"
 import { useVolver } from "@/lib/usar-salud"
 import { cn } from "@/lib/utils"
 
@@ -226,17 +230,27 @@ export function DetalleCita({ proveedores, mascotas, citas: base }: CitasProps) 
   )
 }
 
-/** K6 · Calendario unificado: las citas de todas las mascotas. */
-export function CalendarioCitas({ proveedores, mascotas, citas: base }: CitasProps) {
+type CalendarioProps = CitasProps & {
+  /** Datos de J para mostrar las alertas agregadas desde J1. */
+  recordatorios: { alertas: Alerta[]; eventos: Evento[]; mascotas: MascotaAlerta[]; marcas: Record<string, string> }
+}
+
+/** K6 · Calendario unificado: las citas de todas las mascotas y las alertas agregadas desde J1. */
+export function CalendarioCitas({ proveedores, mascotas, citas: base, recordatorios: r }: CalendarioProps) {
   const volver = useVolver("/")
   const citas = useCitas(base).filter((c) => c.estado !== "cancelada")
+  const alertas = useAlertas(r.alertas, r.eventos, r.mascotas, r.marcas)
+    .filter((a) => a.en_calendario && a.grupo !== "resuelta")
+    .sort((a, b) => a.fecha_vencimiento.localeCompare(b.fecha_vencimiento))
   // ?fecha=AAAA-MM-DD (desde una alerta de J1) abre ese mes con el día elegido.
   const fecha = useSearchParams().get("fecha")
   const inicial = fecha && /^\d{4}-\d{2}-\d{2}$/.test(fecha) ? fecha : null
   const [mes, setMes] = useState(`${(inicial ?? HOY).slice(0, 7)}-01`)
   const [dia, setDia] = useState<string | null>(inicial)
-  const conCita = new Set(citas.map((c) => c.fecha_hora.slice(0, 10)))
+  const marcados = new Set([...citas.map((c) => c.fecha_hora.slice(0, 10)), ...alertas.map((a) => a.fecha_vencimiento)])
   const lista = dia ? citas.filter((c) => c.fecha_hora.startsWith(dia)) : citas.filter((c) => c.fecha_hora.slice(0, 10) >= HOY)
+  // Sin día elegido van todas las pendientes, también las vencidas.
+  const avisos = dia ? alertas.filter((a) => a.fecha_vencimiento === dia) : alertas
 
   return (
     <main className="flex flex-1 flex-col gap-4 px-pantalla pt-14 pb-10">
@@ -245,7 +259,7 @@ export function CalendarioCitas({ proveedores, mascotas, citas: base }: CitasPro
         izquierda={<BotonIcono icono="arrow_back" etiqueta="Volver" onClick={volver} />}
         derecha={<BotonIconoEnlace href="/veterinarias" icono="add" etiqueta="Agendar cita" />}
       />
-      <CalendarioMes mes={mes} onMes={setMes} seleccionado={dia ?? HOY} onElegir={(f) => setDia(f === dia ? null : f)} marcados={conCita} />
+      <CalendarioMes mes={mes} onMes={setMes} seleccionado={dia ?? HOY} onElegir={(f) => setDia(f === dia ? null : f)} marcados={marcados} />
       <h2 className="texto-titulo-seccion text-texto">{dia ? `Citas del ${fechaCorta(dia)}` : "Próximas citas"}</h2>
       {lista.length === 0 ? (
         <div className="flex flex-col gap-4 pt-2">
@@ -271,6 +285,24 @@ export function CalendarioCitas({ proveedores, mascotas, citas: base }: CitasPro
             )
           })}
         </div>
+      )}
+      {avisos.length > 0 && (
+        <>
+          <h2 className="mt-2 texto-titulo-seccion text-texto">Alertas agregadas</h2>
+          <div className="flex flex-col gap-3">
+            {avisos.map((a) => (
+              <FilaOpcion
+                key={a.id}
+                borde
+                tono={a.grupo === "vencida" ? "error" : "neutro"}
+                icono={ICONOS_ALERTA[a.tipo]}
+                titulo={tituloAlertaVista(a)}
+                detalle={`${a.mascota.nombre} · ${a.grupo === "vencida" ? "venció" : "vence"} el ${fechaCorta(a.fecha_vencimiento).replace(/ \d{4}$/, "")}`}
+                href={`/alertas/detalle?id=${a.id}`}
+              />
+            ))}
+          </div>
+        </>
       )}
     </main>
   )

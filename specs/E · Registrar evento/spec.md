@@ -69,7 +69,7 @@ Caso: Valentina registra la vacuna antirrábica que le pusieron a Luna el 12/09/
 - **Cambiar de tipo dentro del formulario.** Los chips de arriba (E2–E6, E10, E11) cambian el formulario sin volver a E1. El chip del tipo actual aparece primero y activo. En E7, el selector segmentado cambia entre Alimentación y Comportamiento.
   - Al cambiar de tipo se conservan la fecha y los soportes. Los campos propios del tipo anterior se descartan sin preguntar.
 - **Cambiar de mascota.** Todos los formularios muestran el selector de mascota del encabezado, como E2.
-- **Desde una alerta (J).** "Ya lo resolví" abre el formulario del tipo con los datos llenos. Al guardar se muestra **J5 · Alerta resuelta** en lugar de E9.
+- **Desde una alerta (J).** "Marcar resuelta" abre el formulario del tipo con los datos llenos. Al guardar se muestra **J5 · Alerta resuelta** en lugar de E9.
 - **Tratamiento (E5).** La fila "Crear horarios de toma" abre **G4 · Definir horarios de toma**. Al confirmar, vuelve a E5 con los horarios en la fila (por ejemplo, "08:00 · 20:00").
 - **Peso (E6).** Mientras escribe el peso, el dueño ve la gráfica de los últimos 6 meses (la última barra es la medición nueva) y la diferencia con el mes anterior ("+0,3 kg frente al mes anterior").
 - **Galería.** "Elegir de la galería" en E8 abre el selector de fotos del teléfono y adjunta la foto sin pasar por E12, que solo se usa con la cámara. Las fotos HEIC del iPhone se convierten a JPG en el teléfono antes de subirlas.

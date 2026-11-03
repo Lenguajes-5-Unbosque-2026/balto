@@ -102,7 +102,7 @@ export function DetalleAlerta({ alertas, eventos, mascotas, marcas }: DetalleAle
         )}
         {opciones}
         <BarraAccion>
-          <Boton onClick={() => acciones.resolver(alerta)}>{alerta.tipo === "alimento_por_acabarse" ? "Ya compré" : "Ya lo resolví"}</Boton>
+          <Boton onClick={() => acciones.resolver(alerta)}>{alerta.tipo === "alimento_por_acabarse" ? "Marcar comprado" : "Marcar resuelta"}</Boton>
           {alerta.tipo === "alimento_por_acabarse" ? (
             <Boton variante="secundario" onClick={() => acciones.comprar(alerta)}>
               Comprar
@@ -174,7 +174,7 @@ function Opciones({ alerta: a, vencida, acciones, onPosponer }: OpcionesProps) {
         borde={!vencida}
         tono="exito"
         icono="check_circle"
-        titulo={esAlimento ? "Ya compré" : "Ya lo resolví"}
+        titulo={esAlimento ? "Marcar comprado" : "Marcar resuelta"}
         detalle={detalleResolver(a)}
         onClick={() => acciones.resolver(a)}
       />

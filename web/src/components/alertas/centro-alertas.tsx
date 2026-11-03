@@ -3,7 +3,7 @@
 import { useState } from "react"
 
 import { useAccionesAlerta } from "@/components/alertas/acciones"
-import { HojaCalendario } from "@/components/alertas/hoja-calendario"
+import { HojaCalendario, agregarAlCalendarioDeBalto } from "@/components/alertas/hoja-calendario"
 import { HojaFiltrosAlertas, SIN_FILTROS, type FiltrosAlertas } from "@/components/alertas/hoja-filtros-alertas"
 import { HojaPosponer } from "@/components/alertas/hoja-posponer"
 import { TarjetaAlertaCompacta, TarjetaAlertaGrande, TarjetaAlertaResuelta } from "@/components/alertas/tarjeta-alerta"
@@ -110,7 +110,10 @@ export function CentroAlertas({ alertas: base, eventos, mascotas, marcas }: Cent
                 oscura={i === 0}
                 onResolver={() => acciones.resolver(a)}
                 onPosponer={() => setPosponiendo(a.id)}
-                onCalendario={() => setAlCalendario(a)}
+                onCalendario={() => {
+                  agregarAlCalendarioDeBalto(a)
+                  setAlCalendario({ ...a, en_calendario: true })
+                }}
               />
             </div>
           ))}
