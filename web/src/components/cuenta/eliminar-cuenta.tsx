@@ -58,7 +58,7 @@ export function CuentaEliminada() {
       </div>
       <Nota icono="mail">Si fue un error, escríbenos en los próximos 30 días.</Nota>
       <BarraAccion>
-        <BotonEnlace href="/">Volver al inicio</BotonEnlace>
+        <BotonEnlace href="/bienvenida">Volver al inicio</BotonEnlace>
       </BarraAccion>
     </main>
   )

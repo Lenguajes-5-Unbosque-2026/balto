@@ -15,6 +15,7 @@ import { PasoHorarios, type Horarios } from "@/components/medicamentos/paso-hora
 import { Nota } from "@/components/nota"
 import { Pasos } from "@/components/pasos"
 import { BloqueSoporte, textoTamano, type Adjunto } from "@/components/registro/bloque-soporte"
+import { puedeVolver } from "@/lib/navegacion"
 import { HOY, diasEntre, sumarDias } from "@/lib/fecha"
 import { useMascotaActiva } from "@/lib/mascota-activa"
 import { nombreTratamiento } from "@/lib/medicamentos"
@@ -52,7 +53,7 @@ export function AgregarMedicamento({ mascotas }: { mascotas: { id: string; nombr
   }
 
   function salir() {
-    if (window.history.length > 1) router.back()
+    if (puedeVolver()) router.back()
     else router.push("/medicamentos")
   }
 
@@ -153,7 +154,7 @@ export function AgregarMedicamento({ mascotas }: { mascotas: { id: string; nombr
           <Campo etiqueta="Dosis" icono="straighten" placeholder="1 cápsula" valor={d.dosis} onCambio={set("dosis")} />
           <Campo etiqueta="Cada" icono="schedule" placeholder="12 horas" valor={d.cada} onCambio={set("cada")} />
         </div>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid movil-m:grid-cols-2 gap-3">
           <Campo etiqueta="Desde" type="date" icono="event" valor={d.desde} onCambio={set("desde")} />
           <Campo etiqueta="Hasta" type="date" icono="event_busy" valor={d.hasta} onCambio={set("hasta")} />
         </div>

@@ -79,7 +79,7 @@ export function BandejaNotificaciones({ alertas, eventos, mascotas, marcas, pedi
         icono: p.estado_pago === "rechazado" ? "credit_card_off" : "local_shipping",
         titulo: p.estado_pago === "rechazado" ? "Pago rechazado" : "Tu pedido salió",
         detalle: `Pedido #${p.numero} · ${hace(p.fecha)}`,
-        href: "/tienda",
+        href: `/tienda/pedido?id=${p.id}`,
         orden: p.fecha,
       })),
   ]

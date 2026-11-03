@@ -54,7 +54,7 @@ function Contenido({ filtros, onAplicar }: Pick<HojaFiltrosProps, "filtros" | "o
         ))}
       </div>
       <span className="texto-micro text-texto-secundario">Rango de fechas</span>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid movil-m:grid-cols-2 gap-3">
         <Campo etiqueta="Desde" type="date" valor={desde} onCambio={setDesde} />
         <Campo etiqueta="Hasta" type="date" valor={hasta} onCambio={setHasta} />
       </div>

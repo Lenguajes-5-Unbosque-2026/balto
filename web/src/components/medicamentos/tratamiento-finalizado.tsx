@@ -1,5 +1,6 @@
 "use client"
 
+import { BotonIconoEnlace } from "@/components/boton-icono"
 import { useSearchParams } from "next/navigation"
 
 import { BarraAccion } from "@/components/barra-accion"
@@ -23,7 +24,7 @@ export function TratamientoFinalizado({ mascotas, ...datos }: FinalizadoProps) {
 
   return (
     <main className="flex flex-1 flex-col gap-5 px-pantalla pt-14">
-      <Encabezado titulo="Tratamiento" />
+      <Encabezado titulo="Tratamiento" derecha={<BotonIconoEnlace href="/medicamentos" icono="close" etiqueta="Cerrar" />} />
       <div className="pt-6">
         <Estado
           tono="exito"

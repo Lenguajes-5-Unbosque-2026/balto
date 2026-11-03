@@ -11,6 +11,8 @@ export type AlertaVista = Alerta & {
   grupo: "vencida" | "semana" | "adelante" | "resuelta"
   /** Fecha a la que se movió el aviso (J3). */
   pospuesta?: string
+  /** Se agregó a K6 · Calendario de Balto desde J1. */
+  en_calendario?: boolean
 }
 
 export const ICONOS_ALERTA: Record<Alerta["tipo"], string> = {
@@ -133,7 +135,7 @@ export function queSeRegistra(a: AlertaVista) {
 }
 
 /**
- * "Ya lo resolví": el formulario de E del tipo con los datos llenos (spec de J).
+ * "Marcar resuelta": el formulario de E del tipo con los datos llenos (spec de J).
  * El alimento no abre formulario: se marca como comprado ahí mismo.
  */
 export function rutaResolver(a: AlertaVista) {
@@ -165,7 +167,7 @@ export function rutaResolver(a: AlertaVista) {
   }
 }
 
-/** Subtítulo de "Ya lo resolví" en J2 y J4. */
+/** Subtítulo de "Marcar resuelta" en J2 y J4. */
 export function detalleResolver(a: AlertaVista) {
   switch (a.tipo) {
     case "refuerzo_vacuna":

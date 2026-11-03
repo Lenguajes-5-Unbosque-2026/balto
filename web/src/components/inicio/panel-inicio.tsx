@@ -6,7 +6,8 @@ import { SelectorMascotas } from "@/components/inicio/selector-mascotas"
 import { TarjetaMascota } from "@/components/inicio/tarjeta-mascota"
 import { TarjetaProximo } from "@/components/inicio/tarjeta-proximo"
 import type { Evento } from "@/lib/eventos"
-import { useMascotaActiva, useMascotas } from "@/lib/mascota-activa"
+import { SinMascotas } from "@/components/inicio/sin-mascotas"
+import { useCambiosMascotas, useMascotaActiva, useMascotas, useMascotasNuevas } from "@/lib/mascota-activa"
 import { proximaAlerta, type Alerta, type PerfilMascota } from "@/lib/perfil"
 import { useAlertas } from "@/lib/usar-alertas"
 import { useDueno } from "@/lib/usar-cuenta"
@@ -31,6 +32,12 @@ export function PanelInicio({ dueno: duenoBase, mascotas: base, eventos: eventos
   // Sin las resueltas en J ni las de eventos eliminados en D7.
   const vigentes = useAlertas(alertas, eventosBase, mascotas, SIN_MARCAS).filter((a) => a.grupo !== "resuelta")
   const alerta = proximaAlerta(vigentes, mascota.id)
+  const cambios = useCambiosMascotas()
+  const nuevas = useMascotasNuevas()
+  const activas = [...base.map((m) => m.id), ...Object.keys(nuevas)].filter((id) => !cambios[id]?.archivada)
+
+  // O1 · Sin mascotas activas: no terminó B o archivó la única que tenía.
+  if (activas.length === 0) return <SinMascotas dueno={dueno.nombre} mascotas={base} />
 
   return (
     <div className="flex flex-col gap-5 px-pantalla pt-12">

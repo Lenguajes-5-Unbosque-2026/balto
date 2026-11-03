@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 
 import { rutaResolver, type AlertaVista } from "@/lib/alertas"
-import { avisarPronto } from "@/lib/pronto"
 import { guardarMascotaActiva } from "@/lib/registro-local"
 import { resolverAlerta } from "@/lib/usar-alertas"
 
@@ -12,7 +11,7 @@ import { resolverAlerta } from "@/lib/usar-alertas"
 export function useAccionesAlerta() {
   const router = useRouter()
   return {
-    /** "Ya lo resolví": abre el formulario de E lleno, con la mascota de la alerta. */
+    /** "Marcar resuelta": abre el formulario de E lleno, con la mascota de la alerta. */
     resolver(a: AlertaVista) {
       const ruta = rutaResolver(a)
       if (!ruta) {
@@ -30,8 +29,9 @@ export function useAccionesAlerta() {
       router.push(`/veterinarias?servicio=${servicio}&alerta=${a.id}`)
     },
     /** "Comprar la vacuna" (N5) o el alimento (N2). */
-    comprar() {
-      avisarPronto("Tienda")
+    comprar(a: AlertaVista) {
+      guardarMascotaActiva(a.mascota_id)
+      router.push(a.tipo === "alimento_por_acabarse" ? "/tienda/alimentos" : `/tienda/vacuna?mascota=${a.mascota_id}&alerta=${a.id}`)
     },
   }
 }

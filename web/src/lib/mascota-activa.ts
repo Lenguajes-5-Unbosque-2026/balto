@@ -48,14 +48,53 @@ export function aplicarCambios<T extends { id: string }>(m: T, c?: CambiosMascot
   return r as T
 }
 
-/** Mascotas activas con los cambios de M18 y sin las archivadas en M13. */
+const CLAVE_NUEVAS = "balto:mascotas-nuevas"
+
+/** Mascota registrada en B desde este navegador. */
+export type MascotaNueva = {
+  id: string
+  dueno_id: string
+  nombre: string
+  especie: "perro" | "gato"
+  raza: string
+  sexo: string
+  fecha_nacimiento: string
+  esterilizada: string
+  microchip: string
+  cedula: string
+  fecha_emision_cedula: string
+  imagen: string
+  alergias: string[]
+}
+
+export function guardarMascotaNueva(m: MascotaNueva) {
+  guardarEnMapa<MascotaNueva>(CLAVE_NUEVAS, m.id, m)
+}
+
+export function useMascotasNuevas() {
+  return useMapaLocal<MascotaNueva>(CLAVE_NUEVAS)
+}
+
+/** La mascota nueva con todas las formas que usan las pantallas (perfil, básica, fila del CSV). */
+export function completarNueva(m: MascotaNueva) {
+  return {
+    ...m,
+    estado: "activa",
+    edad: m.fecha_nacimiento ? edad(m.fecha_nacimiento) : "",
+    detalle: [mayuscula(m.especie), m.raza, mayuscula(m.sexo), m.fecha_nacimiento && edad(m.fecha_nacimiento)].filter(Boolean).join(" · "),
+  }
+}
+
+/** Mascotas activas con los cambios de M18, las nuevas de B y sin las archivadas en M13. */
 export function useMascotas<T extends { id: string }>(base: T[]) {
   const cambios = useCambiosMascotas()
+  const nuevas = useMascotasNuevas()
   return useMemo(() => {
-    const activas = base.filter((m) => !cambios[m.id]?.archivada).map((m) => aplicarCambios(m, cambios[m.id]))
+    const todas = [...base, ...Object.values(nuevas).map((m) => completarNueva(m) as unknown as T)]
+    const activas = todas.filter((m) => !cambios[m.id]?.archivada).map((m) => aplicarCambios(m, cambios[m.id]))
     // Sin mascotas activas la app mostraría O1; mientras tanto se sigue usando la primera.
     return activas.length ? activas : base.slice(0, 1)
-  }, [base, cambios])
+  }, [base, cambios, nuevas])
 }
 
 function suscribir(aviso: () => void) {

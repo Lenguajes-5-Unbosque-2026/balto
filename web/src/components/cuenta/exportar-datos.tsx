@@ -61,7 +61,7 @@ export function ExportarDatos({ dueno: duenoBase, mascotas: base, eventos: event
   if (listo) {
     return (
       <main className="flex flex-1 flex-col gap-4 px-pantalla pt-14">
-        <Encabezado titulo="Exportar mis datos" />
+        <Encabezado titulo="Exportar mis datos" izquierda={<BotonIcono icono="arrow_back" etiqueta="Volver" onClick={() => setListo(false)} />} />
         <div className="pt-4">
           <Estado
             icono="folder_zip"

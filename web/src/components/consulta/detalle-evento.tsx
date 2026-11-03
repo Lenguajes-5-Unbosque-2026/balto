@@ -23,6 +23,7 @@ import {
   type Evento,
   type Soporte,
 } from "@/lib/eventos"
+import { puedeVolver } from "@/lib/navegacion"
 import { fechaCorta } from "@/lib/fecha"
 import { eliminarEvento } from "@/lib/registro-local"
 import { useEventos } from "@/lib/usar-eventos"
@@ -38,7 +39,7 @@ export function DetalleEvento({ eventos: base, dueno }: { eventos: Evento[]; due
   const [confirmar, setConfirmar] = useState(false)
 
   function volver() {
-    if (window.history.length > 1) router.back()
+    if (puedeVolver()) router.back()
     else router.push("/linea-de-tiempo")
   }
 

@@ -39,3 +39,4 @@ e37,m04,vacuna,2025-10-05,carga_inicial,v10,Veterinaria San Francisco de Asís,A
 e38,m04,examen,2026-01-22,carga_inicial,v05,,,,,,,,,,,Perfil renal,VetLab Diagnóstico,"Creatinina levemente elevada (1,7 mg/dl).",alterado,Dr. Ramírez,2026-07-22,,,,,,,,,,,2026-10-02,
 e39,m04,peso,2026-01-22,carga_inicial,,,,,,,,,,,,,,,,,,,,,,12.5,,,,,,2026-10-02,
 e40,m04,consulta,2026-01-22,carga_inicial,v10,Veterinaria San Francisco de Asís,,,,,,,Control geriátrico,Enfermedad renal crónica en estadio 1,Dieta renal y perfil renal cada 6 meses.,,,,,,,,,,,,,,,,,2026-10-02,
+e41,m02,vacuna,2025-10-30,carga_inicial,v02,VetCentro Chapinero,Tos de las perreras · Bronchi-Shield,K3307,2026-10-30,,,,,,,,,,,,,,,,,,,,,,true,2026-09-23,

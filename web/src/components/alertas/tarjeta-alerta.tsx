@@ -22,11 +22,11 @@ type TarjetaGrandeProps = {
   oscura?: boolean
   onResolver: () => void
   onPosponer: () => void
-  onAgendar: () => void
+  onCalendario: () => void
 }
 
-/** Alerta vencida o de esta semana, con "Ya lo resolví", posponer y agendar (componente Tarjeta de alerta). */
-export function TarjetaAlertaGrande({ alerta: a, oscura, onResolver, onPosponer, onAgendar }: TarjetaGrandeProps) {
+/** Alerta vencida o de esta semana, con "Marcar resuelta", posponer y agregar al calendario (componente Tarjeta de alerta). */
+export function TarjetaAlertaGrande({ alerta: a, oscura, onResolver, onPosponer, onCalendario }: TarjetaGrandeProps) {
   const vencida = a.grupo === "vencida"
   return (
     <article className={cn("flex flex-col gap-4 rounded-lg p-4 movil-m:p-5", oscura ? "bg-oscuro" : "bg-primario")}>
@@ -57,11 +57,17 @@ export function TarjetaAlertaGrande({ alerta: a, oscura, onResolver, onPosponer,
             oscura ? "bg-acento text-primario" : "bg-oscuro text-superficie",
           )}
         >
-          <span className="truncate">{a.tipo === "alimento_por_acabarse" ? "Ya compré" : "Ya lo resolví"}</span>
-          <Icono nombre="check" className="icono-m" />
+          {/* Llamado a la acción: "Ya lo resolví" se leía como si la alerta ya estuviera resuelta. */}
+          <span className="truncate">{a.tipo === "alimento_por_acabarse" ? "Marcar comprado" : "Marcar resuelta"}</span>
+          {/* En 320 px el check no cabe junto al texto completo. */}
+          <Icono nombre="check" className="hidden icono-m movil-m:inline-block" />
         </button>
         <BotonRedondo icono="snooze" etiqueta="Posponer aviso" onClick={onPosponer} />
-        <BotonRedondo icono="calendar_month" etiqueta="Agendar cita" onClick={onAgendar} />
+        <BotonRedondo
+          icono={a.en_calendario ? "event_available" : "calendar_add_on"}
+          etiqueta={a.en_calendario ? "En el calendario de Balto" : "Agregar al calendario"}
+          onClick={onCalendario}
+        />
       </div>
     </article>
   )

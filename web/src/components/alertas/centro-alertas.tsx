@@ -3,6 +3,7 @@
 import { useState } from "react"
 
 import { useAccionesAlerta } from "@/components/alertas/acciones"
+import { HojaCalendario, agregarAlCalendarioDeBalto } from "@/components/alertas/hoja-calendario"
 import { HojaFiltrosAlertas, SIN_FILTROS, type FiltrosAlertas } from "@/components/alertas/hoja-filtros-alertas"
 import { HojaPosponer } from "@/components/alertas/hoja-posponer"
 import { TarjetaAlertaCompacta, TarjetaAlertaGrande, TarjetaAlertaResuelta } from "@/components/alertas/tarjeta-alerta"
@@ -34,6 +35,7 @@ export function CentroAlertas({ alertas: base, eventos, mascotas, marcas }: Cent
   const [filtros, setFiltros] = useState<FiltrosAlertas>(SIN_FILTROS)
   const [verFiltros, setVerFiltros] = useState(false)
   const [posponiendo, setPosponiendo] = useState<string | null>(null)
+  const [alCalendario, setAlCalendario] = useState<AlertaVista | null>(null)
 
   const filtradas = todas.filter(
     (a) => (filtros.mascota === "todas" || a.mascota_id === filtros.mascota) && enCategoriaAlerta(a.tipo, filtros.categorias),
@@ -108,7 +110,10 @@ export function CentroAlertas({ alertas: base, eventos, mascotas, marcas }: Cent
                 oscura={i === 0}
                 onResolver={() => acciones.resolver(a)}
                 onPosponer={() => setPosponiendo(a.id)}
-                onAgendar={() => acciones.agendar(a)}
+                onCalendario={() => {
+                  agregarAlCalendarioDeBalto(a)
+                  setAlCalendario({ ...a, en_calendario: true })
+                }}
               />
             </div>
           ))}
@@ -135,6 +140,7 @@ export function CentroAlertas({ alertas: base, eventos, mascotas, marcas }: Cent
         }}
       />
       <HojaPosponer alertaId={posponiendo} onCerrar={() => setPosponiendo(null)} />
+      <HojaCalendario alerta={alCalendario} onCerrar={() => setAlCalendario(null)} />
     </div>
   )
 }
