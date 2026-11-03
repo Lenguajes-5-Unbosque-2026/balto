@@ -490,7 +490,7 @@ function EditarVacuna({ inicial, onListo, onQuitar }: { inicial: Vacuna; onListo
   return (
     <div className="flex flex-col gap-3">
       <Campo etiqueta="Vacuna o desparasitación" requerido icono="vaccines" placeholder="Antirrábica" sugerencias={["Antirrábica", "Múltiple DHPPi+L", "Tos de las perreras", "Triple felina", "Desparasitación"]} valor={v.vacuna} onCambio={set("vacuna")} />
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid movil-m:grid-cols-2 gap-3">
         <Campo etiqueta="Fecha aplicada" type="date" max={HOY} valor={v.fecha} onCambio={set("fecha")} />
         <Campo etiqueta="Próximo refuerzo" type="date" valor={v.proximo_refuerzo} onCambio={set("proximo_refuerzo")} />
       </div>
@@ -604,7 +604,7 @@ function PasoFormula(props: {
         <Campo etiqueta="Cada (horas)" icono="schedule" inputMode="numeric" placeholder="12" valor={d.cada} onCambio={(v) => set("cada")(v.replace(/\D/g, ""))} />
       </div>
       {revisar && (
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid movil-m:grid-cols-2 gap-3">
           <Campo etiqueta="Desde" type="date" icono="event" valor={d.desde} onCambio={set("desde")} />
           <Campo etiqueta="Hasta" type="date" icono="event_busy" valor={d.hasta} onCambio={set("hasta")} />
         </div>

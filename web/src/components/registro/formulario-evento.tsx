@@ -47,7 +47,7 @@ const COMUNES = ["fecha", "que_cambio"]
 /** Columnas del evento que no son campos del formulario. */
 const NO_EDITABLES = ["id", "mascota_id", "tipo", "soportes", "recordatorio", "fecha_creacion", "fecha_edicion", "eliminado_en"]
 
-/** Campos que llegan llenos en la URL desde "Ya lo resolví" de una alerta (J). */
+/** Campos que llegan llenos en la URL desde "Marcar resuelta" de una alerta (J). */
 const PRELLENABLES = [
   "vacuna", "veterinaria", "producto", "via", "tipo_examen", "laboratorio", "proximo_refuerzo", "proxima_dosis", "proximo_control",
   // Desde H7 · "Registrar lo que pasó" (E11 lleno).
@@ -159,7 +159,7 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
       toast.success("Cambios guardados")
       salir()
     } else if (alertaId) {
-      // Desde "Ya lo resolví" se muestra J5 en lugar de E9.
+      // Desde "Marcar resuelta" se muestra J5 en lugar de E9.
       resolverAlerta(alertaId, evento.id)
       router.push(`/alertas/resuelta?id=${alertaId}&evento=${evento.id}`)
     } else {
@@ -206,7 +206,7 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
       {tipo === "vacuna" && (
         <section className="flex flex-col gap-4 rounded-lg bg-superficie p-4 shadow-tarjeta movil-m:p-5">
           <Campo etiqueta="Vacuna aplicada" requerido icono="vaccines" placeholder="Nombre de la vacuna" valor={v("vacuna")} onCambio={set("vacuna")} />
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid movil-m:grid-cols-2 gap-3">
             <Campo etiqueta="Fecha aplicada" requerido type="date" valor={v("fecha")} onCambio={set("fecha")} />
             <Campo etiqueta="Próximo refuerzo" type="date" valor={v("proximo_refuerzo")} onCambio={set("proximo_refuerzo")} />
           </div>
@@ -229,7 +229,7 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
       {tipo === "desparasitacion" && (
         <>
           <Campo etiqueta="Producto" requerido icono="medication" placeholder="Nombre del antiparasitario" valor={v("producto")} onCambio={set("producto")} />
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid movil-m:grid-cols-2 gap-3">
             <Campo etiqueta="Fecha" requerido type="date" icono="event" valor={v("fecha")} onCambio={set("fecha")} />
             <Campo etiqueta="Vía" icono="straighten" placeholder="Oral" valor={v("via")} onCambio={set("via")} />
           </div>
@@ -251,7 +251,7 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
       {tipo === "consulta" && (
         <>
           <Campo etiqueta="Veterinaria que atendió" requerido icono="local_hospital" placeholder="Nombre de la veterinaria" sugerencias={veterinarias} valor={v("veterinaria")} onCambio={set("veterinaria")} />
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid movil-m:grid-cols-2 gap-3">
             <Campo etiqueta="Motivo" icono="help" placeholder="Opcional" valor={v("motivo")} onCambio={set("motivo")} />
             <Campo etiqueta="Fecha" requerido type="date" valor={v("fecha")} onCambio={set("fecha")} />
           </div>
@@ -264,7 +264,7 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
       {tipo === "examen" && (
         <>
           <Campo etiqueta="Tipo de examen" requerido icono="labs" placeholder="Por ejemplo, hemograma" valor={v("tipo_examen")} onCambio={set("tipo_examen")} />
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid movil-m:grid-cols-2 gap-3">
             <Campo etiqueta="Laboratorio" icono="science" placeholder="Opcional" valor={v("laboratorio")} onCambio={set("laboratorio")} />
             <Campo etiqueta="Fecha" requerido type="date" valor={v("fecha")} onCambio={set("fecha")} />
           </div>
@@ -278,7 +278,7 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
               { valor: "alterado", etiqueta: "Alterado" },
             ]}
           />
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid movil-m:grid-cols-2 gap-3">
             <Campo etiqueta="Solicitado por" icono="person" placeholder="Opcional" valor={v("solicitado_por")} onCambio={set("solicitado_por")} />
             <Campo etiqueta="Próximo control" type="date" valor={v("proximo_control")} onCambio={set("proximo_control")} />
           </div>
@@ -327,7 +327,7 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
       {tipo === "otro" && (
         <>
           <Campo etiqueta="¿Qué pasó?" requerido icono="edit" placeholder="Título del evento" valor={v("titulo")} onCambio={set("titulo")} />
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid movil-m:grid-cols-2 gap-3">
             <Campo etiqueta="Fecha" requerido type="date" icono="event" valor={v("fecha")} onCambio={set("fecha")} />
             <Campo etiqueta="Lugar" icono="place" placeholder="Casa" valor={v("lugar")} onCambio={set("lugar")} />
           </div>

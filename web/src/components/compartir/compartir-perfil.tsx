@@ -361,7 +361,7 @@ export function CompartirPerfil({ mascotas, eventos: base, envios: enviosBase }:
         })}
       </div>
       {modo === "filtrado" && (
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid movil-m:grid-cols-2 gap-3">
           <Campo etiqueta="Desde" type="date" valor={desde} onCambio={setDesde} />
           <Campo etiqueta="Hasta" type="date" valor={hasta} onCambio={setHasta} />
         </div>

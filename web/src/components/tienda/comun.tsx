@@ -53,7 +53,7 @@ export function SeccionesTienda({ actual, detalles }: { actual?: SeccionTienda; 
             </span>
             <span className="flex w-full flex-col items-center">
               <span className="w-full truncate text-center texto-etiqueta-fuerte">{s.texto}</span>
-              {detalles?.[s.slug] && <span className="w-full truncate text-center texto-micro normal-case text-texto-secundario">{detalles[s.slug]}</span>}
+              {detalles?.[s.slug] && <span className="w-full line-clamp-2 text-center texto-micro normal-case text-texto-secundario">{detalles[s.slug]}</span>}
             </span>
           </Link>
         )

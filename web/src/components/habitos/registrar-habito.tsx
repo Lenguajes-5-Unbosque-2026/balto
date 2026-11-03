@@ -109,7 +109,7 @@ export function RegistrarHabito({ mascotas }: { mascotas: { id: string; nombre: 
         })}
       </div>
 
-      <div className={cn("grid gap-3", pideDuracion && "grid-cols-2")}>
+      <div className={cn("grid gap-3", pideDuracion && "movil-m:grid-cols-2")}>
         <Campo etiqueta="Fecha" type="date" max={HOY} valor={fecha} onCambio={setFecha} />
         {pideDuracion && (
           <Campo etiqueta="Duración" requerido placeholder={tipo === "sueno" ? "8 h" : "45 min"} valor={duracion} onCambio={setDuracion} />

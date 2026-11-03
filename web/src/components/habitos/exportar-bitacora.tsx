@@ -131,7 +131,7 @@ export function ExportarBitacora({ mascotas, habitos, eventos }: ExportarProps) 
           />
         ))}
       </div>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid movil-m:grid-cols-2 gap-3">
         <Campo etiqueta="Desde" type="date" valor={desde} onCambio={setDesde} />
         <Campo etiqueta="Hasta" type="date" valor={hasta} onCambio={setHasta} />
       </div>
