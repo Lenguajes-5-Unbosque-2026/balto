@@ -16,7 +16,7 @@ La fecha de referencia ("hoy") es el **27 de octubre de 2026**: las alertas, tom
 |---|---|---|---|
 | `duenos.csv` | 3 | Dueños (A5, M2) | — |
 | `mascotas.csv` | 5 | Mascotas y su cédula (B) | `dueno_id` → duenos |
-| `eventos.csv` | 40 | Los 9 tipos de evento de E; una fila por evento, con las columnas propias de cada tipo | `mascota_id` → mascotas · `proveedor_id` → veterinarias (opcional) |
+| `eventos.csv` | 41 | Los 9 tipos de evento de E; una fila por evento, con las columnas propias de cada tipo | `mascota_id` → mascotas · `proveedor_id` → veterinarias (opcional) |
 | `soportes.csv` | 9 | Archivos adjuntos a eventos (D5) | `evento_id` → eventos · archivo en `soportes/` |
 | `veterinarias.csv` | 15 | Veterinarias y otros proveedores de Bogotá (K) | — |
 | `alergias.csv` | 4 | Alergias por mascota (B4, F5) | `mascota_id` → mascotas |
@@ -24,7 +24,7 @@ La fecha de referencia ("hoy") es el **27 de octubre de 2026**: las alertas, tom
 | `tratamientos.csv` | 4 | Tratamientos (G) | `mascota_id` → mascotas · `evento_id` → eventos |
 | `horarios_toma.csv` | 5 | Horas de toma de cada tratamiento (G4) | `tratamiento_id` → tratamientos |
 | `tomas.csv` | 8 | Tomas registradas (G1, G2) | `tratamiento_id` → tratamientos |
-| `alertas.csv` | 12 | Alertas (J) | `mascota_id` → mascotas · `evento_id` / `evento_resolucion_id` → eventos · `plan_id` → planes_alimentacion |
+| `alertas.csv` | 13 | Alertas (J) | `mascota_id` → mascotas · `evento_id` / `evento_resolucion_id` → eventos · `plan_id` → planes_alimentacion |
 | `citas.csv` | 5 | Citas agendadas (K) | `dueno_id`, `mascota_id`, `proveedor_id` → veterinarias, `alerta_id`, `pedido_id` |
 | `planes_alimentacion.csv` | 3 | Plan de alimentación (H) | `mascota_id` → mascotas |
 | `comidas_programadas.csv` | 5 | Comidas del plan (H4) | `plan_id` → planes_alimentacion |
