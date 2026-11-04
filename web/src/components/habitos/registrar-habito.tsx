@@ -42,6 +42,7 @@ export function RegistrarHabito({ mascotas }: { mascotas: { id: string; nombre: 
   const [observacion, setObservacion] = useState("")
   const [fotos, setFotos] = useState<Adjunto[]>([])
   const [salir, setSalir] = useState(false)
+  const [guardando, setGuardando] = useState(false)
 
   const pideDuracion = CON_DURACION.includes(tipo)
   const completo = !!fecha && (pideDuracion ? minutos(duracion) > 0 : tipo === "deposiciones" || observacion.trim() !== "")
@@ -52,7 +53,7 @@ export function RegistrarHabito({ mascotas }: { mascotas: { id: string; nombre: 
     else router.push("/habitos")
   }
 
-  function guardar() {
+  async function guardar() {
     const soportes = fotos.map(({ nombre, tipo: t, tamanoKb }) => ({ nombre, tipo: t, tamanoKb }))
     if (tipo === "alimentacion" || tipo === "atipico") {
       guardarEvento({
@@ -65,16 +66,23 @@ export function RegistrarHabito({ mascotas }: { mascotas: { id: string; nombre: 
         fecha_creacion: HOY,
       })
     } else {
-      guardarHabito({
-        id: crypto.randomUUID(),
-        mascota_id: mascota.id,
-        tipo,
-        fecha,
-        duracion_min: pideDuracion ? String(minutos(duracion)) : "",
-        consistencia: tipo === "deposiciones" ? consistencia : "",
-        observacion: observacion.trim(),
-        imagen: fotos[0]?.nombre ?? "",
-      })
+      setGuardando(true)
+      try {
+        await guardarHabito({
+          id: crypto.randomUUID(),
+          mascota_id: mascota.id,
+          tipo,
+          fecha,
+          duracion_min: pideDuracion ? String(minutos(duracion)) : "",
+          consistencia: tipo === "deposiciones" ? consistencia : "",
+          observacion: observacion.trim(),
+          imagen: fotos[0]?.nombre ?? "",
+        })
+      } catch {
+        setGuardando(false)
+        toast.error("No pudimos guardar el hábito. Revisa tu conexión e inténtalo de nuevo.")
+        return
+      }
     }
     toast.success("Hábito registrado")
     router.replace("/habitos")
@@ -141,8 +149,8 @@ export function RegistrarHabito({ mascotas }: { mascotas: { id: string; nombre: 
       <BloqueSoporte aceptaPdf={false} textoArea="Foto de apoyo" iconoArea="add_a_photo" soportes={fotos} onCambio={setFotos} />
 
       <BarraAccion>
-        <Boton disabled={!completo} onClick={guardar}>
-          Guardar
+        <Boton disabled={!completo || guardando} onClick={guardar}>
+          {guardando ? "Guardando…" : "Guardar"}
           <Icono nombre="check" className="icono-m" />
         </Boton>
       </BarraAccion>

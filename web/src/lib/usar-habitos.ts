@@ -1,39 +1,74 @@
 "use client"
 
-import { useMemo } from "react"
+import { useEffect, useMemo, useState } from "react"
 
 import { guardarEnMapa, useMapaLocal } from "@/lib/almacen-local"
 import type { Evento } from "@/lib/eventos"
 import { registrosDe, type Habito } from "@/lib/habitos"
+import { supabase } from "@/lib/supabase"
 import { useEventos } from "@/lib/usar-eventos"
 
 const CLAVE = "balto:habitos"
 
 type HabitoLocal = Habito | { eliminado: true }
 
-export function guardarHabito(h: Habito) {
-  guardarEnMapa<HabitoLocal>(CLAVE, h.id, h)
+/** Guarda un hábito en la tabla `habitos` de Supabase. Lanza un error si no se pudo. */
+export async function guardarHabito(h: Habito) {
+  if (!supabase) throw new Error("Supabase no está configurado")
+  const { error } = await supabase.from("habitos").insert({
+    id: h.id,
+    mascota_id: h.mascota_id,
+    tipo: h.tipo,
+    fecha: h.fecha,
+    duracion_min: h.duracion_min ? Number(h.duracion_min) : null,
+    consistencia: h.consistencia || null,
+    observacion: h.observacion || null,
+    imagen: h.imagen || null,
+  })
+  if (error) throw error
+}
+
+/** Hábitos de una mascota guardados en Supabase (vacío si no hay conexión o configuración). */
+async function leerHabitos(mascotaId: string): Promise<Habito[]> {
+  if (!supabase) return []
+  const { data, error } = await supabase.from("habitos").select("*").eq("mascota_id", mascotaId)
+  if (error || !data) return []
+  return data.map((h) => ({
+    id: h.id,
+    mascota_id: h.mascota_id,
+    tipo: h.tipo,
+    fecha: h.fecha,
+    duracion_min: h.duracion_min == null ? "" : String(h.duracion_min),
+    consistencia: h.consistencia ?? "",
+    observacion: h.observacion ?? "",
+    imagen: h.imagen ?? "",
+  }))
 }
 
 export function eliminarHabito(id: string) {
   guardarEnMapa<HabitoLocal>(CLAVE, id, { eliminado: true })
 }
 
-/** Registros de la bitácora de una mascota: hábitos (CSV y de este navegador) y eventos de E7. */
+/** Registros de la bitácora de una mascota: hábitos (CSV y Supabase) y eventos de E7. */
 export function useBitacora(habitos: Habito[], eventosBase: Evento[], mascotaId: string) {
   const locales = useMapaLocal<HabitoLocal>(CLAVE)
   const eventos = useEventos(eventosBase)
+  const [remotos, setRemotos] = useState<Habito[]>([])
+
+  useEffect(() => {
+    let vigente = true
+    leerHabitos(mascotaId).then((r) => vigente && setRemotos(r))
+    return () => {
+      vigente = false
+    }
+  }, [mascotaId])
+
   return useMemo(() => {
     const ids = new Set(habitos.map((h) => h.id))
-    const todos = [
-      ...habitos.filter((h) => !(locales[h.id] && "eliminado" in locales[h.id])),
-      ...Object.entries(locales)
-        .filter(([id, h]) => !ids.has(id) && !("eliminado" in h))
-        .map(([, h]) => h as Habito),
-    ]
+    const todos = [...habitos, ...remotos.filter((h) => !ids.has(h.id))].filter((h) => !(locales[h.id] && "eliminado" in locales[h.id]))
     return registrosDe(
       todos.filter((h) => h.mascota_id === mascotaId),
       eventos.filter((e) => e.mascota_id === mascotaId),
     )
-  }, [habitos, eventos, locales, mascotaId])
+  }, [habitos, remotos, eventos, locales, mascotaId])
 }
