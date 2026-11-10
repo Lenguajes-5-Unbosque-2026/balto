@@ -7,7 +7,7 @@ import { Boton } from "@/components/boton"
 import { Campo } from "@/components/campo"
 import { Hoja } from "@/components/hoja"
 import { OpcionRadio } from "@/components/opcion-radio"
-import { HOY, fechaCorta, sumarDias } from "@/lib/fecha"
+import { fechaCorta, hoy, sumarDias } from "@/lib/fecha"
 import { posponerAlerta } from "@/lib/usar-alertas"
 
 const OPCIONES = [
@@ -27,10 +27,10 @@ export function HojaPosponer({ alertaId, onCerrar }: { alertaId: string | null; 
 
 function Contenido({ alertaId, onCerrar }: { alertaId: string; onCerrar: () => void }) {
   const [opcion, setOpcion] = useState<(typeof OPCIONES)[number]["valor"]>("manana")
-  const [fecha, setFecha] = useState(sumarDias(HOY, 7))
+  const [fecha, setFecha] = useState(sumarDias(hoy(), 7))
 
   const elegida = OPCIONES.find((o) => o.valor === opcion)!
-  const destino = opcion === "elegir" ? fecha : sumarDias(HOY, elegida.dias)
+  const destino = opcion === "elegir" ? fecha : sumarDias(hoy(), elegida.dias)
 
   function posponer() {
     posponerAlerta(alertaId, destino)
@@ -45,13 +45,13 @@ function Contenido({ alertaId, onCerrar }: { alertaId: string; onCerrar: () => v
           key={o.valor}
           icono={o.icono}
           titulo={o.titulo}
-          detalle={o.dias ? fechaCorta(sumarDias(HOY, o.dias)) : undefined}
+          detalle={o.dias ? fechaCorta(sumarDias(hoy(), o.dias)) : undefined}
           activa={opcion === o.valor}
           onElegir={() => setOpcion(o.valor)}
         />
       ))}
-      {opcion === "elegir" && <Campo etiqueta="Fecha del aviso" type="date" icono="event" min={sumarDias(HOY, 1)} valor={fecha} onCambio={setFecha} />}
-      <Boton className="mt-3" disabled={!destino || destino <= HOY} onClick={posponer}>
+      {opcion === "elegir" && <Campo etiqueta="Fecha del aviso" type="date" icono="event" min={sumarDias(hoy(), 1)} valor={fecha} onCambio={setFecha} />}
+      <Boton className="mt-3" disabled={!destino || destino <= hoy()} onClick={posponer}>
         Posponer
       </Boton>
     </div>

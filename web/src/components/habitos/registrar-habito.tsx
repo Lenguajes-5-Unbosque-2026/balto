@@ -15,7 +15,7 @@ import { Icono } from "@/components/icono"
 import { Nota } from "@/components/nota"
 import { BloqueSoporte, type Adjunto } from "@/components/registro/bloque-soporte"
 import { puedeVolver } from "@/lib/navegacion"
-import { HOY } from "@/lib/fecha"
+import { hoy } from "@/lib/fecha"
 import { CONSISTENCIAS, TIPOS_HABITO, type TipoHabito } from "@/lib/habitos"
 import { useMascotaActiva } from "@/lib/mascota-activa"
 import { guardarEvento } from "@/lib/registro-local"
@@ -37,7 +37,7 @@ export function RegistrarHabito({ mascotas }: { mascotas: { id: string; nombre: 
   const router = useRouter()
   const [mascota] = useMascotaActiva(mascotas)
   const [tipo, setTipo] = useState<TipoHabito>("paseo")
-  const [fecha, setFecha] = useState(HOY)
+  const [fecha, setFecha] = useState(hoy())
   const [duracion, setDuracion] = useState("")
   const [consistencia, setConsistencia] = useState("normal")
   const [observacion, setObservacion] = useState("")
@@ -64,7 +64,7 @@ export function RegistrarHabito({ mascotas }: { mascotas: { id: string; nombre: 
         fecha,
         que_cambio: observacion.trim(),
         soportes,
-        fecha_creacion: HOY,
+        fecha_creacion: hoy(),
       })
     } else {
       setGuardando(true)
@@ -118,7 +118,7 @@ export function RegistrarHabito({ mascotas }: { mascotas: { id: string; nombre: 
       </div>
 
       <div className={cn("grid gap-3", pideDuracion && "movil-m:grid-cols-2")}>
-        <Campo etiqueta="Fecha" type="date" max={HOY} valor={fecha} onCambio={setFecha} />
+        <Campo etiqueta="Fecha" type="date" max={hoy()} valor={fecha} onCambio={setFecha} />
         {pideDuracion && (
           <Campo etiqueta="Duración" requerido placeholder={tipo === "sueno" ? "8 h" : "45 min"} valor={duracion} onCambio={setDuracion} />
         )}

@@ -17,7 +17,7 @@ import { Interruptor } from "@/components/interruptor"
 import { OpcionRadio } from "@/components/opcion-radio"
 import type { Cita, Veterinaria } from "@/lib/datos"
 import { DUENO_ACTUAL_ID } from "@/lib/cuenta-actual"
-import { HOY, fechaLarga, sumarDias } from "@/lib/fecha"
+import { fechaLarga, hoy, sumarDias } from "@/lib/fecha"
 import { useMascotaActiva } from "@/lib/mascota-activa"
 import { cuposDel, iconoProveedor, proximosConCupo, servicioParaCita } from "@/lib/proveedores"
 import { guardarCita, useCitas } from "@/lib/usar-proveedores"
@@ -44,7 +44,7 @@ export function AgendarCita({ proveedores, mascotas, citas: base }: AgendarProps
   const [activa] = useMascotaActiva(mascotas)
   const [mascotaId, setMascotaId] = useState(reprogramar?.mascota_id ?? activa.id)
   const [servicio, setServicio] = useState(reprogramar?.servicio ?? (v ? servicioParaCita(v, p.get("servicio")) : "Consulta general"))
-  const [dia, setDia] = useState(() => (v ? (proximosConCupo(v, HOY, 1)[0] ?? sumarDias(HOY, 1)) : sumarDias(HOY, 1)))
+  const [dia, setDia] = useState(() => (v ? (proximosConCupo(v, hoy(), 1)[0] ?? sumarDias(hoy(), 1)) : sumarDias(hoy(), 1)))
   const [mes, setMes] = useState(`${dia.slice(0, 7)}-01`)
   const [hora, setHora] = useState("")
   const [editando, setEditando] = useState(false)
@@ -187,7 +187,7 @@ export function AgendarCita({ proveedores, mascotas, citas: base }: AgendarProps
           setHora("")
         }}
         marcados={marcados}
-        deshabilitado={(f) => f <= HOY}
+        deshabilitado={(f) => f <= hoy()}
       />
       <span className="texto-micro text-texto-secundario">Horarios disponibles · {diaCorto(dia)}</span>
       <div className="flex flex-wrap gap-2">

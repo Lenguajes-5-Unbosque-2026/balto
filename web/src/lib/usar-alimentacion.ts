@@ -5,7 +5,7 @@ import { useMemo } from "react"
 import type { Comida, Plan } from "@/lib/alimentacion"
 import { guardarEnMapa, useMapaLocal } from "@/lib/almacen-local"
 import type { ComidaProgramada, PlanAlimentacion } from "@/lib/datos"
-import { AHORA, HOY } from "@/lib/fecha"
+import { AHORA, hoy } from "@/lib/fecha"
 import { enSupabase } from "@/lib/sincronizar"
 
 const CLAVE_PLANES = "balto:planes"
@@ -17,7 +17,7 @@ export function guardarPlan(mascotaId: string, plan: Plan) {
   enSupabase({ tipo: "plan", mascotaId, plan: datos, comidas, idNuevo: `${mascotaId}-plan-${Date.now()}` })
 }
 
-const claveComida = (mascotaId: string, hora: string) => `${mascotaId}|${HOY}|${hora}`
+const claveComida = (mascotaId: string, hora: string) => `${mascotaId}|${hoy()}|${hora}`
 
 /** "Servir" (H1) o "Servida" (H5): la comida de hoy queda servida con la hora actual (solo en este navegador). */
 export function servirComida(mascotaId: string, hora: string) {

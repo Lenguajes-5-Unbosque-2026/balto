@@ -2,6 +2,7 @@ import fs from "node:fs"
 import path from "node:path"
 
 import { cacheLife, cacheTag } from "next/cache"
+import { connection } from "next/server"
 import { cache } from "react"
 
 import { DUENO_ACTUAL_ID } from "@/lib/cuenta-actual"
@@ -52,6 +53,8 @@ const deLaSolicitud = cache((): { datos?: Datos } => ({}))
 let ultimos: Datos | undefined
 
 export async function cargarDatos() {
+  // La página se arma en cada visita: así "hoy" (lib/fecha.ts) es el día en que se abre, no el de la compilación.
+  await connection()
   const datos = await traerDatos()
   deLaSolicitud().datos = datos
   ultimos = datos

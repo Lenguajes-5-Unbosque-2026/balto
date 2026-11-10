@@ -1,5 +1,5 @@
 import type { Envio } from "@/lib/datos"
-import { AHORA, HOY, diasEntre, sumarDias } from "@/lib/fecha"
+import { AHORA, diasEntre, hoy, sumarDias } from "@/lib/fecha"
 
 /** Secciones de L1, en el orden de la lista. Las alergias van siempre, por seguridad. */
 export const SECCIONES = [
@@ -42,13 +42,13 @@ export const VENCIMIENTOS = [
 /** Fecha y hora en que vence un enlace creado ahora. */
 export function expiraEn(vencimiento: Envio["vencimiento"]) {
   const v = VENCIMIENTOS.find((x) => x.valor === vencimiento)
-  return v?.dias ? `${sumarDias(HOY, v.dias)} ${AHORA}` : ""
+  return v?.dias ? `${sumarDias(hoy(), v.dias)} ${AHORA}` : ""
 }
 
 /** "activo", "vencido" o "desactivado" (L5, L6, L8). */
 export function estadoEnlace(e: Envio): "activo" | "vencido" | "desactivado" {
   if (e.activo !== "true") return "desactivado"
-  if (e.expira_en && e.expira_en < `${HOY} ${AHORA}`) return "vencido"
+  if (e.expira_en && e.expira_en < `${hoy()} ${AHORA}`) return "vencido"
   return "activo"
 }
 
@@ -57,7 +57,7 @@ export function textoVence(e: Envio) {
   const estado = estadoEnlace(e)
   if (estado !== "activo") return estado
   if (!e.expira_en) return "sin vencimiento"
-  const dias = diasEntre(HOY, e.expira_en.slice(0, 10))
+  const dias = diasEntre(hoy(), e.expira_en.slice(0, 10))
   if (dias <= 0) return "vence hoy"
   return dias === 1 ? "vence mañana" : `vence en ${dias} días`
 }
@@ -71,7 +71,7 @@ export function nuevoToken() {
 
 /** "Hoy, 9:41 a. m.", "ayer", "26 oct". */
 export function cuandoSeEnvio(fecha: string) {
-  const dias = diasEntre(fecha, HOY)
+  const dias = diasEntre(fecha, hoy())
   if (dias === 0) return "hoy"
   if (dias === 1) return "ayer"
   return `hace ${dias} días`

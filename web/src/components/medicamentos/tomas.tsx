@@ -7,7 +7,7 @@ import { Boton } from "@/components/boton"
 import { Hoja } from "@/components/hoja"
 import { Icono } from "@/components/icono"
 import { OpcionRadio } from "@/components/opcion-radio"
-import { AHORA, HOY } from "@/lib/fecha"
+import { AHORA, hoy } from "@/lib/fecha"
 import { hora12, momentoDelDia, nombreTratamiento, restarMinutos, type TomaVista } from "@/lib/medicamentos"
 import { registrarToma } from "@/lib/usar-medicamentos"
 import { cn } from "@/lib/utils"
@@ -74,7 +74,7 @@ export function FilaTomaHoy({ toma: t, onOmitir }: FilaTomaProps) {
 
 /** Toma de G2: bloque de hora, momento del día, estado y la acción o el chip de estado. */
 export function FilaTomaDetalle({ toma: t, onOmitir }: FilaTomaProps) {
-  const ayer = t.fecha < HOY
+  const ayer = t.fecha < hoy()
   const [h] = t.hora.split(":").map(Number)
   return (
     <div className="flex items-center gap-3 rounded-md border border-borde-fuerte bg-superficie p-3 movil-m:gap-3.5 movil-m:p-3.5">

@@ -8,7 +8,7 @@ import { useEffect } from "react"
 import { CabeceraPublica, PerfilPublico } from "@/components/compartir/perfil-publico"
 import { seccionesDe } from "@/lib/compartir"
 import type { Evento } from "@/lib/eventos"
-import { HOY, fechaCorta } from "@/lib/fecha"
+import { fechaCorta, hoy } from "@/lib/fecha"
 import { useMascotas } from "@/lib/mascota-activa"
 import type { PerfilMascota } from "@/lib/perfil"
 import { useDueno } from "@/lib/usar-cuenta"
@@ -40,7 +40,7 @@ export function PdfPerfil({ mascotas: base, eventos: eventosBase, dueno: duenoBa
         <BotonVolver respaldo="/compartir" />
         <BotonIcono icono="print" etiqueta="Imprimir o guardar en PDF" onClick={() => window.print()} />
       </div>
-      <CabeceraPublica detalle={`Reporte del ${fechaCorta(HOY)}`} candado={false} />
+      <CabeceraPublica detalle={`Reporte del ${fechaCorta(hoy())}`} candado={false} />
       {elegidas.map((mascota) => (
         <section key={mascota.id} className="flex flex-col gap-4 break-before-page first-of-type:break-before-auto">
           <PerfilPublico

@@ -1,5 +1,5 @@
 import type { Toma, Tratamiento } from "@/lib/datos"
-import { AHORA, HOY, diaSemana, diasEntre, sumarDias } from "@/lib/fecha"
+import { AHORA, diaSemana, diasEntre, hoy, sumarDias } from "@/lib/fecha"
 
 /** Tratamiento con sus horas de toma y el estado ya calculado (se finaliza solo al pasar la fecha de fin). */
 export type TratamientoVista = Tratamiento & { horas: string[] }
@@ -79,13 +79,13 @@ export function duracion(t: Pick<Tratamiento, "duracion_dias">) {
 /** Día del tratamiento (1 a la duración): "Día 3 de 7". */
 export function diaTratamiento(t: TratamientoVista) {
   const dur = duracion(t)
-  return Math.min(Math.max(diasEntre(t.fecha_inicio, HOY) + 1, 1), dur || 1)
+  return Math.min(Math.max(diasEntre(t.fecha_inicio, hoy()) + 1, 1), dur || 1)
 }
 
 /** El estado sin esperar a nadie: al pasar la fecha de fin, el tratamiento se finaliza solo (spec de G). */
 export function estadoTratamiento(t: Tratamiento): Tratamiento["estado"] {
   if (t.estado === "finalizado") return "finalizado"
-  return t.fecha_fin && t.fecha_fin <= HOY ? "finalizado" : "vigente"
+  return t.fecha_fin && t.fecha_fin <= hoy() ? "finalizado" : "vigente"
 }
 
 /** ¿Hay toma ese día? Todos los días entre inicio y fin, o solo los días elegidos en "Por días". */
@@ -97,8 +97,8 @@ function hayTomaEl(t: TratamientoVista, fecha: string) {
 
 /** Sin respuesta 2 horas después de la hora de la toma: "Sin registrar". */
 function vencida(fecha: string, hora: string) {
-  if (fecha < HOY) return true
-  if (fecha > HOY) return false
+  if (fecha < hoy()) return true
+  if (fecha > hoy()) return false
   const [h, m] = hora.split(":").map(Number)
   const [ah, am] = AHORA.split(":").map(Number)
   return ah * 60 + am - (h * 60 + m) > 120
@@ -141,7 +141,7 @@ export function registrosDelCsv(tomas: Toma[]): Record<string, RegistroToma> {
 
 /** Resumen de G9: días cumplidos y tomas registradas u omitidas hasta hoy. */
 export function resumenTratamiento(t: TratamientoVista, registros: Record<string, RegistroToma>) {
-  const hasta = t.fecha_fin && t.fecha_fin < HOY ? t.fecha_fin : sumarDias(HOY, 1)
+  const hasta = t.fecha_fin && t.fecha_fin < hoy() ? t.fecha_fin : sumarDias(hoy(), 1)
   const tomas: TomaVista[] = []
   for (let f = t.fecha_inicio; f < hasta; f = sumarDias(f, 1)) tomas.push(...tomasDelDia(t, f, registros))
   return {

@@ -1,12 +1,12 @@
 import { ordenarEventos, type Evento } from "@/lib/eventos"
-import { HOY, diasEntre, fechaCorta, nombreMes } from "@/lib/fecha"
+import { diasEntre, fechaCorta, hoy, nombreMes } from "@/lib/fecha"
 import { nombreVacuna, ultimasVacunas } from "@/lib/perfil"
 
 const sinAnio = (iso: string) => fechaCorta(iso).replace(/ \d{4}$/, "")
 
 /** "hoy", "mañana", "en 2 días", "hace 3 días". */
 export function textoEn(fecha: string) {
-  const dias = diasEntre(HOY, fecha)
+  const dias = diasEntre(hoy(), fecha)
   if (dias === 0) return "hoy"
   if (dias === 1) return "mañana"
   if (dias < 0) return `hace ${-dias} ${dias === -1 ? "día" : "días"}`
@@ -29,7 +29,7 @@ export function ultimaDesparasitacion(eventos: Evento[]) {
 export function textoProximaVacuna(eventos: Evento[]) {
   const v = proximaVacuna(eventos)
   if (!v) return "Sin vacunas registradas"
-  const vencida = v.proximo_refuerzo! < HOY
+  const vencida = v.proximo_refuerzo! < hoy()
   return `${vencida ? "Vencida" : "Próxima"}: ${nombreVacuna(v).toLowerCase()} ${textoEn(v.proximo_refuerzo!)}`
 }
 

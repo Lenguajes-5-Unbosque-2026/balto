@@ -18,7 +18,7 @@ import { Pasos } from "@/components/pasos"
 import { Selector } from "@/components/selector"
 import { puedeVolver } from "@/lib/navegacion"
 import { DUENO_ACTUAL_ID } from "@/lib/cuenta-actual"
-import { HOY } from "@/lib/fecha"
+import { hoy } from "@/lib/fecha"
 import { guardarMascotaNueva, useMascotasNuevas } from "@/lib/mascota-activa"
 import { guardarEvento, guardarMascotaActiva } from "@/lib/registro-local"
 import { guardarSalud } from "@/lib/usar-salud"
@@ -91,20 +91,20 @@ export function NuevaMascota({ siguienteCedula }: { siguienteCedula: number }) {
       esterilizada: String(m.esterilizada),
       microchip: m.microchip,
       cedula: cedula(numero, m.nombre.trim()),
-      fecha_emision_cedula: HOY,
+      fecha_emision_cedula: hoy(),
       imagen: m.imagen,
       alergias: salud.alergias,
     })
     const peso = Number.parseFloat(salud.peso.replace(",", "."))
-    if (peso > 0) guardarEvento({ id: crypto.randomUUID(), mascota_id: id, tipo: "peso", fecha: HOY, peso_kg: String(peso), fecha_creacion: HOY })
+    if (peso > 0) guardarEvento({ id: crypto.randomUUID(), mascota_id: id, tipo: "peso", fecha: hoy(), peso_kg: String(peso), fecha_creacion: hoy() })
     if (salud.medicacion.trim()) {
-      guardarEvento({ id: crypto.randomUUID(), mascota_id: id, tipo: "tratamiento", fecha: HOY, medicamento: salud.medicacion.trim(), fecha_creacion: HOY })
+      guardarEvento({ id: crypto.randomUUID(), mascota_id: id, tipo: "tratamiento", fecha: hoy(), medicamento: salud.medicacion.trim(), fecha_creacion: hoy() })
     }
     const condicion = salud.condiciones.trim()
     if (condicion && !/^ningun/i.test(condicion)) {
       guardarSalud(id, {
         alergias: salud.alergias,
-        condiciones: [{ id: crypto.randomUUID(), mascota_id: id, nombre: condicion, fecha_diagnostico: HOY, diagnosticada_por: "" }],
+        condiciones: [{ id: crypto.randomUUID(), mascota_id: id, nombre: condicion, fecha_diagnostico: hoy(), diagnosticada_por: "" }],
       })
     }
     // La mascota nueva pasa a ser la activa (spec de B).
@@ -264,7 +264,7 @@ export function NuevaMascota({ siguienteCedula }: { siguienteCedula: number }) {
             ]}
           />
         </div>
-        <Campo etiqueta="Nacimiento" type="date" max={HOY} valor={m.nacimiento} onCambio={set("nacimiento")} />
+        <Campo etiqueta="Nacimiento" type="date" max={hoy()} valor={m.nacimiento} onCambio={set("nacimiento")} />
       </div>
       <div className="flex items-center justify-between gap-3 rounded-md bg-superficie p-4">
         <span className="texto-cuerpo-fuerte text-texto">{m.sexo === "macho" ? "Esterilizado" : "Esterilizada"}</span>

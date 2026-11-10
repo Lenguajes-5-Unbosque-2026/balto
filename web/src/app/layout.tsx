@@ -40,8 +40,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <Suspense>
             <RegistroNavegacion />
           </Suspense>
-          <Vigilante />
-          {children}
+          <Suspense>
+            <Vigilante />
+          </Suspense>
+          {/* Las páginas se arman en cada visita (lib/datos.ts): al navegar se sigue viendo la pantalla anterior hasta que llega la nueva. */}
+          <Suspense>{children}</Suspense>
         </div>
         <Toaster />
       </body>

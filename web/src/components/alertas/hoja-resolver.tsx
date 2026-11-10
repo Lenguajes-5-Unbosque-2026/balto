@@ -16,7 +16,7 @@ import {
   type AlertaVista,
   type DatosResolver,
 } from "@/lib/alertas"
-import { HOY, fechaCorta, sumarDias } from "@/lib/fecha"
+import { fechaCorta, hoy, sumarDias } from "@/lib/fecha"
 
 type HojaResolverProps = {
   alerta: AlertaVista | null
@@ -48,15 +48,15 @@ function Contenido({ alerta: a, onRegistrar, onVerDatos }: Pick<HojaResolverProp
   const resumen = resumenConocido(a)
 
   const [cuando, setCuando] = useState<Cuando>("hoy")
-  const [otraFecha, setOtraFecha] = useState(HOY)
+  const [otraFecha, setOtraFecha] = useState(hoy())
   const [proxima, setProxima] = useState<Proxima>(intervalo ? "intervalo" : "no")
   const [otraProxima, setOtraProxima] = useState("")
   const [peso, setPeso] = useState("")
 
-  const fecha = cuando === "hoy" ? HOY : cuando === "ayer" ? sumarDias(HOY, -1) : otraFecha
+  const fecha = cuando === "hoy" ? hoy() : cuando === "ayer" ? sumarDias(hoy(), -1) : otraFecha
   const fechaProxima = !r.proxima || proxima === "no" ? "" : proxima === "intervalo" ? sumarDias(fecha, intervalo) : otraProxima
   const datos: DatosResolver = { fecha, proxima: fechaProxima, ...(r.tipo === "peso" ? { peso_kg: peso } : {}) }
-  const listo = !!fecha && fecha <= HOY && (proxima !== "otra" || fechaProxima > fecha) && (r.tipo !== "peso" || Number(peso.replace(",", ".")) > 0)
+  const listo = !!fecha && fecha <= hoy() && (proxima !== "otra" || fechaProxima > fecha) && (r.tipo !== "peso" || Number(peso.replace(",", ".")) > 0)
 
   return (
     <div className="flex flex-col gap-5">
@@ -78,7 +78,7 @@ function Contenido({ alerta: a, onRegistrar, onVerDatos }: Pick<HojaResolverProp
         <Chip texto="Ayer" activo={cuando === "ayer"} onClick={() => setCuando("ayer")} />
         <Chip texto="Otra fecha" icono="event" activo={cuando === "otra"} onClick={() => setCuando("otra")} />
       </Grupo>
-      {cuando === "otra" && <Campo etiqueta="Fecha" type="date" icono="event" max={HOY} valor={otraFecha} onCambio={setOtraFecha} />}
+      {cuando === "otra" && <Campo etiqueta="Fecha" type="date" icono="event" max={hoy()} valor={otraFecha} onCambio={setOtraFecha} />}
 
       {r.proxima && (
         <>

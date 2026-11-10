@@ -6,14 +6,6 @@ import { cargarDatos, obtenerDueno, obtenerEnvios, obtenerEventosDueno, obtenerP
 
 export const metadata: Metadata = { title: "Perfil de salud · Balto", robots: { index: false } }
 
-/** Los enlaces de data/mock/ se generan al compilar; los creados en el navegador se resuelven al abrirlos. */
-export async function generateStaticParams() {
-  await cargarDatos()
-  return obtenerEnvios()
-    .filter((e) => e.token)
-    .map((e) => ({ token: e.token }))
-}
-
 /** L5 · Vista pública del perfil y L6 · Enlace expirado (balto.app/p/<token>). */
 export default async function EnlacePage({ params }: PageProps<"/p/[token]">) {
   await cargarDatos()

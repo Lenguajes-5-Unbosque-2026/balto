@@ -14,7 +14,7 @@ import { Nota } from "@/components/nota"
 import { ICONOS_ALERTA, tituloAlertaVista } from "@/lib/alertas"
 import type { Pedido } from "@/lib/datos"
 import type { Evento } from "@/lib/eventos"
-import { HOY, diasEntre } from "@/lib/fecha"
+import { diasEntre, hoy } from "@/lib/fecha"
 import { tomasDelDia } from "@/lib/medicamentos"
 import type { Alerta } from "@/lib/perfil"
 import { useAlertas, type MascotaAlerta } from "@/lib/usar-alertas"
@@ -35,7 +35,7 @@ type Notificacion = { id: string; icono: string; titulo: string; detalle: string
 
 /** "hace 1 h", "ayer", "hace 3 días": cuándo llegó el aviso. */
 function hace(fecha: string) {
-  const dias = diasEntre(fecha, HOY)
+  const dias = diasEntre(fecha, hoy())
   if (dias <= 0) return "hoy"
   return dias === 1 ? "ayer" : `hace ${dias} días`
 }
@@ -50,7 +50,7 @@ export function BandejaNotificaciones({ alertas, eventos, mascotas, marcas, pedi
 
   const lista: Notificacion[] = [
     ...pendientes.map((a) => {
-      const dias = diasEntre(HOY, a.fecha_vencimiento)
+      const dias = diasEntre(hoy(), a.fecha_vencimiento)
       const cuando = dias < 0 ? `Venció hace ${-dias} días` : dias === 0 ? "Vence hoy" : dias === 1 ? "Vence mañana" : `Vence en ${dias} días`
       return {
         id: `alerta-${a.id}`,
@@ -63,14 +63,14 @@ export function BandejaNotificaciones({ alertas, eventos, mascotas, marcas, pedi
     }),
     ...tratamientos
       .filter((t) => t.estado === "vigente" && t.recordatorio === "true")
-      .flatMap((t) => tomasDelDia(t, HOY, registros).filter((x) => x.estado !== "tomada"))
+      .flatMap((t) => tomasDelDia(t, hoy(), registros).filter((x) => x.estado !== "tomada"))
       .map((x) => ({
         id: `toma-${x.clave}`,
         icono: "medication",
         titulo: `Dosis de las ${x.hora}`,
         detalle: `${x.tratamiento.medicamento.split(" ")[0]} · hoy`,
         href: `/medicamentos/detalle?id=${x.tratamiento.id}`,
-        orden: HOY,
+        orden: hoy(),
       })),
     ...pedidos
       .filter((p) => p.estado_entrega === "en_camino" || p.estado_pago === "rechazado")

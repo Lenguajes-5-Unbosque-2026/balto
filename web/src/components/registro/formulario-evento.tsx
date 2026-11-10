@@ -22,7 +22,7 @@ import { GraficaPeso } from "@/components/registro/grafica-peso"
 import type { MascotaBasica, Medicion } from "@/components/registro/tipos"
 import { puedeVolver } from "@/lib/navegacion"
 import { tipoEvento, type Evento, type TipoEvento } from "@/lib/eventos"
-import { HOY, fechaCorta, sumarDias } from "@/lib/fecha"
+import { fechaCorta, hoy, sumarDias } from "@/lib/fecha"
 import { useMascotaActiva } from "@/lib/mascota-activa"
 import { marcarPendiente } from "@/lib/conexion"
 import { guardarEvento } from "@/lib/registro-local"
@@ -86,7 +86,7 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
   const [inicial] = useState(() => {
     const prellenado = Object.fromEntries(PRELLENABLES.flatMap((c) => (parametros.get(c) ? [[c, parametros.get(c)!]] : [])))
     return {
-      valores: original ? valoresDe(original) : { fecha: HOY, resultado: "normal", ...prellenado },
+      valores: original ? valoresDe(original) : { fecha: hoy(), resultado: "normal", ...prellenado },
       soportes: (original?.soportes ?? []) as Adjunto[],
       // Al resolver una alerta, el recordatorio de la siguiente queda encendido.
       recordatorio: original ? original.recordatorio === "true" : !!alertaId,
@@ -107,7 +107,7 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
       soportes !== inicial.soportes ||
       recordatorio !== inicial.recordatorio
     : soportes.length > 0 ||
-      Object.entries(valores).some(([k, val]) => val && !(k === "fecha" && val === HOY) && !(k === "resultado" && val === "normal"))
+      Object.entries(valores).some(([k, val]) => val && !(k === "fecha" && val === hoy()) && !(k === "resultado" && val === "normal"))
   const completo = OBLIGATORIOS[tipo].every((c) => v(c).trim() !== "")
 
   function cambiarTipo(nuevo: TipoEvento) {
@@ -136,7 +136,7 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
       id: original?.id ?? crypto.randomUUID(),
       mascota_id: mascota.id,
       tipo,
-      fecha: v("fecha") || original?.fecha || HOY,
+      fecha: v("fecha") || original?.fecha || hoy(),
       peso_kg: tipo === "peso" ? v("peso_kg").replace(",", ".") : undefined,
       recordatorio: String(recordatorio),
       // Las vistas previas locales (blob:) no sobreviven a la recarga; los archivos publicados conservan su url.
@@ -146,8 +146,8 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
         tamanoKb,
         ...(url?.startsWith("/") ? { url } : {}),
       })),
-      fecha_creacion: original?.fecha_creacion ?? HOY,
-      ...(original ? { fecha_edicion: HOY } : {}),
+      fecha_creacion: original?.fecha_creacion ?? hoy(),
+      ...(original ? { fecha_edicion: hoy() } : {}),
     }
     if (tipo !== "examen") delete evento.resultado
     guardarEvento(evento)
@@ -315,7 +315,7 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
         <>
           <Campo etiqueta="Peso (kg)" requerido icono="monitor_weight" inputMode="decimal" placeholder="0,0" valor={v("peso_kg")} onCambio={set("peso_kg")} />
           <Campo etiqueta="Fecha de la medición" type="date" icono="event" valor={v("fecha")} onCambio={set("fecha")} />
-          <GraficaPeso mediciones={mediciones.filter((m) => m.mascotaId === mascota.id && !(original && m.fecha === original.fecha))} nuevo={v("peso_kg")} fecha={v("fecha") || HOY} />
+          <GraficaPeso mediciones={mediciones.filter((m) => m.mascotaId === mascota.id && !(original && m.fecha === original.fecha))} nuevo={v("peso_kg")} fecha={v("fecha") || hoy()} />
         </>
       )}
 

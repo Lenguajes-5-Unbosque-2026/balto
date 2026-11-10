@@ -7,7 +7,7 @@ import { Icono } from "@/components/icono"
 import { agregarAlimento, BotonCarrito, SeccionesTienda, TarjetaProducto, useRecomendados, type PropsTienda } from "@/components/tienda/comun"
 import { textoEntrega } from "@/components/tienda/pedidos"
 import type { Producto } from "@/lib/datos"
-import { HOY, sumarDias } from "@/lib/fecha"
+import { hoy, sumarDias } from "@/lib/fecha"
 import { useTienda } from "@/lib/usar-tienda"
 
 /**
@@ -24,7 +24,7 @@ export function InicioTienda(datos: PropsTienda) {
   const masVendidos = !alimento && !vacuna ? datos.productos.filter((p) => p.tipo === "alimento" && p.especie.includes(mascota.especie)).slice(0, 2) : []
   const enCurso = pedidos.filter((p) => p.estado_pago === "aprobado" && p.estado_entrega && p.estado_entrega !== "entregado")
   const pronto = alertas.filter(
-    (a) => a.grupo !== "resuelta" && (a.tipo === "refuerzo_vacuna" || a.tipo === "proxima_desparasitacion") && a.fecha_vencimiento <= sumarDias(HOY, 45),
+    (a) => a.grupo !== "resuelta" && (a.tipo === "refuerzo_vacuna" || a.tipo === "proxima_desparasitacion") && a.fecha_vencimiento <= sumarDias(hoy(), 45),
   ).length
   const agregar = (p: Producto) => agregarAlimento(p, 1, carrito.find((i) => i.producto_id === p.id)?.cantidad)
 

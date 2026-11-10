@@ -12,7 +12,7 @@ import { Nota } from "@/components/nota"
 import { Selector } from "@/components/selector"
 import { TarjetaEvento } from "@/components/tarjeta-evento"
 import { ordenarEventos, tituloEvento, type Evento } from "@/lib/eventos"
-import { HOY, fechaNumerica } from "@/lib/fecha"
+import { fechaNumerica, hoy } from "@/lib/fecha"
 import { nombreVacuna, ultimasVacunas, type PerfilMascota } from "@/lib/perfil"
 import { barraProximaDosis, proximaVacuna, ultimaDesparasitacion } from "@/lib/salud"
 import { useMascotaYEventos, useVolver } from "@/lib/usar-salud"
@@ -81,7 +81,7 @@ export function CarnetVacunas({ mascotas, eventos: base }: { mascotas: PerfilMas
 
 function TarjetaVacuna({ evento: e }: { evento: Evento }) {
   const fecha = e.tipo === "vacuna" ? e.proximo_refuerzo : e.proxima_dosis
-  const vencida = fecha && fecha < HOY
+  const vencida = fecha && fecha < hoy()
   return (
     <TarjetaEvento
       evento={e}

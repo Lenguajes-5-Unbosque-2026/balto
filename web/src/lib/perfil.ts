@@ -1,5 +1,5 @@
 import { enMinuscula, ordenarEventos, textoFrecuencia, tituloEvento, type Evento } from "@/lib/eventos"
-import { HOY, diasEntre, fechaCorta, sumarDias } from "@/lib/fecha"
+import { diasEntre, fechaCorta, hoy, sumarDias } from "@/lib/fecha"
 
 /** Lo que muestran Inicio y D1 de cada mascota (data/mock/mascotas.csv y alergias.csv). */
 export type PerfilMascota = {
@@ -88,7 +88,7 @@ export { nombreVacuna }
 export function estadoVacunas(eventos: Evento[]): "al-dia" | "vencida" | "sin-vacunas" {
   const vacunas = ultimasVacunas(eventos)
   if (vacunas.length === 0) return "sin-vacunas"
-  return vacunas.some((v) => v.proximo_refuerzo && v.proximo_refuerzo < HOY) ? "vencida" : "al-dia"
+  return vacunas.some((v) => v.proximo_refuerzo && v.proximo_refuerzo < hoy()) ? "vencida" : "al-dia"
 }
 
 export function ultimoPeso(eventos: Evento[]) {
@@ -104,7 +104,7 @@ export function medicacionVigente(eventos: Evento[]) {
       const fin = dias > 0 ? sumarDias(e.fecha, dias) : ""
       return { evento: e, fin }
     })
-    .filter(({ fin }) => fin && fin >= HOY)
+    .filter(({ fin }) => fin && fin >= hoy())
     .map(({ evento, fin }) => ({
       evento,
       nombre: evento.medicamento || tituloEvento(evento),
@@ -132,7 +132,7 @@ export function tituloAlerta(a: Alerta, evento?: Evento) {
 
 /** "en 5 días (28 sep)", "mañana (28 oct)", "venció hace 26 días". */
 export function cuandoVence(fecha: string) {
-  const dias = diasEntre(HOY, fecha)
+  const dias = diasEntre(hoy(), fecha)
   const dia = `(${fechaCorta(fecha).replace(/ \d{4}$/, "")})`
   if (dias < 0) return `venció hace ${-dias} ${-dias === 1 ? "día" : "días"}`
   if (dias === 0) return `hoy ${dia}`

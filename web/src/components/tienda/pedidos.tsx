@@ -17,7 +17,7 @@ import { Selector } from "@/components/selector"
 import { EncabezadoTienda, type PropsTienda } from "@/components/tienda/comun"
 import { Totales, cuandoAplicacion } from "@/components/tienda/carrito"
 import { veterinariaCorta } from "@/lib/eventos"
-import { HOY, fechaCorta, sumarDias } from "@/lib/fecha"
+import { fechaCorta, hoy, sumarDias } from "@/lib/fecha"
 import { hora12 } from "@/lib/medicamentos"
 import { PASOS_PEDIDO, iconoProducto, pasoPedido, precio } from "@/lib/tienda"
 import { useTienda, type PedidoLocal } from "@/lib/usar-tienda"
@@ -30,7 +30,7 @@ const sinAnio = (iso: string) => fechaCorta(iso).replace(/ \d{4}$/, "")
 export function textoEntrega(p: PedidoLocal) {
   const [dia, rango = ""] = p.ventana_entrega.split(" · ")
   if (p.estado_entrega === "entregado") return `Entregado el ${dia}`
-  const cuando = dia === sinAnio(HOY) ? "hoy" : dia === sinAnio(sumarDias(HOY, 1)) ? "mañana" : `el ${dia}`
+  const cuando = dia === sinAnio(hoy()) ? "hoy" : dia === sinAnio(sumarDias(hoy(), 1)) ? "mañana" : `el ${dia}`
   const [desde, hasta] = rango.split("–")
   return hasta ? `Llega ${cuando} entre ${desde.trim()} y ${hasta.trim()}` : `Llega ${cuando}`
 }
@@ -200,7 +200,7 @@ function Seguimiento({ p, datos }: { p: PedidoLocal; datos: PropsTienda }) {
               <span className="flex min-w-0 flex-1 flex-col">
                 <span className="texto-cuerpo-fuerte text-texto">{s.nombre}</span>
                 <span className="texto-etiqueta text-texto-secundario">
-                  {!hecho ? "Pendiente" : i === 0 && hora ? `${p.fecha.startsWith(HOY) ? "Hoy" : sinAnio(p.fecha.slice(0, 10))}, ${hora12(hora)}` : p.fecha.startsWith(HOY) ? "Hoy" : sinAnio(p.fecha.slice(0, 10))}
+                  {!hecho ? "Pendiente" : i === 0 && hora ? `${p.fecha.startsWith(hoy()) ? "Hoy" : sinAnio(p.fecha.slice(0, 10))}, ${hora12(hora)}` : p.fecha.startsWith(hoy()) ? "Hoy" : sinAnio(p.fecha.slice(0, 10))}
                 </span>
               </span>
               {hecho && <Icono nombre="check" className="icono-m text-exito" />}

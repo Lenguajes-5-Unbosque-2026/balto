@@ -16,7 +16,7 @@ import { Nota } from "@/components/nota"
 import { Pasos } from "@/components/pasos"
 import { BloqueSoporte, textoTamano, type Adjunto } from "@/components/registro/bloque-soporte"
 import { puedeVolver } from "@/lib/navegacion"
-import { HOY, diasEntre, sumarDias } from "@/lib/fecha"
+import { diasEntre, hoy, sumarDias } from "@/lib/fecha"
 import { useMascotaActiva } from "@/lib/mascota-activa"
 import { nombreTratamiento } from "@/lib/medicamentos"
 import { guardarEvento } from "@/lib/registro-local"
@@ -24,7 +24,8 @@ import { guardarTratamiento } from "@/lib/usar-medicamentos"
 
 type Datos = { nombre: string; presentacion: string; via: string; dosis: string; duracion: string; prescrito: string; cada: string; desde: string; hasta: string }
 
-const VACIO: Datos = { nombre: "", presentacion: "", via: "", dosis: "", duracion: "", prescrito: "", cada: "", desde: HOY, hasta: "" }
+/** Formulario vacío; "desde" es hoy (se calcula al abrir, no al cargar la app). */
+const vacio = (): Datos => ({ nombre: "", presentacion: "", via: "", dosis: "", duracion: "", prescrito: "", cada: "", desde: hoy(), hasta: "" })
 
 /** "7 días" → 7. */
 const dias = (texto: string) => Number.parseInt(texto.replace(/\D+/g, " ").trim().split(" ")[0] ?? "", 10) || 0
@@ -40,12 +41,12 @@ export function AgregarMedicamento({ mascotas }: { mascotas: { id: string; nombr
   const router = useRouter()
   const [mascota] = useMascotaActiva(mascotas)
   const [paso, setPaso] = useState<"datos" | "revisar" | "horarios">("datos")
-  const [d, setD] = useState<Datos>(VACIO)
+  const [d, setD] = useState<Datos>(vacio)
   const [formula, setFormula] = useState<Adjunto[]>([])
   const [confirmarSalida, setConfirmarSalida] = useState(false)
 
   const set = (campo: keyof Datos) => (valor: string) => setD((x) => ({ ...x, [campo]: valor }))
-  const tocado = formula.length > 0 || Object.entries(d).some(([k, v]) => v && !(k === "desde" && v === HOY))
+  const tocado = formula.length > 0 || Object.entries(d).some(([k, v]) => v && !(k === "desde" && v === hoy()))
 
   function cerrar() {
     if (tocado) setConfirmarSalida(true)
@@ -68,7 +69,7 @@ export function AgregarMedicamento({ mascotas }: { mascotas: { id: string; nombr
 
   function guardar(h: Horarios) {
     const duracion = d.hasta && d.desde ? diasEntre(d.desde, d.hasta) : dias(d.duracion) || 7
-    const inicio = d.desde || HOY
+    const inicio = d.desde || hoy()
     const id = crypto.randomUUID()
     const eventoId = crypto.randomUUID()
     const medicamento = d.nombre.trim()
@@ -86,7 +87,7 @@ export function AgregarMedicamento({ mascotas }: { mascotas: { id: string; nombr
       duracion_dias: String(duracion),
       soportes,
       recordatorio: String(h.recordatorio),
-      fecha_creacion: HOY,
+      fecha_creacion: hoy(),
     })
     guardarTratamiento(id, {
       mascota_id: mascota.id,

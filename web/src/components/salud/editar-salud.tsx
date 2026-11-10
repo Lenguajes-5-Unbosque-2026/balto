@@ -15,7 +15,7 @@ import { Nota } from "@/components/nota"
 import { puedeVolver } from "@/lib/navegacion"
 import type { Condicion } from "@/lib/datos"
 import { normalizar } from "@/lib/eventos"
-import { HOY } from "@/lib/fecha"
+import { hoy } from "@/lib/fecha"
 import { useMascotaActiva } from "@/lib/mascota-activa"
 import type { PerfilMascota } from "@/lib/perfil"
 import { ALERGIAS_SUGERIDAS, guardarSalud, useSalud } from "@/lib/usar-salud"
@@ -76,7 +76,7 @@ function Formulario({ mascotas, condiciones: base, veterinarias }: EditarSaludPr
           id: elegida?.id ?? crypto.randomUUID(),
           mascota_id: mascota.id,
           nombre: nombre.trim(),
-          fecha_diagnostico: elegida?.fecha_diagnostico ?? HOY,
+          fecha_diagnostico: elegida?.fecha_diagnostico ?? hoy(),
           diagnosticada_por: por.trim(),
         }
       : null

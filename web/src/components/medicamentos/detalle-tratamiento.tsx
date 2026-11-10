@@ -15,7 +15,7 @@ import { Icono } from "@/components/icono"
 import { Interruptor } from "@/components/interruptor"
 import { FilaTomaDetalle, HojaOmitir } from "@/components/medicamentos/tomas"
 import { RasgoOscuro } from "@/components/rasgo"
-import { HOY, fechaLarga, sumarDias } from "@/lib/fecha"
+import { fechaLarga, hoy, sumarDias } from "@/lib/fecha"
 import {
   diaTratamiento,
   duracion,
@@ -62,12 +62,12 @@ export function DetalleTratamiento(datos: DatosMedicamentos) {
   const dur = duracion(t)
   const dia = diaTratamiento(t)
   const progreso = vigente ? Math.round((dia / Math.max(dur, 1)) * 100) : 100
-  const tomas = [...tomasDelDia(t, HOY, registros), ...tomasDelDia(t, sumarDias(HOY, -1), registros).reverse()]
+  const tomas = [...tomasDelDia(t, hoy(), registros), ...tomasDelDia(t, sumarDias(hoy(), -1), registros).reverse()]
   const resumen = resumenTratamiento(t, registros)
   const recordatorio = t.recordatorio === "true"
 
   function confirmarFin() {
-    guardarTratamiento(t!.id, { estado: "finalizado", finalizado_antes: "true", fecha_fin: HOY, recordatorio: "false" })
+    guardarTratamiento(t!.id, { estado: "finalizado", finalizado_antes: "true", fecha_fin: hoy(), recordatorio: "false" })
     router.replace(`/medicamentos/finalizado?id=${t!.id}`)
   }
 
@@ -156,7 +156,7 @@ export function DetalleTratamiento(datos: DatosMedicamentos) {
         <>
           <div className="mt-1 flex items-center justify-between">
             <h3 className="texto-titulo-seccion text-texto">Tomas</h3>
-            <span className="texto-micro text-texto-secundario">{diaCorto(HOY)}</span>
+            <span className="texto-micro text-texto-secundario">{diaCorto(hoy())}</span>
           </div>
           {tomas.length ? (
             <div className="flex flex-col gap-3">

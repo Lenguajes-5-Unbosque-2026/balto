@@ -9,7 +9,7 @@ import { Icono } from "@/components/icono"
 import type { AlertaVista } from "@/lib/alertas"
 import { diasRestantes } from "@/lib/alimentacion"
 import type { Producto } from "@/lib/datos"
-import { HOY, diasEntre } from "@/lib/fecha"
+import { diasEntre, hoy } from "@/lib/fecha"
 import { useMascotaActiva } from "@/lib/mascota-activa"
 import { nombreVacuna } from "@/lib/perfil"
 import { agotado, iconoProducto, precio, productoDelPlan, productoDeVacuna, productoDesparasitacion } from "@/lib/tienda"
@@ -128,7 +128,7 @@ export function productoParaAlerta(productos: Producto[], a: AlertaVista, especi
   const producto =
     a.tipo === "proxima_desparasitacion" ? productoDesparasitacion(productos) : a.evento ? productoDeVacuna(productos, nombreVacuna(a.evento), especie) : undefined
   if (!producto) return undefined
-  const n = diasEntre(HOY, a.fecha_vencimiento)
+  const n = diasEntre(hoy(), a.fecha_vencimiento)
   return { producto, alerta: a, rotulo: n < 0 ? `Venció hace ${-n} días` : `Vence ${dias(n)}` }
 }
 

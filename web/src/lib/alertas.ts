@@ -1,5 +1,5 @@
 import { veterinariaCorta, type Evento } from "@/lib/eventos"
-import { HOY, diasEntre, fechaCorta, mesesEntre, sumarDias } from "@/lib/fecha"
+import { diasEntre, fechaCorta, hoy, mesesEntre, sumarDias } from "@/lib/fecha"
 import { nombreVacuna, tituloAlerta, type Alerta } from "@/lib/perfil"
 
 /** Alerta lista para mostrar: con su evento de origen, la mascota y el grupo de J1. */
@@ -41,7 +41,7 @@ export function enCategoriaAlerta(tipo: Alerta["tipo"], categorias: CategoriaAle
 
 /** Grupo de J1 según los días que faltan (spec de J: 7 días o menos = esta semana). */
 export function grupoAlerta(fecha: string): AlertaVista["grupo"] {
-  const dias = diasEntre(HOY, fecha)
+  const dias = diasEntre(hoy(), fecha)
   if (dias < 0) return "vencida"
   return dias <= 7 ? "semana" : "adelante"
 }
@@ -54,7 +54,7 @@ const sinAnio = (iso: string) => fechaCorta(iso).replace(/ \d{4}$/, "")
 
 /** "VENCE EN 2 DÍAS · 25 SEP" o "VENCIÓ HACE 3 DÍAS · 25 SEP" (tarjetas grandes de J1). */
 export function rotuloVence(a: AlertaVista) {
-  const dias = diasEntre(HOY, a.fecha_vencimiento)
+  const dias = diasEntre(hoy(), a.fecha_vencimiento)
   const dia = sinAnio(a.fecha_vencimiento)
   if (dias < 0) return `Venció hace ${-dias} ${dias === -1 ? "día" : "días"} · ${dia}`
   if (dias === 0) return `Vence hoy · ${dia}`
@@ -64,9 +64,9 @@ export function rotuloVence(a: AlertaVista) {
 
 /** "EN 12 DÍAS · 5 OCT" o "EN 10 MESES · 12 SEP 2027" (tarjetas de "Más adelante"). */
 export function rotuloAdelante(a: AlertaVista) {
-  const dias = diasEntre(HOY, a.fecha_vencimiento)
+  const dias = diasEntre(hoy(), a.fecha_vencimiento)
   if (dias <= 60) return `En ${dias} días · ${sinAnio(a.fecha_vencimiento)}`
-  const meses = mesesEntre(HOY, a.fecha_vencimiento)
+  const meses = mesesEntre(hoy(), a.fecha_vencimiento)
   return `En ${meses} ${meses === 1 ? "mes" : "meses"} · ${fechaCorta(a.fecha_vencimiento)}`
 }
 
@@ -186,7 +186,7 @@ export function eventoAlResolver(a: AlertaVista, d: DatosResolver): Evento {
     origen: "registro",
     recordatorio: String(!!(r.proxima && d.proxima)),
     soportes: [],
-    fecha_creacion: HOY,
+    fecha_creacion: hoy(),
   }
   if (r.proxima && d.proxima) (evento as Record<string, unknown>)[r.proxima] = d.proxima
   if (r.tipo === "peso") evento.peso_kg = (d.peso_kg ?? "").replace(",", ".")
@@ -204,7 +204,7 @@ export function rutaResolver(a: AlertaVista, d?: Partial<DatosResolver>) {
   const datos = new URLSearchParams({ alerta: a.id, resuelve: tituloAlertaVista(a), ...datosConocidos(a) })
   // Sin elegir, la próxima fecha se propone con el mismo intervalo de la vez anterior, contado desde hoy.
   const intervalo = intervaloAnterior(a)
-  const proxima = d?.proxima ?? (intervalo ? sumarDias(d?.fecha ?? HOY, intervalo) : "")
+  const proxima = d?.proxima ?? (intervalo ? sumarDias(d?.fecha ?? hoy(), intervalo) : "")
   if (d?.fecha) datos.set("fecha", d.fecha)
   if (r.proxima && proxima) datos.set(r.proxima, proxima)
   if (d?.peso_kg) datos.set("peso_kg", d.peso_kg)

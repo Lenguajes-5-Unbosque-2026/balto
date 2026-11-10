@@ -17,7 +17,7 @@ import { Rasgo } from "@/components/rasgo"
 import { agregarAlimento, BotonCarrito, EncabezadoTienda, productoParaAlerta, TarjetaProducto, useRecomendados, type PropsTienda } from "@/components/tienda/comun"
 import { frecuenciaAlerta } from "@/lib/alertas"
 import { normalizar } from "@/lib/eventos"
-import { HOY, fechaCorta, fechaLarga, sumarDias } from "@/lib/fecha"
+import { fechaCorta, fechaLarga, hoy, sumarDias } from "@/lib/fecha"
 import { useMascotas } from "@/lib/mascota-activa"
 import { cuposDel, distanciaKm, proximosConCupo, puntoDe, textoKm } from "@/lib/proveedores"
 import { agotado, iconoProducto, paraEspecie, precio, productoDeVacuna } from "@/lib/tienda"
@@ -128,7 +128,7 @@ export function Vacunas(datos: PropsTienda) {
     .filter((a) => a.grupo !== "resuelta" && (a.tipo === "refuerzo_vacuna" || a.tipo === "proxima_desparasitacion") && a.grupo !== "adelante")
     .concat(
       alertas.filter(
-        (a) => a.grupo === "adelante" && (a.tipo === "refuerzo_vacuna" || a.tipo === "proxima_desparasitacion") && a.fecha_vencimiento <= sumarDias(HOY, 45),
+        (a) => a.grupo === "adelante" && (a.tipo === "refuerzo_vacuna" || a.tipo === "proxima_desparasitacion") && a.fecha_vencimiento <= sumarDias(hoy(), 45),
       ),
     )
     .sort((a, b) => a.fecha_vencimiento.localeCompare(b.fecha_vencimiento))
@@ -213,7 +213,7 @@ export function DetalleVacuna(datos: PropsTienda) {
   const opciones = datos.proveedores
     .filter((v) => v.aliada === "true" && v.servicios.split(";").includes("vacunacion") && v.agenda_en_linea === "true")
     .map((v) => {
-      const dia = cuposDel(v, sumarDias(HOY, 1)).length ? sumarDias(HOY, 1) : proximosConCupo(v, HOY, 1)[0]
+      const dia = cuposDel(v, sumarDias(hoy(), 1)).length ? sumarDias(hoy(), 1) : proximosConCupo(v, hoy(), 1)[0]
       return { v, km: distanciaKm(ref, puntoDe(v)), dia, hora: dia ? cuposDel(v, dia)[0] : "" }
     })
     .filter((o) => o.dia)

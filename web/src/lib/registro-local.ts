@@ -2,7 +2,7 @@
 
 import { alertaDeEvento, proximaFechaEvento } from "@/lib/alertas"
 import type { Evento } from "@/lib/eventos"
-import { HOY, sumarDias } from "@/lib/fecha"
+import { hoy, sumarDias } from "@/lib/fecha"
 import { enSupabase, type Operacion } from "@/lib/sincronizar"
 
 /**
@@ -51,13 +51,13 @@ export function guardarEvento(evento: Evento) {
 
 /** El evento, sus soportes y la alerta que genera (refuerzo, próxima dosis, control). */
 function operacionesEvento(evento: Evento): Operacion[] {
-  const ops: Operacion[] = [{ tipo: "guardar", tabla: "eventos", donde: { id: evento.id }, fila: evento, alCrear: { origen: "registro", fecha_creacion: HOY } }]
+  const ops: Operacion[] = [{ tipo: "guardar", tabla: "eventos", donde: { id: evento.id }, fila: evento, alCrear: { origen: "registro", fecha_creacion: hoy() } }]
   if (evento.soportes) {
     ops.push({
       tipo: "reemplazar",
       tabla: "soportes",
       donde: { evento_id: evento.id },
-      filas: evento.soportes.map((s, i) => ({ id: `${evento.id}-s${i + 1}`, archivo: s.nombre, tipo: s.tipo, tamano_kb: s.tamanoKb, fecha_subida: HOY })),
+      filas: evento.soportes.map((s, i) => ({ id: `${evento.id}-s${i + 1}`, archivo: s.nombre, tipo: s.tipo, tamano_kb: s.tamanoKb, fecha_subida: hoy() })),
     })
   }
   const alerta = alertaDeEvento(evento)
@@ -85,7 +85,7 @@ export function eliminarEvento(id: string) {
     eventosRegistrados().filter((e) => e.id !== id),
   )
   escribirLista(CLAVE_ELIMINADOS, [...new Set([...eventosEliminados(), id])])
-  enSupabase({ tipo: "actualizar", tabla: "eventos", donde: { id }, fila: { eliminado_en: HOY } })
+  enSupabase({ tipo: "actualizar", tabla: "eventos", donde: { id }, fila: { eliminado_en: hoy() } })
 }
 
 export function buscarEvento(id: string) {

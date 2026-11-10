@@ -1,5 +1,5 @@
 import { normalizar } from "@/lib/eventos"
-import { AHORA, HOY, diasEntre } from "@/lib/fecha"
+import { AHORA, diasEntre, hoy } from "@/lib/fecha"
 
 export type Comida = { nombre: string; hora: string; gramos: number }
 
@@ -57,7 +57,7 @@ export function repartir(gramosDia: number, n: number): Comida[] {
 /** Días de alimento que quedan en la bolsa abierta (15 kg ÷ 380 g al día, menos los días ya servidos). */
 export function diasRestantes(p: Plan) {
   if (p.tipo !== "concentrado" || !p.presentacion_kg || !p.gramos_dia || !p.fecha_bolsa_abierta) return null
-  return Math.max(Math.floor((p.presentacion_kg * 1000) / p.gramos_dia) - diasEntre(p.fecha_bolsa_abierta, HOY), 0)
+  return Math.max(Math.floor((p.presentacion_kg * 1000) / p.gramos_dia) - diasEntre(p.fecha_bolsa_abierta, hoy()), 0)
 }
 
 /** "Concentrado adulto · salmón" o lo que le dan en casa. */

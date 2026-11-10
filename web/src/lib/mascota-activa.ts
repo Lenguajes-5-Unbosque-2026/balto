@@ -3,8 +3,7 @@
 import { useMemo, useSyncExternalStore } from "react"
 
 import { guardarEnMapa, useMapaLocal } from "@/lib/almacen-local"
-import { edad } from "@/lib/fecha"
-import { HOY } from "@/lib/fecha"
+import { edad, hoy } from "@/lib/fecha"
 import { guardarMascotaActiva, leerMascotaActiva } from "@/lib/registro-local"
 import { enSupabase } from "@/lib/sincronizar"
 
@@ -76,7 +75,7 @@ export type MascotaNueva = {
 export function guardarMascotaNueva(m: MascotaNueva) {
   guardarEnMapa<MascotaNueva>(CLAVE_NUEVAS, m.id, m)
   enSupabase(
-    { tipo: "guardar", tabla: "mascotas", donde: { id: m.id }, fila: m, alCrear: { estado: "activa", carga_inicial: "pendiente", fecha_registro: HOY } },
+    { tipo: "guardar", tabla: "mascotas", donde: { id: m.id }, fila: m, alCrear: { estado: "activa", carga_inicial: "pendiente", fecha_registro: hoy() } },
     { tipo: "reemplazar", tabla: "alergias", donde: { mascota_id: m.id }, filas: m.alergias.map((alergia, i) => ({ id: `${m.id}-al${i + 1}`, alergia })) },
   )
 }

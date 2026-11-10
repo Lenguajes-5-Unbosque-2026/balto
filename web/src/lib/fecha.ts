@@ -1,12 +1,16 @@
-/**
- * "Hoy" para los datos de prueba (data/mock/README.md). Se fija en vez de usar
- * la fecha del sistema para que alertas, pesos y fechas por defecto coincidan
- * con los datos de Supabase y los CSV. El 10 nov 2026 se movieron 14 días los
- * datos y esta fecha (antes 27 oct), con supabase/mover-fechas-14-dias.sql.
- */
-export const HOY = "2026-11-10"
+const DIA_BOGOTA = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Bogota", year: "numeric", month: "2-digit", day: "2-digit" })
 
-/** Hora de "ahora" para las tomas de hoy (G1, G2), fija por la misma razón que HOY. */
+/**
+ * La fecha de hoy en Bogotá ("2026-11-10"), la del día en que se abre la app.
+ * Se calcula con la zona de Bogotá para que el servidor y el celular den el
+ * mismo día. Las páginas que la usan se arman en cada visita (cargarDatos llama
+ * connection()), así que nunca queda la fecha del día en que se compiló.
+ */
+export function hoy() {
+  return DIA_BOGOTA.format(new Date())
+}
+
+/** Hora de "ahora" para las tomas de hoy (G1, G2). Es fija: con ella se calculan las tomas pendientes y vencidas del día. */
 export const AHORA = "09:41"
 
 const MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]
@@ -45,7 +49,7 @@ export function mesesEntre(desde: string, hasta: string) {
 /** Edad en años a partir de la fecha de nacimiento ("3 años"). */
 export function edad(nacimiento: string) {
   if (!nacimiento) return ""
-  const anios = Math.floor(mesesEntre(nacimiento, HOY) / 12)
+  const anios = Math.floor(mesesEntre(nacimiento, hoy()) / 12)
   return anios === 1 ? "1 año" : `${anios} años`
 }
 

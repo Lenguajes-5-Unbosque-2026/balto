@@ -25,7 +25,7 @@ import {
 } from "@/lib/alertas"
 import { puedeVolver } from "@/lib/navegacion"
 import type { Evento } from "@/lib/eventos"
-import { HOY, diasEntre, fechaCorta } from "@/lib/fecha"
+import { diasEntre, fechaCorta, hoy } from "@/lib/fecha"
 import { nombreVacuna, type Alerta } from "@/lib/perfil"
 import { useAlertas, type MascotaAlerta } from "@/lib/usar-alertas"
 
@@ -73,7 +73,7 @@ export function DetalleAlerta({ alertas, eventos, mascotas, marcas }: DetalleAle
           tono="exito"
           icono="task_alt"
           titulo="Alerta resuelta"
-          mensaje={`${tituloAlertaVista(alerta)} de ${alerta.mascota.nombre} se resolvió el ${fechaCorta(alerta.fecha_resuelta ?? HOY)}.`}
+          mensaje={`${tituloAlertaVista(alerta)} de ${alerta.mascota.nombre} se resolvió el ${fechaCorta(alerta.fecha_resuelta ?? hoy())}.`}
         />
         {alerta.evento_resolucion_id && (
           <BotonEnlace href={`/evento?id=${alerta.evento_resolucion_id}`} variante="secundario">
@@ -118,7 +118,7 @@ export function DetalleAlerta({ alertas, eventos, mascotas, marcas }: DetalleAle
     )
   }
 
-  const dias = diasEntre(HOY, alerta.fecha_vencimiento)
+  const dias = diasEntre(hoy(), alerta.fecha_vencimiento)
   const cuando = dias === 0 ? "hoy" : dias === 1 ? "mañana" : `en ${dias} días`
   const frecuencia = frecuenciaAlerta(alerta)
   const veterinaria = veterinariaAlerta(alerta)
@@ -206,7 +206,7 @@ function tituloVencida(a: AlertaVista) {
 
 /** "Venció hace 3 días, el 25 sep. Agenda la aplicación pronto." */
 function mensajeVencida(a: AlertaVista) {
-  const dias = -diasEntre(HOY, a.fecha_vencimiento)
+  const dias = -diasEntre(hoy(), a.fecha_vencimiento)
   const hace = `Venció hace ${dias} ${dias === 1 ? "día" : "días"}, el ${sinAnio(a.fecha_vencimiento)}.`
   const que = {
     refuerzo_vacuna: "Agenda la aplicación pronto.",
