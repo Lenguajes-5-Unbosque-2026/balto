@@ -1,9 +1,10 @@
 /**
  * "Hoy" para los datos de prueba (data/mock/README.md). Se fija en vez de usar
  * la fecha del sistema para que alertas, pesos y fechas por defecto coincidan
- * con los CSV. Cuando lleguen los datos de Supabase, esto pasa a ser la fecha real.
+ * con los datos de Supabase y los CSV. El 10 nov 2026 se movieron 14 días los
+ * datos y esta fecha (antes 27 oct), con supabase/mover-fechas-14-dias.sql.
  */
-export const HOY = "2026-10-27"
+export const HOY = "2026-11-10"
 
 /** Hora de "ahora" para las tomas de hoy (G1, G2), fija por la misma razón que HOY. */
 export const AHORA = "09:41"

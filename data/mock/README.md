@@ -8,7 +8,7 @@ Registros inventados pero realistas (Bogotá, octubre de 2026). Primero alimenta
 - Booleanos `true` / `false`. Decimales con punto (`28.4`). Precios en pesos colombianos sin separador (`289900`).
 - Las listas dentro de una celda van separadas con `;` (por ejemplo, `servicios`).
 
-La fecha de referencia ("hoy") es el **27 de octubre de 2026**: las alertas, tomas y citas están calculadas contra ese día.
+La fecha de referencia ("hoy") es el **10 de noviembre de 2026** (`HOY` en `web/src/lib/fecha.ts`): las alertas, tomas y citas están calculadas contra ese día. Hasta el 10 nov era el 27 oct; todas las fechas se movieron 14 días (en Supabase, con `supabase/mover-fechas-14-dias.sql`). Las fechas de nacimiento no se movieron.
 
 ## Archivos y relaciones
 
