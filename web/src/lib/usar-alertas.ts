@@ -9,6 +9,7 @@ import { HOY } from "@/lib/fecha"
 import { useCambiosMascotas, useMascotasNuevas } from "@/lib/mascota-activa"
 import type { Alerta } from "@/lib/perfil"
 import { eventosRegistrados, suscribirEventos } from "@/lib/registro-local"
+import { enSupabase } from "@/lib/sincronizar"
 import { useEventos } from "@/lib/usar-eventos"
 
 const CLAVE = "balto:alertas"
@@ -19,14 +20,16 @@ type CambioAlerta = { resuelta?: string; evento_resolucion_id?: string; pospuest
 /** "Marcar resuelta" (J5): la alerta pasa a Resueltas con el evento que la resolvió. */
 export function resolverAlerta(id: string, eventoId?: string) {
   guardarEnMapa<CambioAlerta>(CLAVE, id, { resuelta: HOY, evento_resolucion_id: eventoId ?? "" })
+  enSupabase({ tipo: "actualizar", tabla: "alertas", donde: { id }, fila: { estado: "resuelta", fecha_resuelta: HOY, evento_resolucion_id: eventoId ?? "" } })
 }
 
 /** J3: mueve el aviso, no el vencimiento. */
 export function posponerAlerta(id: string, fecha: string) {
   guardarEnMapa<CambioAlerta>(CLAVE, id, { pospuesta: fecha })
+  enSupabase({ tipo: "actualizar", tabla: "alertas", donde: { id }, fila: { fecha_aviso_pospuesto: fecha } })
 }
 
-/** Ícono de calendario de J1: la alerta queda en K6 · Calendario de Balto. */
+/** Ícono de calendario de J1: la alerta queda en K6 · Calendario de Balto (solo en este navegador: no hay columna para eso). */
 export function agregarAlertaAlCalendario(id: string) {
   guardarEnMapa<CambioAlerta>(CLAVE, id, { en_calendario: HOY })
 }

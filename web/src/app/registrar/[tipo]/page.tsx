@@ -4,7 +4,7 @@ import { Suspense } from "react"
 
 import { EmpezarDeCero } from "@/components/empezar-de-cero"
 import { FormularioEvento } from "@/components/registro/formulario-evento"
-import { anticipacionAvisos, obtenerMascotasBasicas, obtenerMediciones, obtenerVeterinarias } from "@/lib/datos"
+import { anticipacionAvisos, cargarDatos, obtenerMascotasBasicas, obtenerMediciones, obtenerVeterinarias } from "@/lib/datos"
 import { TIPOS_EVENTO, tipoEvento } from "@/lib/eventos"
 
 export function generateStaticParams() {
@@ -20,7 +20,8 @@ export async function generateMetadata({ params }: PageProps<"/registrar/[tipo]"
  * E2–E7, E10 y E11: formulario de cada tipo de evento. Los 9 tipos se generan
  * al compilar; el Suspense solo deja que la navegación sea instantánea.
  */
-export default function FormularioPage({ params }: PageProps<"/registrar/[tipo]">) {
+export default async function FormularioPage({ params }: PageProps<"/registrar/[tipo]">) {
+  await cargarDatos()
   return (
     <EmpezarDeCero>
       <Suspense>

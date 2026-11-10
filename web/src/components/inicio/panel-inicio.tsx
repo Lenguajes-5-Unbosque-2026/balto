@@ -34,7 +34,7 @@ export function PanelInicio({ dueno: duenoBase, mascotas: base, eventos: eventos
   const alerta = proximaAlerta(vigentes, mascota.id)
   const cambios = useCambiosMascotas()
   const nuevas = useMascotasNuevas()
-  const activas = [...base.map((m) => m.id), ...Object.keys(nuevas)].filter((id) => !cambios[id]?.archivada)
+  const activas = [...new Set([...base.map((m) => m.id), ...Object.keys(nuevas)])].filter((id) => !cambios[id]?.archivada)
 
   // O1 · Sin mascotas activas: no terminó B o archivó la única que tenía.
   if (activas.length === 0) return <SinMascotas dueno={dueno.nombre} mascotas={base} />

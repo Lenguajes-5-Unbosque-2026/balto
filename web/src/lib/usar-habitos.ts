@@ -5,6 +5,8 @@ import { useEffect, useMemo, useState } from "react"
 import { guardarEnMapa, useMapaLocal } from "@/lib/almacen-local"
 import type { Evento } from "@/lib/eventos"
 import { registrosDe, type Habito } from "@/lib/habitos"
+import { refrescarDatos } from "@/lib/refrescar"
+import { enSupabase } from "@/lib/sincronizar"
 import { supabase } from "@/lib/supabase"
 import { useEventos } from "@/lib/usar-eventos"
 
@@ -26,6 +28,7 @@ export async function guardarHabito(h: Habito) {
     imagen: h.imagen || null,
   })
   if (error) throw error
+  void refrescarDatos().catch(() => undefined)
 }
 
 /** Hábitos de una mascota guardados en Supabase (vacío si no hay conexión o configuración). */
@@ -47,6 +50,7 @@ async function leerHabitos(mascotaId: string): Promise<Habito[]> {
 
 export function eliminarHabito(id: string) {
   guardarEnMapa<HabitoLocal>(CLAVE, id, { eliminado: true })
+  enSupabase({ tipo: "borrar", tabla: "habitos", donde: { id } })
 }
 
 /** Registros de la bitácora de una mascota: hábitos (CSV y Supabase) y eventos de E7. */

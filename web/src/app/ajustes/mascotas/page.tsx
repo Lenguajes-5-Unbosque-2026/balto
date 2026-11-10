@@ -1,11 +1,12 @@
 import type { Metadata } from "next"
 
 import { MisMascotas } from "@/components/cuenta/mis-mascotas"
-import { obtenerMascotas } from "@/lib/datos"
+import { cargarDatos, obtenerMascotas } from "@/lib/datos"
 
 export const metadata: Metadata = { title: "Mis mascotas · Balto" }
 
 /** M5 · Administrar mascotas. */
-export default function Pagina() {
+export default async function Pagina() {
+  await cargarDatos()
   return <MisMascotas mascotas={obtenerMascotas()} />
 }

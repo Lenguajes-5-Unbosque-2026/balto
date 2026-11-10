@@ -24,7 +24,10 @@ export function MisMascotas({ mascotas: base }: { mascotas: Mascota[] }) {
   const volver = useVolver("/ajustes")
   const cambios = useCambiosMascotas()
   const nuevas = useMascotasNuevas()
-  const mascotas = [...base, ...Object.values(nuevas).map((m) => completarNueva(m) as unknown as Mascota)].map((m) => aplicarCambios(m, cambios[m.id]))
+  const ids = new Set(base.map((m) => m.id))
+  const mascotas = [...base, ...Object.values(nuevas).filter((m) => !ids.has(m.id)).map((m) => completarNueva(m) as unknown as Mascota)].map((m) =>
+    aplicarCambios(m, cambios[m.id]),
+  )
   const activas = mascotas.filter((m) => !cambios[m.id]?.archivada)
   const archivadas = mascotas.filter((m) => cambios[m.id]?.archivada)
 

@@ -3,8 +3,10 @@
 import { useMemo } from "react"
 
 import { guardarEnMapa, useMapaLocal } from "@/lib/almacen-local"
+import { DUENO_ACTUAL_ID } from "@/lib/cuenta-actual"
 import type { Cita } from "@/lib/datos"
 import { ZONAS, type Punto } from "@/lib/proveedores"
+import { enSupabase } from "@/lib/sincronizar"
 
 const CLAVE_UBICACION = "balto:ubicacion"
 const CLAVE_FAVORITA = "balto:favorita"
@@ -37,6 +39,7 @@ export function useFavorita() {
 
 export function guardarCita(id: string, cambios: Partial<Cita>) {
   guardarEnMapa<Partial<Cita>>(CLAVE_CITAS, id, cambios)
+  enSupabase({ tipo: "guardar", tabla: "citas", donde: { id }, fila: cambios, alCrear: { dueno_id: DUENO_ACTUAL_ID } })
 }
 
 /** Citas del CSV más las agendadas, reprogramadas o canceladas en este navegador. */

@@ -3,13 +3,14 @@ import { Suspense } from "react"
 
 import { CalendarioCitas } from "@/components/proveedores/citas"
 import { marcasDePlanes, mascotasAlerta } from "@/lib/alertas-servidor"
-import { obtenerEventosDueno, obtenerTodasAlertas } from "@/lib/datos"
+import { cargarDatos, obtenerEventosDueno, obtenerTodasAlertas } from "@/lib/datos"
 import { datosProveedores } from "@/lib/proveedores-servidor"
 
 export const metadata: Metadata = { title: "Calendario · Balto" }
 
 /** K6 · Calendario unificado: citas y las alertas que el dueño agregó desde J1. */
-export default function Pagina() {
+export default async function Pagina() {
+  await cargarDatos()
   return (
     <Suspense>
       <CalendarioCitas

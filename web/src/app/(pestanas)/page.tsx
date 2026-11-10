@@ -1,8 +1,9 @@
 import { PanelInicio } from "@/components/inicio/panel-inicio"
-import { obtenerAlertas, obtenerDueno, obtenerEventosDueno, obtenerPerfiles } from "@/lib/datos"
+import { cargarDatos, obtenerAlertas, obtenerDueno, obtenerEventosDueno, obtenerPerfiles } from "@/lib/datos"
 
 /** Inicio · Selector de mascota. Sin mascotas activas sería O1 (fuera del MVP). */
-export default function InicioPage() {
+export default async function InicioPage() {
+  await cargarDatos()
   return (
     <PanelInicio
       dueno={obtenerDueno()}

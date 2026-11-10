@@ -31,8 +31,9 @@
 | `design/auditoria-referencias.md` | Referencias visuales, decisiones de UI que salieron de ellas y riesgos detectados en el archivo de Figma. |
 | `design/flujos/` | Pantallas exportadas de Figma (JPG, 390 × 844), una carpeta por flujo. Ver sección 4. |
 | `specs/` | Specs de cada flujo: una carpeta por flujo con el mismo nombre de su carpeta en `design/flujos/`, con `spec.md` (y luego `plan.md` y `tareas.md`). `specs/README.md` tiene el mapa de flujos, sus conexiones, las inconsistencias y todas las preguntas abiertas. `specs/_plantilla.md` es la plantilla. La spec modelo es la de E. |
-| `data/` | Modelo de datos (`modelo-datos.md`, todavía no existe). |
-| `web/` | Todo el código de la aplicación (Next.js). Hoy solo tiene el README. |
+| `data/` | `data/mock/`: los CSV con los datos de prueba (las mismas 22 tablas de Supabase). |
+| `supabase/` | SQL para Supabase: permisos de las tablas (`permisos-abiertos.sql`) y los scripts de hábitos. |
+| `web/` | Todo el código de la aplicación (Next.js). |
 
 ## 4. Flujos
 
@@ -63,7 +64,7 @@ Carpetas de `design/flujos/`. Los IDs de pantalla son los de los nombres de arch
 - Mobile-first: todo se diseña para celular.
 - Componentes: shadcn/ui según design/componentes.md; los custom se crean como componentes reutilizables.
 - Estilos: siempre con los tokens del tema. Nunca valores sueltos.
-- Datos: primero de data/mock/; después de Supabase.
+- Datos: la app lee y escribe en las 22 tablas de Supabase (`web/src/lib/datos.ts` para leer, `web/src/lib/sincronizar.ts` para guardar; la conversión de formatos está en `web/src/lib/esquema.ts`). Sin las variables `NEXT_PUBLIC_SUPABASE_*` usa los CSV de `data/mock/`, que tienen las mismas columnas.
 - Todo el código vive dentro de web/.
 
 ## Preguntas abiertas

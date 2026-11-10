@@ -1,6 +1,9 @@
 "use client"
 
+import { alertaDeEvento, proximaFechaEvento } from "@/lib/alertas"
 import type { Evento } from "@/lib/eventos"
+import { HOY } from "@/lib/fecha"
+import { enSupabase, type Operacion } from "@/lib/sincronizar"
 
 /**
  * Cambios hechos en este navegador mientras no hay Supabase: eventos nuevos o
@@ -43,6 +46,35 @@ function escribirLista(clave: string, lista: unknown[]) {
 /** Guarda un evento nuevo o reemplaza uno existente (también los del CSV, al editarlos). */
 export function guardarEvento(evento: Evento) {
   escribirLista(CLAVE_EVENTOS, [evento, ...eventosRegistrados().filter((e) => e.id !== evento.id)])
+  enSupabase(...operacionesEvento(evento))
+}
+
+/** El evento, sus soportes y la alerta que genera (refuerzo, próxima dosis, control). */
+function operacionesEvento(evento: Evento): Operacion[] {
+  const ops: Operacion[] = [{ tipo: "guardar", tabla: "eventos", donde: { id: evento.id }, fila: evento, alCrear: { fecha_creacion: HOY } }]
+  if (evento.soportes) {
+    ops.push({
+      tipo: "reemplazar",
+      tabla: "soportes",
+      donde: { evento_id: evento.id },
+      filas: evento.soportes.map((s, i) => ({ id: `${evento.id}-s${i + 1}`, archivo: s.nombre, tipo: s.tipo, tamano_kb: s.tamanoKb, fecha_subida: HOY })),
+    })
+  }
+  const alerta = alertaDeEvento(evento)
+  if (alerta) {
+    // Si la alerta ya existe (y quizá está resuelta), solo cambia su fecha.
+    const { estado, ...datos } = alerta
+    ops.push({ tipo: "guardar", tabla: "alertas", donde: { id: alerta.id }, fila: datos, alCrear: { estado } })
+  } else {
+    ops.push({ tipo: "borrar", tabla: "alertas", donde: { id: `l-${evento.id}` } })
+  }
+  // Las alertas del evento que siguen pendientes toman la fecha editada en D6.
+  const fecha = proximaFechaEvento(evento)
+  if (fecha) {
+    for (const estado of ["proxima", "vencida"])
+      ops.push({ tipo: "actualizar", tabla: "alertas", donde: { evento_id: evento.id, estado }, fila: { fecha_vencimiento: fecha } })
+  }
+  return ops
 }
 
 /** Borrado de D7: deja de verse en toda la app. */
@@ -52,6 +84,7 @@ export function eliminarEvento(id: string) {
     eventosRegistrados().filter((e) => e.id !== id),
   )
   escribirLista(CLAVE_ELIMINADOS, [...new Set([...eventosEliminados(), id])])
+  enSupabase({ tipo: "actualizar", tabla: "eventos", donde: { id }, fila: { eliminado_en: HOY } })
 }
 
 export function buscarEvento(id: string) {

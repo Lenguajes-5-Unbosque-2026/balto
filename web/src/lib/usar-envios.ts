@@ -4,12 +4,14 @@ import { useMemo } from "react"
 
 import { guardarEnMapa, useMapaLocal } from "@/lib/almacen-local"
 import type { Envio } from "@/lib/datos"
+import { enSupabase } from "@/lib/sincronizar"
 
 const CLAVE = "balto:envios"
 
 /** Guarda un envío nuevo o cambia uno (vencimiento del enlace, desactivarlo). */
 export function guardarEnvio(id: string, cambios: Partial<Envio>) {
   guardarEnMapa<Partial<Envio>>(CLAVE, id, cambios)
+  enSupabase({ tipo: "guardar", tabla: "envios", donde: { id }, fila: cambios })
 }
 
 /** Envíos del CSV más los hechos en este navegador, del más reciente al más antiguo. */
