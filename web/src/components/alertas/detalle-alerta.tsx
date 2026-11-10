@@ -113,6 +113,7 @@ export function DetalleAlerta({ alertas, eventos, mascotas, marcas }: DetalleAle
             </Boton>
           )}
         </BarraAccion>
+        {acciones.hojaResolver}
       </main>
     )
   }
@@ -153,6 +154,7 @@ export function DetalleAlerta({ alertas, eventos, mascotas, marcas }: DetalleAle
       {opciones}
 
       <HojaPosponer alertaId={posponiendo ? alerta.id : null} onCerrar={() => setPosponiendo(false)} />
+      {acciones.hojaResolver}
     </main>
   )
 }

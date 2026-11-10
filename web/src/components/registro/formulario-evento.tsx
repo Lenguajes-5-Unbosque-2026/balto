@@ -78,6 +78,7 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
   const router = useRouter()
   const parametros = useSearchParams()
   const alertaId = original ? null : parametros.get("alerta")
+  const alertaTitulo = alertaId ? parametros.get("resuelve") : null
   const [activa, cambiarMascota] = useMascotaActiva(mascotas)
   const mascota = (original && mascotas.find((m) => m.id === original.mascota_id)) || activa
   const [tipo, setTipo] = useState<TipoEvento>(original?.tipo ?? tipoInicial)
@@ -201,6 +202,13 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
         />
       ) : (
         <ChipsTipo actual={tipo} onCambio={cambiarTipo} />
+      )}
+
+      {alertaId && (
+        <Nota icono="task_alt" tono="exito">
+          {alertaTitulo ? <>Estás resolviendo la alerta <strong>{alertaTitulo}</strong>.</> : "Estás resolviendo una alerta."} Al guardar, queda resuelta y el
+          evento entra en la línea de tiempo.
+        </Nota>
       )}
 
       {tipo === "vacuna" && (
@@ -338,7 +346,7 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
 
       <BarraAccion>
         <Boton disabled={!completo || (original && !tocado)} onClick={guardar}>
-          {original ? "Guardar cambios" : "Guardar evento"}
+          {original ? "Guardar cambios" : alertaId ? "Guardar y resolver" : "Guardar evento"}
           {original && <Icono nombre="check" className="icono-m" />}
         </Boton>
       </BarraAccion>

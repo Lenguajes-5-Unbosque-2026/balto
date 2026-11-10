@@ -140,7 +140,8 @@ export function queSeRegistra(a: AlertaVista) {
  */
 export function rutaResolver(a: AlertaVista) {
   const e = a.evento
-  const datos = new URLSearchParams({ alerta: a.id })
+  // "resuelve" es el título de la alerta, para la nota del formulario.
+  const datos = new URLSearchParams({ alerta: a.id, resuelve: tituloAlertaVista(a) })
   const con = (campo: string, valor?: string) => valor && datos.set(campo, valor)
   // La próxima fecha se propone con el mismo intervalo de la vez anterior, contado desde hoy.
   const siguiente = e && e.fecha < a.fecha_vencimiento ? sumarDias(HOY, diasEntre(e.fecha, a.fecha_vencimiento)) : ""

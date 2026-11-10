@@ -140,6 +140,7 @@ export function CentroAlertas({ alertas: base, eventos, mascotas, marcas }: Cent
         }}
       />
       <HojaPosponer alertaId={posponiendo} onCerrar={() => setPosponiendo(null)} />
+      {acciones.hojaResolver}
       <HojaCalendario alerta={alCalendario} onCerrar={() => setAlCalendario(null)} />
     </div>
   )
