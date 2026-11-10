@@ -47,9 +47,10 @@ const COMUNES = ["fecha", "que_cambio"]
 /** Columnas del evento que no son campos del formulario. */
 const NO_EDITABLES = ["id", "mascota_id", "tipo", "soportes", "recordatorio", "fecha_creacion", "fecha_edicion", "eliminado_en"]
 
-/** Campos que llegan llenos en la URL desde "Marcar resuelta" de una alerta (J). */
+/** Campos que llegan llenos en la URL desde "Marcar resuelta" de una alerta (J): lo de la vez anterior y lo elegido en la hoja. */
 const PRELLENABLES = [
-  "vacuna", "veterinaria", "producto", "via", "tipo_examen", "laboratorio", "proximo_refuerzo", "proxima_dosis", "proximo_control",
+  "vacuna", "veterinaria", "proveedor_id", "producto", "via", "tipo_examen", "laboratorio", "solicitado_por",
+  "proximo_refuerzo", "proxima_dosis", "proximo_control", "fecha", "peso_kg",
   // Desde H7 · "Registrar lo que pasó" (E11 lleno).
   "titulo", "lugar", "detalle",
 ]
