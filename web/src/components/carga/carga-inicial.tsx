@@ -83,7 +83,7 @@ export function CargaInicial({ mascotas }: { mascotas: { id: string; nombre: str
   }
 
   function registrar(eventos: Omit<Evento, "id" | "mascota_id" | "fecha_creacion">[]) {
-    const nuevos = eventos.map((e) => ({ ...e, id: crypto.randomUUID(), mascota_id: mascota.id, fecha_creacion: HOY }) as Evento)
+    const nuevos = eventos.map((e) => ({ ...e, id: crypto.randomUUID(), mascota_id: mascota.id, origen: "carga_inicial", fecha_creacion: HOY }) as Evento)
     for (const e of nuevos) guardarEvento(e)
     setGuardados((x) => [...x, ...nuevos])
     return nuevos

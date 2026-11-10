@@ -2,7 +2,7 @@
 
 import { alertaDeEvento, proximaFechaEvento } from "@/lib/alertas"
 import type { Evento } from "@/lib/eventos"
-import { HOY } from "@/lib/fecha"
+import { HOY, sumarDias } from "@/lib/fecha"
 import { enSupabase, type Operacion } from "@/lib/sincronizar"
 
 /**
@@ -51,7 +51,7 @@ export function guardarEvento(evento: Evento) {
 
 /** El evento, sus soportes y la alerta que genera (refuerzo, próxima dosis, control). */
 function operacionesEvento(evento: Evento): Operacion[] {
-  const ops: Operacion[] = [{ tipo: "guardar", tabla: "eventos", donde: { id: evento.id }, fila: evento, alCrear: { fecha_creacion: HOY } }]
+  const ops: Operacion[] = [{ tipo: "guardar", tabla: "eventos", donde: { id: evento.id }, fila: evento, alCrear: { origen: "registro", fecha_creacion: HOY } }]
   if (evento.soportes) {
     ops.push({
       tipo: "reemplazar",
@@ -64,7 +64,8 @@ function operacionesEvento(evento: Evento): Operacion[] {
   if (alerta) {
     // Si la alerta ya existe (y quizá está resuelta), solo cambia su fecha.
     const { estado, ...datos } = alerta
-    ops.push({ tipo: "guardar", tabla: "alertas", donde: { id: alerta.id }, fila: datos, alCrear: { estado } })
+    // Como en data/mock/: el aviso sale una semana antes del vencimiento.
+    ops.push({ tipo: "guardar", tabla: "alertas", donde: { id: alerta.id }, fila: datos, alCrear: { estado, fecha_aviso: sumarDias(alerta.fecha_vencimiento, -7) } })
   } else {
     ops.push({ tipo: "borrar", tabla: "alertas", donde: { id: `l-${evento.id}` } })
   }

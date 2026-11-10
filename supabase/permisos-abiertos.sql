@@ -7,10 +7,17 @@
 -- Cuando llegue Supabase Auth, estas políticas se reemplazan por unas por dueño.
 --
 -- Se puede correr más de una vez: borra y vuelve a crear la política de cada tabla.
+--
+-- También deja opcionales (sin NOT NULL) todas las columnas menos la llave
+-- primaria. Al importar los CSV, Supabase marcó como obligatoria cada columna
+-- que nunca venía vacía, pero la app deja varias vacías a propósito (la alerta
+-- recién creada, el alimento que no es de una mascota, el medicamento sin
+-- evento…). Las reglas de qué es obligatorio las aplica la app.
 
 do $$
 declare
   t text;
+  c record;
 begin
   foreach t in array array[
     'alergias', 'alertas', 'citas', 'comidas_programadas', 'condiciones', 'direcciones',
@@ -26,5 +33,22 @@ begin
       'create policy "acceso_abierto" on public.%I for all to anon, authenticated using (true) with check (true)',
       t
     );
+
+    for c in
+      select col.column_name
+      from information_schema.columns col
+      where col.table_schema = 'public'
+        and col.table_name = t
+        and col.is_nullable = 'NO'
+        and col.column_name not in (
+          select kcu.column_name
+          from information_schema.table_constraints tc
+          join information_schema.key_column_usage kcu
+            on kcu.constraint_name = tc.constraint_name and kcu.table_schema = tc.table_schema
+          where tc.table_schema = 'public' and tc.table_name = t and tc.constraint_type = 'PRIMARY KEY'
+        )
+    loop
+      execute format('alter table public.%I alter column %I drop not null', t, c.column_name);
+    end loop;
   end loop;
 end $$;
