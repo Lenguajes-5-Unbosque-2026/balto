@@ -12,7 +12,7 @@ Importa porque cierra el ciclo de las alertas: una vacuna por vencer (J) se conv
 |---|---|---|
 | K1 | Buscador · permiso de ubicación | Diálogo "¿Usamos tu ubicación? Para mostrarte las veterinarias más cercanas. También puedes elegir la zona a mano." Botones "Permitir" / "Elegir manualmente". |
 | K2 | Filtros de proveedores | Hoja "Filtrar": tipo de servicio (Urgencias 24 h, Consulta general, Especialista, Estética, Paseo, Guardería), distancia (1 km / 3 km / 5 km o más), "Abierto ahora" y los botones "Limpiar" / "Ver 12". |
-| K3 | Listado de proveedores | Buscador "Veterinaria, servicio o zona", botón de filtros, botón de mapa, chips Cerca de mí / Urgencias / Abierto y tarjetas con el nombre, la calificación, la distancia y el horario. |
+| K3 | Listado de proveedores | Buscador "Veterinaria, servicio o zona", botón de filtros, botón de mapa, chips Cerca de mí / Urgencias / Abierto ("Cerca de mí" empieza apagado en cada entrada; al tocarlo deja solo lo que está a 3 km o menos y, si no hay ubicación, primero pide K1) y tarjetas con el nombre, la calificación, la distancia y el horario. |
 | K4 | Ficha del proveedor | Foto del lugar, nombre, calificación (230 reseñas), distancia, horario, servicios (chips), dirección, teléfono, botones "Llamar" / "Ruta", corazón para marcarlo como favorito y "Agendar cita". |
 | K5 | Agendar cita | Proveedor, servicio y mascota (lápiz para cambiarlos), calendario del mes con los días disponibles, "Horarios disponibles · Jue 25" y "Confirmar cita". |
 | K6 | Calendario unificado | Calendario del mes con los días que tienen citas, la lista "Próximas citas" (todas las mascotas) y + arriba. |
@@ -27,7 +27,7 @@ Importa porque cierra el ciclo de las alertas: una vacuna por vencer (J) se conv
 Caso: el refuerzo de la antirrábica de Luna vence el 25 sep y Samuel quiere agendar la vacuna.
 
 1. **Entrada.** En **J2** toca **Agendar cita**. Se abre K3 con el filtro de servicio "Vacunación"; si Samuel tiene una veterinaria favorita, aparece primero.
-2. **Ubicación (K1).** Es la primera vez que usa K, así que Balto pregunta "¿Usamos tu ubicación?". Toca **Permitir** y el navegador pide el permiso. Samuel acepta y la lista se ordena por distancia ("Cerca de mí").
+2. **Ubicación (K1).** Es la primera vez que usa K, así que Balto pregunta "¿Usamos tu ubicación?". Toca **Permitir** y el navegador pide el permiso. Samuel acepta y la lista se ordena por distancia. Para ver solo lo más cercano toca el chip **Cerca de mí** (3 km o menos).
 3. **Elegir (K3 → K4).** Toca "Clínica Veterinaria Norte · ★ 4,8 · 0,8 km · Abierto 24 h" → K4. Ve los servicios (Urgencias, Vacunación, Cirugía, Laboratorio), la dirección y el teléfono. Toca el corazón para marcarla como su veterinaria de confianza.
 4. **Agendar (K5).** Toca **Agendar cita**. K5 viene con "Vacunación · Luna" lleno. Elige el **jueves 25**; los días con cupo se ven sombreados. Elige las **10:00** y toca **Confirmar cita**.
 5. **Confirmación (K9).**

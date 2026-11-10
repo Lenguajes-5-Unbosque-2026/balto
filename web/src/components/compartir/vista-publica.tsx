@@ -8,6 +8,7 @@ import { CabeceraPublica, PerfilPublico } from "@/components/compartir/perfil-pu
 import { Estado } from "@/components/estado"
 import { Icono } from "@/components/icono"
 import { Nota } from "@/components/nota"
+import { puedeVolver } from "@/lib/navegacion"
 import { estadoEnlace, seccionesDe } from "@/lib/compartir"
 import type { Envio } from "@/lib/datos"
 import type { Evento } from "@/lib/eventos"
@@ -61,7 +62,7 @@ export function VistaPublica({ token, mascotas, eventos: base, envios, dueno: du
         </div>
         <Nota icono="refresh">Pídele a quien te lo envió que genere uno nuevo desde la app.</Nota>
         <BarraAccion>
-          <BotonEnlace href="/">Entendido</BotonEnlace>
+          <BotonEnlace href="/bienvenida">Entendido</BotonEnlace>
         </BarraAccion>
       </main>
     )
@@ -83,7 +84,7 @@ export function VistaPublica({ token, mascotas, eventos: base, envios, dueno: du
           {/* El PDF sale del diálogo de impresión del navegador ("Guardar como PDF"). */}
           <Boton onClick={() => window.print()}>Descargar PDF</Boton>
           {previa && (
-            <Boton variante="secundario" onClick={() => router.back()}>
+            <Boton variante="secundario" onClick={() => (puedeVolver() ? router.back() : router.push("/compartir/historial"))}>
               Volver
             </Boton>
           )}

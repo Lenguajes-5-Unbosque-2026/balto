@@ -51,7 +51,7 @@ A1 → A2 → A3 → A4 → A5 → B1 → B2 → B4 → B6 → B5 → C1 … C7 
 | B | A5 (registro); O1 ("Registrar una mascota"); + del selector de Inicio; M5 ("Agregar mascota"). B6 también desde la ficha "Microchip" de Inicio. |
 | C | B5 (obligatorio); C7 "Agregar más archivos"; D8 "Subir documentos que ya tengas"; tarjeta "Termina de subir…" en Inicio. |
 | D | D1: flecha ↗ de la tarjeta de Inicio, B6 "Ver versión digital". D2: barra inferior, G9, J5. D4: tarjetas de E9, C7, F2, F3, I1. |
-| E | + de la barra inferior (E1). Directo a un formulario desde F2 (E2 / E10), F3, F4 (E6), J ("Ya lo resolví"), H7 (E11), K (después de una cita), N (confirmar una vacuna). |
+| E | + de la barra inferior (E1). Directo a un formulario desde F2 (E2 / E10), F3, F4 (E6), J ("Marcar resuelta"), H7 (E11), K (después de una cita), N (confirmar una vacuna). |
 | F | Inicio › Accesos rápidos › Salud (F1); ficha "Al día" (F2) y ficha de peso (F4) de Inicio. |
 | G | Inicio › Accesos rápidos › Medicamentos; F1; F3 (G2); F5; E5 (G4); notificación G5. |
 | H | Inicio › Accesos rápidos › Alimentación; notificación H5; alerta de alimento (J). |

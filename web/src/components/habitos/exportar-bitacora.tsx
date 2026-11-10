@@ -61,7 +61,7 @@ export function ExportarBitacora({ mascotas, habitos, eventos }: ExportarProps) 
     const [icono, titulo] = CANALES[canal]
     return (
       <main className="flex flex-1 flex-col gap-4 px-pantalla pt-14">
-        <Encabezado titulo="Exportar bitácora" />
+        <Encabezado titulo="Exportar bitácora" derecha={<BotonIcono icono="close" etiqueta="Cerrar" onClick={() => router.push("/habitos")} />} />
         <div className="pt-4">
           <Estado tono="exito" icono="check_circle" titulo="Bitácora lista" mensaje={`${archivo} · ${paginas} páginas`} />
         </div>
@@ -131,7 +131,7 @@ export function ExportarBitacora({ mascotas, habitos, eventos }: ExportarProps) 
           />
         ))}
       </div>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid movil-m:grid-cols-2 gap-3">
         <Campo etiqueta="Desde" type="date" valor={desde} onCambio={setDesde} />
         <Campo etiqueta="Hasta" type="date" valor={hasta} onCambio={setHasta} />
       </div>

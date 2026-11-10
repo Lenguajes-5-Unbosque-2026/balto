@@ -20,9 +20,11 @@ import { ChipsTipo } from "@/components/registro/chips-tipo"
 import { EncabezadoRegistro } from "@/components/registro/encabezado-registro"
 import { GraficaPeso } from "@/components/registro/grafica-peso"
 import type { MascotaBasica, Medicion } from "@/components/registro/tipos"
+import { puedeVolver } from "@/lib/navegacion"
 import { tipoEvento, type Evento, type TipoEvento } from "@/lib/eventos"
 import { HOY, fechaCorta, sumarDias } from "@/lib/fecha"
 import { useMascotaActiva } from "@/lib/mascota-activa"
+import { marcarPendiente } from "@/lib/conexion"
 import { guardarEvento } from "@/lib/registro-local"
 import { resolverAlerta } from "@/lib/usar-alertas"
 
@@ -45,7 +47,7 @@ const COMUNES = ["fecha", "que_cambio"]
 /** Columnas del evento que no son campos del formulario. */
 const NO_EDITABLES = ["id", "mascota_id", "tipo", "soportes", "recordatorio", "fecha_creacion", "fecha_edicion", "eliminado_en"]
 
-/** Campos que llegan llenos en la URL desde "Ya lo resolví" de una alerta (J). */
+/** Campos que llegan llenos en la URL desde "Marcar resuelta" de una alerta (J). */
 const PRELLENABLES = [
   "vacuna", "veterinaria", "producto", "via", "tipo_examen", "laboratorio", "proximo_refuerzo", "proxima_dosis", "proximo_control",
   // Desde H7 · "Registrar lo que pasó" (E11 lleno).
@@ -117,7 +119,7 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
   /** En D6 se vuelve a D4; si se abrió el enlace directo, a la línea de tiempo. */
   function salir() {
     if (!original) router.push("/")
-    else if (window.history.length > 1) router.back()
+    else if (puedeVolver()) router.back()
     else router.replace(`/evento?id=${original.id}`)
   }
 
@@ -147,11 +149,17 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
     }
     if (tipo !== "examen") delete evento.resultado
     guardarEvento(evento)
+    if (!original && !navigator.onLine) {
+      // O8: sin conexión el evento queda en el celular y se sube cuando vuelva el internet (O3).
+      marcarPendiente(evento.id, { titulo: tipoEvento(tipo)!.nombre, detalle: "Guardado en el celular · pendiente", icono: tipoEvento(tipo)!.icono, eventoId: evento.id })
+      router.push(`/no-se-pudo-guardar?evento=${evento.id}&titulo=${encodeURIComponent(tipoEvento(tipo)!.nombre)}&icono=${tipoEvento(tipo)!.icono}`)
+      return
+    }
     if (original) {
       toast.success("Cambios guardados")
       salir()
     } else if (alertaId) {
-      // Desde "Ya lo resolví" se muestra J5 en lugar de E9.
+      // Desde "Marcar resuelta" se muestra J5 en lugar de E9.
       resolverAlerta(alertaId, evento.id)
       router.push(`/alertas/resuelta?id=${alertaId}&evento=${evento.id}`)
     } else {
@@ -198,7 +206,7 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
       {tipo === "vacuna" && (
         <section className="flex flex-col gap-4 rounded-lg bg-superficie p-4 shadow-tarjeta movil-m:p-5">
           <Campo etiqueta="Vacuna aplicada" requerido icono="vaccines" placeholder="Nombre de la vacuna" valor={v("vacuna")} onCambio={set("vacuna")} />
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid movil-m:grid-cols-2 gap-3">
             <Campo etiqueta="Fecha aplicada" requerido type="date" valor={v("fecha")} onCambio={set("fecha")} />
             <Campo etiqueta="Próximo refuerzo" type="date" valor={v("proximo_refuerzo")} onCambio={set("proximo_refuerzo")} />
           </div>
@@ -221,7 +229,7 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
       {tipo === "desparasitacion" && (
         <>
           <Campo etiqueta="Producto" requerido icono="medication" placeholder="Nombre del antiparasitario" valor={v("producto")} onCambio={set("producto")} />
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid movil-m:grid-cols-2 gap-3">
             <Campo etiqueta="Fecha" requerido type="date" icono="event" valor={v("fecha")} onCambio={set("fecha")} />
             <Campo etiqueta="Vía" icono="straighten" placeholder="Oral" valor={v("via")} onCambio={set("via")} />
           </div>
@@ -243,7 +251,7 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
       {tipo === "consulta" && (
         <>
           <Campo etiqueta="Veterinaria que atendió" requerido icono="local_hospital" placeholder="Nombre de la veterinaria" sugerencias={veterinarias} valor={v("veterinaria")} onCambio={set("veterinaria")} />
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid movil-m:grid-cols-2 gap-3">
             <Campo etiqueta="Motivo" icono="help" placeholder="Opcional" valor={v("motivo")} onCambio={set("motivo")} />
             <Campo etiqueta="Fecha" requerido type="date" valor={v("fecha")} onCambio={set("fecha")} />
           </div>
@@ -256,7 +264,7 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
       {tipo === "examen" && (
         <>
           <Campo etiqueta="Tipo de examen" requerido icono="labs" placeholder="Por ejemplo, hemograma" valor={v("tipo_examen")} onCambio={set("tipo_examen")} />
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid movil-m:grid-cols-2 gap-3">
             <Campo etiqueta="Laboratorio" icono="science" placeholder="Opcional" valor={v("laboratorio")} onCambio={set("laboratorio")} />
             <Campo etiqueta="Fecha" requerido type="date" valor={v("fecha")} onCambio={set("fecha")} />
           </div>
@@ -270,7 +278,7 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
               { valor: "alterado", etiqueta: "Alterado" },
             ]}
           />
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid movil-m:grid-cols-2 gap-3">
             <Campo etiqueta="Solicitado por" icono="person" placeholder="Opcional" valor={v("solicitado_por")} onCambio={set("solicitado_por")} />
             <Campo etiqueta="Próximo control" type="date" valor={v("proximo_control")} onCambio={set("proximo_control")} />
           </div>
@@ -319,7 +327,7 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
       {tipo === "otro" && (
         <>
           <Campo etiqueta="¿Qué pasó?" requerido icono="edit" placeholder="Título del evento" valor={v("titulo")} onCambio={set("titulo")} />
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid movil-m:grid-cols-2 gap-3">
             <Campo etiqueta="Fecha" requerido type="date" icono="event" valor={v("fecha")} onCambio={set("fecha")} />
             <Campo etiqueta="Lugar" icono="place" placeholder="Casa" valor={v("lugar")} onCambio={set("lugar")} />
           </div>

@@ -1,5 +1,6 @@
 "use client"
 
+import { BotonVolver } from "@/components/boton-volver"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 
@@ -21,7 +22,8 @@ export function AvisoComida({ mascotas, ...datos }: AvisoComidaProps) {
   const comida = plan?.comidas.find((c) => estadoComida(c.hora, !!servida(mascota.id, c.hora)) === "pendiente") ?? plan?.comidas.at(-1)
 
   return (
-    <main className="-mb-px flex flex-1 flex-col gap-6 bg-primario px-pantalla pt-20">
+    <main className="-mb-px flex flex-1 flex-col gap-6 bg-primario px-pantalla pt-14">
+      <BotonVolver respaldo="/alimentacion" />
       <div className="flex flex-col items-center gap-1 pb-6 text-superficie">
         <span className="texto-reloj">9:41</span>
         <span className="texto-cuerpo text-sobre-oscuro-secundario">{fechaLarga(HOY)}</span>

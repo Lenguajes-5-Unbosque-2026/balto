@@ -6,7 +6,7 @@ import { alertaDeEvento, grupoAlerta, proximaFechaEvento, type AlertaVista } fro
 import { guardarEnMapa, useMapaLocal } from "@/lib/almacen-local"
 import type { Evento } from "@/lib/eventos"
 import { HOY } from "@/lib/fecha"
-import { useCambiosMascotas } from "@/lib/mascota-activa"
+import { useCambiosMascotas, useMascotasNuevas } from "@/lib/mascota-activa"
 import type { Alerta } from "@/lib/perfil"
 import { eventosRegistrados, suscribirEventos } from "@/lib/registro-local"
 import { useEventos } from "@/lib/usar-eventos"
@@ -14,9 +14,9 @@ import { useEventos } from "@/lib/usar-eventos"
 const CLAVE = "balto:alertas"
 
 /** Lo que cambió el dueño en una alerta desde este navegador. */
-type CambioAlerta = { resuelta?: string; evento_resolucion_id?: string; pospuesta?: string }
+type CambioAlerta = { resuelta?: string; evento_resolucion_id?: string; pospuesta?: string; en_calendario?: string }
 
-/** "Ya lo resolví" (J5): la alerta pasa a Resueltas con el evento que la resolvió. */
+/** "Marcar resuelta" (J5): la alerta pasa a Resueltas con el evento que la resolvió. */
 export function resolverAlerta(id: string, eventoId?: string) {
   guardarEnMapa<CambioAlerta>(CLAVE, id, { resuelta: HOY, evento_resolucion_id: eventoId ?? "" })
 }
@@ -24,6 +24,11 @@ export function resolverAlerta(id: string, eventoId?: string) {
 /** J3: mueve el aviso, no el vencimiento. */
 export function posponerAlerta(id: string, fecha: string) {
   guardarEnMapa<CambioAlerta>(CLAVE, id, { pospuesta: fecha })
+}
+
+/** Ícono de calendario de J1: la alerta queda en K6 · Calendario de Balto. */
+export function agregarAlertaAlCalendario(id: string) {
+  guardarEnMapa<CambioAlerta>(CLAVE, id, { en_calendario: HOY })
 }
 
 export type MascotaAlerta = { id: string; nombre: string; imagen: string }
@@ -41,6 +46,7 @@ export function useAlertas(base: Alerta[], eventosBase: Evento[], mascotas: Masc
   const cambios = useMapaLocal<CambioAlerta>(CLAVE)
   // Las mascotas archivadas en M13 no generan alertas.
   const cambiosMascotas = useCambiosMascotas()
+  const nuevas = useMascotasNuevas()
 
   return useMemo(() => {
     const porId = new Map(eventos.map((e) => [e.id, e]))
@@ -60,7 +66,8 @@ export function useAlertas(base: Alerta[], eventosBase: Evento[], mascotas: Masc
     ]
 
     return todas.flatMap((a): AlertaVista[] => {
-      const mascota = mascotas.find((m) => m.id === a.mascota_id)
+      // Las mascotas registradas en B desde este navegador también tienen alertas.
+      const mascota = mascotas.find((m) => m.id === a.mascota_id) ?? nuevas[a.mascota_id]
       if (!mascota || cambiosMascotas[mascota.id]?.archivada) return []
       const c = cambios[a.id]
       const resuelta = a.estado === "resuelta" || !!c?.resuelta
@@ -75,8 +82,9 @@ export function useAlertas(base: Alerta[], eventosBase: Evento[], mascotas: Masc
           mascota,
           grupo: resuelta ? "resuelta" : grupoAlerta(a.fecha_vencimiento),
           pospuesta: c?.pospuesta || a.fecha_aviso_pospuesto || undefined,
+          en_calendario: !!c?.en_calendario,
         },
       ]
     })
-  }, [base, eventos, locales, cambios, cambiosMascotas, mascotas, marcas])
+  }, [base, eventos, locales, cambios, cambiosMascotas, nuevas, mascotas, marcas])
 }

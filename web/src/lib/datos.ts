@@ -74,6 +74,11 @@ export function obtenerMascotas(duenoId = DUENO_ACTUAL): Mascota[] {
 
 const mayuscula = (t: string) => t.charAt(0).toUpperCase() + t.slice(1)
 
+/** Número de la próxima cédula animal: BAL-0006-… (B6). */
+export function siguienteCedula() {
+  return Math.max(...(leer("mascotas") as Mascota[]).map((m) => Number(m.cedula.split("-")[1]) || 0)) + 1
+}
+
 /** Mascotas con la línea de detalle que muestran los selectores ("Perro · Golden Retriever · Hembra · 3 años"). */
 export function obtenerMascotasBasicas(duenoId = DUENO_ACTUAL) {
   return obtenerMascotas(duenoId).map((m) => ({
@@ -159,10 +164,61 @@ export function obtenerPreferencias(duenoId = DUENO_ACTUAL) {
     .map((p) => ({ tipo: p.tipo, activo: p.activo, anticipacion: p.anticipacion }))
 }
 
-export type Pedido = { id: string; numero: string; estado_pago: string; estado_entrega: string; ventana_entrega: string; total: string; fecha: string }
+export type Pedido = {
+  id: string
+  numero: string
+  direccion_id: string
+  metodo_pago: string
+  metodo_pago_id: string
+  subtotal: string
+  envio: string
+  total: string
+  estado_pago: string
+  /** "" | "confirmado" | "preparacion" | "en_camino" | "entregado" */
+  estado_entrega: string
+  ventana_entrega: string
+  fecha: string
+}
 
 export function obtenerPedidos(duenoId = DUENO_ACTUAL): Pedido[] {
   return (leer("pedidos") as (Pedido & { dueno_id: string })[]).filter((p) => p.dueno_id === duenoId)
+}
+
+/** Catálogo de la Tienda (N). */
+export type Producto = {
+  id: string
+  tipo: "alimento" | "vacuna" | "desparasitacion"
+  nombre: string
+  /** "perro", "gato" o "perro;gato" */
+  especie: string
+  etapa: string
+  presentacion: string
+  precio_cop: string
+  stock: string
+  incluye_aplicacion: string
+  descripcion: string
+}
+
+export function obtenerProductos(): Producto[] {
+  return leer("productos") as Producto[]
+}
+
+export type PedidoItem = { id: string; pedido_id: string; producto_id: string; cantidad: string; precio_unitario: string; mascota_id: string; cita_id: string }
+
+export function obtenerItemsPedido(): PedidoItem[] {
+  return leer("pedido_items") as PedidoItem[]
+}
+
+export type Direccion = { id: string; nombre: string; direccion: string; barrio: string; indicaciones: string; predeterminada: string }
+
+export function obtenerDirecciones(duenoId = DUENO_ACTUAL): Direccion[] {
+  return (leer("direcciones") as (Direccion & { dueno_id: string })[]).filter((d) => d.dueno_id === duenoId)
+}
+
+export type MetodoPago = { id: string; tipo: string; franquicia: string; ultimos_4: string; predeterminado: string }
+
+export function obtenerMetodosPago(duenoId = DUENO_ACTUAL): MetodoPago[] {
+  return (leer("metodos_pago") as (MetodoPago & { dueno_id: string })[]).filter((m) => m.dueno_id === duenoId)
 }
 
 /** Mascotas activas con lo que muestran Inicio y D1, y sus alergias (B4, F5). */

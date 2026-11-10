@@ -1,5 +1,7 @@
 "use client"
 
+import { BotonIcono } from "@/components/boton-icono"
+import { BotonVolver } from "@/components/boton-volver"
 import { useSearchParams } from "next/navigation"
 import { useEffect } from "react"
 
@@ -32,6 +34,10 @@ export function PdfBitacora({ mascotas, habitos, eventos }: PdfBitacoraProps) {
 
   return (
     <main className="flex flex-1 flex-col gap-4 px-pantalla py-10 print:py-4">
+      <div className="flex justify-between print:hidden">
+        <BotonVolver respaldo="/habitos/exportar" />
+        <BotonIcono icono="print" etiqueta="Imprimir o guardar en PDF" onClick={() => window.print()} />
+      </div>
       <CabeceraPublica detalle={`${etologo ? "Bitácora de comportamiento" : "Bitácora de hábitos"} de ${mascota.nombre} · ${textoRango(desde, hasta)}`} candado={false} />
       {grupos.map((g) => {
         const propios = registros.filter((r) => (g.tipos as readonly string[]).includes(r.tipo) && r.fecha >= desde && r.fecha <= hasta)

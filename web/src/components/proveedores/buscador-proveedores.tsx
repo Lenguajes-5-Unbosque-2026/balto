@@ -38,6 +38,8 @@ import { useVolver } from "@/lib/usar-salud"
 type Filtros = { servicios: Servicio[]; distancia: "1" | "3" | "5"; abierto: boolean }
 
 const DISTANCIAS = { "1": 1, "3": 3, "5": Infinity }
+/** "Cerca de mí" deja solo lo que está a esta distancia o menos. */
+const RADIO_CERCA = 3
 
 /** K3 · Listado de proveedores, con K1 (ubicación), K2 (filtros), K7 (buscar por zona) y K8 (sin resultados). */
 export function BuscadorProveedores({ proveedores }: { proveedores: Veterinaria[] }) {
@@ -52,6 +54,8 @@ export function BuscadorProveedores({ proveedores }: { proveedores: Veterinaria[
     abierto: p.get("abierto") === "1",
   }))
   const [verFiltros, setVerFiltros] = useState(false)
+  // "Cerca de mí" empieza apagado en cada entrada y se prende o apaga al tocarlo.
+  const [cerca, setCerca] = useState(false)
   const [porZona, setPorZona] = useState(false)
   const [pidiendo, setPidiendo] = useState(false)
   // K1 se muestra una sola vez por sesión mientras no haya ubicación guardada.
@@ -85,6 +89,7 @@ export function BuscadorProveedores({ proveedores }: { proveedores: Veterinaria[
           (!busqueda || normalizar(busqueda).split(/\s+/).every((q) => texto.includes(q))) &&
           f.servicios.every((s) => ofrece(v, s)) &&
           km <= DISTANCIAS[f.distancia] &&
+          (!cerca || km <= RADIO_CERCA) &&
           (!f.abierto || horario.abierto)
         )
       })
@@ -140,8 +145,12 @@ export function BuscadorProveedores({ proveedores }: { proveedores: Veterinaria[
         <Chip
           texto={ubicacion?.modo === "zona" ? ubicacion.zona : "Cerca de mí"}
           icono="near_me"
-          activo={!!ubicacion}
-          onClick={() => (ubicacion ? setPorZona(true) : setPidiendo(true))}
+          activo={cerca}
+          onClick={() => {
+            // Sin ubicación guardada, primero se pide (K1); el filtro queda prendido con lo que elija.
+            if (!ubicacion && !cerca) setPidiendo(true)
+            setCerca(!cerca)
+          }}
         />
         <Chip texto="Urgencias" icono="emergency" activo={filtros.servicios.includes("urgencias")} onClick={() => alternarServicio("urgencias")} />
         <Chip texto="Abierto" icono="schedule" activo={filtros.abierto} onClick={() => setFiltros((f) => ({ ...f, abierto: !f.abierto }))} />
@@ -165,7 +174,10 @@ export function BuscadorProveedores({ proveedores }: { proveedores: Veterinaria[
           )}
           <BarraAccion>
             <Boton
-              onClick={() => setFiltros((f) => ({ ...f, distancia: "5", abierto: false }))}
+              onClick={() => {
+                setFiltros((f) => ({ ...f, distancia: "5", abierto: false }))
+                setCerca(false)
+              }}
               className="px-2 texto-cuerpo-fuerte"
             >
               Ampliar la búsqueda
@@ -174,6 +186,7 @@ export function BuscadorProveedores({ proveedores }: { proveedores: Veterinaria[
               variante="secundario"
               onClick={() => {
                 setFiltros({ servicios: [], distancia: "5", abierto: false })
+                setCerca(false)
               }}
             >
               Quitar filtros
@@ -198,7 +211,11 @@ export function BuscadorProveedores({ proveedores }: { proveedores: Veterinaria[
       {/* K1 · Buscador · permiso de ubicación (solo la primera vez) */}
       <Dialogo
         abierto={pidiendo || (ubicacion === null && primeraVez)}
-        onCerrar={cerrarK1}
+        onCerrar={() => {
+          cerrarK1()
+          // Cerró K1 sin elegir: "Cerca de mí" no queda prendido sin ubicación.
+          if (!ubicacion) setCerca(false)
+        }}
         icono="location_on"
         titulo="¿Usamos tu ubicación?"
         mensaje="Para mostrarte las veterinarias más cercanas. También puedes elegir la zona a mano."

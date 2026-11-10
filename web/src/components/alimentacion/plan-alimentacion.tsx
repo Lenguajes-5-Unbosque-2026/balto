@@ -3,7 +3,7 @@
 import { toast } from "sonner"
 
 import { BarraAccion } from "@/components/barra-accion"
-import { Boton, BotonEnlace } from "@/components/boton"
+import { BotonEnlace } from "@/components/boton"
 import { BotonIcono, BotonIconoEnlace } from "@/components/boton-icono"
 import { Encabezado } from "@/components/encabezado"
 import { Estado } from "@/components/estado"
@@ -13,7 +13,6 @@ import { RasgoOscuro } from "@/components/rasgo"
 import { diasRestantes, estadoComida, nombrePlan } from "@/lib/alimentacion"
 import { HOY } from "@/lib/fecha"
 import { useMascotaActiva } from "@/lib/mascota-activa"
-import { avisarPronto } from "@/lib/pronto"
 import { guardarPlan, servirComida, usePlanes, type DatosAlimentacion } from "@/lib/usar-alimentacion"
 import { useVolver } from "@/lib/usar-salud"
 import { cn } from "@/lib/utils"
@@ -129,10 +128,10 @@ export function PlanAlimentacion({ mascotas, ...datos }: PlanProps) {
       )}
 
       {plan.tipo === "concentrado" && (
-        <Boton variante={poco ? "primario" : "suave"} onClick={() => avisarPronto("Tienda")}>
+        <BotonEnlace href="/tienda/alimentos" variante={poco ? "primario" : "suave"}>
           Comprar alimento
           <Icono nombre="storefront" className="icono-m" />
-        </Boton>
+        </BotonEnlace>
       )}
     </main>
   )
