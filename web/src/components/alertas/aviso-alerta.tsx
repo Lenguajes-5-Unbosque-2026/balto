@@ -10,7 +10,7 @@ import { Icono } from "@/components/icono"
 import { Nota } from "@/components/nota"
 import { tituloAlertaVista, type AlertaVista } from "@/lib/alertas"
 import type { Evento } from "@/lib/eventos"
-import { HOY, diasEntre, fechaCorta, fechaLarga, sumarDias } from "@/lib/fecha"
+import { diasEntre, fechaCorta, fechaLarga, hoy, sumarDias } from "@/lib/fecha"
 import { nombreVacuna, type Alerta } from "@/lib/perfil"
 import { posponerAlerta, useAlertas, type MascotaAlerta } from "@/lib/usar-alertas"
 
@@ -34,7 +34,7 @@ export function AvisoAlerta({ alertas, eventos, mascotas, marcas }: AvisoAlertaP
 
   function masTarde() {
     // "Más tarde" = mañana a la misma hora (spec de J).
-    posponerAlerta(alerta!.id, sumarDias(HOY, 1))
+    posponerAlerta(alerta!.id, sumarDias(hoy(), 1))
     toast.success("Te avisamos mañana")
     router.push("/")
   }
@@ -44,7 +44,7 @@ export function AvisoAlerta({ alertas, eventos, mascotas, marcas }: AvisoAlertaP
       <BotonVolver respaldo="/alertas" />
       <div className="flex flex-col items-center gap-1 pb-4">
         <span className="texto-display text-texto">9:41</span>
-        <span className="texto-cuerpo text-texto-secundario">{fechaLarga(HOY)}</span>
+        <span className="texto-cuerpo text-texto-secundario">{fechaLarga(hoy())}</span>
       </div>
 
       {alerta ? (
@@ -100,7 +100,7 @@ function tituloAviso(a: AlertaVista) {
 
 /** "Antirrábica · vence en 2 días (25 sep)". */
 function detalleAviso(a: AlertaVista) {
-  const dias = diasEntre(HOY, a.fecha_vencimiento)
+  const dias = diasEntre(hoy(), a.fecha_vencimiento)
   const que = a.tipo === "refuerzo_vacuna" && a.evento ? nombreVacuna(a.evento) : tituloAlertaVista(a)
   const cuando =
     dias < 0 ? `venció hace ${-dias} ${dias === -1 ? "día" : "días"}` : dias === 0 ? "vence hoy" : dias === 1 ? "vence mañana" : `vence en ${dias} días`

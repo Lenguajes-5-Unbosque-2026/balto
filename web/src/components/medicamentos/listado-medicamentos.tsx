@@ -9,7 +9,7 @@ import { Estado } from "@/components/estado"
 import { FilaOpcion } from "@/components/fila-opcion"
 import { FilaTomaHoy, HojaOmitir } from "@/components/medicamentos/tomas"
 import { Selector } from "@/components/selector"
-import { fechaCorta, HOY } from "@/lib/fecha"
+import { fechaCorta, hoy } from "@/lib/fecha"
 import { useMascotaActiva } from "@/lib/mascota-activa"
 import {
   diaTratamiento,
@@ -35,7 +35,7 @@ export function ListadoMedicamentos({ mascotas, ...datos }: ListadoProps) {
   const propios = tratamientos.filter((t) => t.mascota_id === mascota.id)
   const vigentes = propios.filter((t) => t.estado === "vigente")
   const finalizados = propios.filter((t) => t.estado === "finalizado").sort((a, b) => b.fecha_inicio.localeCompare(a.fecha_inicio))
-  const hoy = vigentes.flatMap((t) => tomasDelDia(t, HOY, registros)).sort((a, b) => a.hora.localeCompare(b.hora))
+  const tomasDeHoy = vigentes.flatMap((t) => tomasDelDia(t, hoy(), registros)).sort((a, b) => a.hora.localeCompare(b.hora))
   const lista = pestana === "vigentes" ? vigentes : finalizados
 
   return (
@@ -79,7 +79,7 @@ export function ListadoMedicamentos({ mascotas, ...datos }: ListadoProps) {
               detalle={
                 t.estado === "vigente"
                   ? `${frecuenciaTratamiento(t)} · día ${diaTratamiento(t)} de ${duracion(t)}`
-                  : `Terminó el ${fechaCorta(t.fecha_fin || HOY)}`
+                  : `Terminó el ${fechaCorta(t.fecha_fin || hoy())}`
               }
               href={`/medicamentos/detalle?id=${t.id}`}
             />
@@ -87,11 +87,11 @@ export function ListadoMedicamentos({ mascotas, ...datos }: ListadoProps) {
         </div>
       )}
 
-      {pestana === "vigentes" && hoy.length > 0 && (
+      {pestana === "vigentes" && tomasDeHoy.length > 0 && (
         <>
           <h2 className="mt-2 texto-titulo-seccion text-texto">Tomas de hoy</h2>
           <div className="flex flex-col gap-3">
-            {hoy.map((t) => (
+            {tomasDeHoy.map((t) => (
               <FilaTomaHoy key={t.clave} toma={t} onOmitir={setOmitiendo} />
             ))}
           </div>

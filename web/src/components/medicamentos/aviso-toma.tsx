@@ -7,7 +7,7 @@ import { useState } from "react"
 import { BotonEnlace } from "@/components/boton"
 import { Icono } from "@/components/icono"
 import { confirmarToma, HojaOmitir } from "@/components/medicamentos/tomas"
-import { HOY, fechaLarga } from "@/lib/fecha"
+import { fechaLarga, hoy } from "@/lib/fecha"
 import { nombreTratamiento, tomasDelDia, type TomaVista } from "@/lib/medicamentos"
 import { useMedicamentos, type DatosMedicamentos } from "@/lib/usar-medicamentos"
 
@@ -20,7 +20,7 @@ export function AvisoToma({ mascotas, ...datos }: AvisoTomaProps) {
   const { tratamientos, registros } = useMedicamentos(datos)
   const vigentes = tratamientos.filter((t) => t.estado === "vigente")
   const t = vigentes.find((x) => x.id === id) ?? vigentes[0]
-  const toma = t && (tomasDelDia(t, HOY, registros).find((x) => x.estado === "pendiente" || x.estado === "pospuesta") ?? tomasDelDia(t, HOY, registros)[0])
+  const toma = t && (tomasDelDia(t, hoy(), registros).find((x) => x.estado === "pendiente" || x.estado === "pospuesta") ?? tomasDelDia(t, hoy(), registros)[0])
   const [omitiendo, setOmitiendo] = useState<TomaVista | null>(null)
   const mascota = mascotas.find((m) => m.id === t?.mascota_id)
 
@@ -29,7 +29,7 @@ export function AvisoToma({ mascotas, ...datos }: AvisoTomaProps) {
       <BotonVolver respaldo="/medicamentos" />
       <div className="flex flex-col items-center gap-1 pb-6 text-superficie">
         <span className="texto-reloj">9:41</span>
-        <span className="texto-cuerpo text-sobre-oscuro-secundario">{fechaLarga(HOY)}</span>
+        <span className="texto-cuerpo text-sobre-oscuro-secundario">{fechaLarga(hoy())}</span>
       </div>
 
       {t && toma ? (

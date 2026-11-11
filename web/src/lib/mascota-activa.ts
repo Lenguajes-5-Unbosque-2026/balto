@@ -3,8 +3,9 @@
 import { useMemo, useSyncExternalStore } from "react"
 
 import { guardarEnMapa, useMapaLocal } from "@/lib/almacen-local"
-import { edad } from "@/lib/fecha"
+import { edad, hoy } from "@/lib/fecha"
 import { guardarMascotaActiva, leerMascotaActiva } from "@/lib/registro-local"
+import { enSupabase } from "@/lib/sincronizar"
 
 const EVENTO = "balto:mascota-activa"
 const CLAVE_MASCOTAS = "balto:mascotas"
@@ -25,6 +26,10 @@ export type CambiosMascota = {
 
 export function guardarCambiosMascota(id: string, cambios: CambiosMascota) {
   guardarEnMapa<CambiosMascota>(CLAVE_MASCOTAS, id, cambios)
+  const { archivada, ...fila } = cambios
+  // Archivar (M13) cambia el estado: la mascota deja de salir en la app, pero no se borra.
+  const estado = archivada === undefined ? {} : { estado: archivada ? "archivada" : "activa" }
+  enSupabase({ tipo: "actualizar", tabla: "mascotas", donde: { id }, fila: { ...fila, ...estado } })
 }
 
 export function useCambiosMascotas() {
@@ -69,6 +74,10 @@ export type MascotaNueva = {
 
 export function guardarMascotaNueva(m: MascotaNueva) {
   guardarEnMapa<MascotaNueva>(CLAVE_NUEVAS, m.id, m)
+  enSupabase(
+    { tipo: "guardar", tabla: "mascotas", donde: { id: m.id }, fila: m, alCrear: { estado: "activa", carga_inicial: "pendiente", fecha_registro: hoy() } },
+    { tipo: "reemplazar", tabla: "alergias", donde: { mascota_id: m.id }, filas: m.alergias.map((alergia, i) => ({ id: `${m.id}-al${i + 1}`, alergia })) },
+  )
 }
 
 export function useMascotasNuevas() {
@@ -90,7 +99,9 @@ export function useMascotas<T extends { id: string }>(base: T[]) {
   const cambios = useCambiosMascotas()
   const nuevas = useMascotasNuevas()
   return useMemo(() => {
-    const todas = [...base, ...Object.values(nuevas).map((m) => completarNueva(m) as unknown as T)]
+    // Una mascota nueva también llega del servidor cuando ya se subió: no se repite.
+    const ids = new Set(base.map((m) => m.id))
+    const todas = [...base, ...Object.values(nuevas).filter((m) => !ids.has(m.id)).map((m) => completarNueva(m) as unknown as T)]
     const activas = todas.filter((m) => !cambios[m.id]?.archivada).map((m) => aplicarCambios(m, cambios[m.id]))
     // Sin mascotas activas la app mostraría O1; mientras tanto se sigue usando la primera.
     return activas.length ? activas : base.slice(0, 1)

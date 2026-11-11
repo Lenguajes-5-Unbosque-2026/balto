@@ -11,7 +11,7 @@ import { Icono } from "@/components/icono"
 import { Nota } from "@/components/nota"
 import { RasgoOscuro } from "@/components/rasgo"
 import { diasRestantes, estadoComida, nombrePlan } from "@/lib/alimentacion"
-import { HOY } from "@/lib/fecha"
+import { hoy } from "@/lib/fecha"
 import { useMascotaActiva } from "@/lib/mascota-activa"
 import { guardarPlan, servirComida, usePlanes, type DatosAlimentacion } from "@/lib/usar-alimentacion"
 import { useVolver } from "@/lib/usar-salud"
@@ -116,7 +116,7 @@ export function PlanAlimentacion({ mascotas, ...datos }: PlanProps) {
             <button
               type="button"
               onClick={() => {
-                guardarPlan(mascota.id, { ...plan, fecha_bolsa_abierta: HOY })
+                guardarPlan(mascota.id, { ...plan, fecha_bolsa_abierta: hoy() })
                 toast.success("Empezamos a contar la bolsa nueva")
               }}
               className="ml-1 texto-etiqueta-fuerte text-primario underline"

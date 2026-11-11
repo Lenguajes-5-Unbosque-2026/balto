@@ -1,11 +1,12 @@
 import type { Metadata } from "next"
 
 import { ConfigurarNotificaciones } from "@/components/cuenta/configurar-notificaciones"
-import { obtenerPreferencias } from "@/lib/datos"
+import { cargarDatos, obtenerPreferencias } from "@/lib/datos"
 
 export const metadata: Metadata = { title: "Notificaciones · Balto" }
 
 /** M3 · Configurar notificaciones. */
-export default function Pagina() {
+export default async function Pagina() {
+  await cargarDatos()
   return <ConfigurarNotificaciones preferencias={obtenerPreferencias()} />
 }

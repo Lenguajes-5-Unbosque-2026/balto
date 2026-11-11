@@ -15,7 +15,7 @@ import { Icono } from "@/components/icono"
 import { Nota } from "@/components/nota"
 import { OpcionCasilla } from "@/components/opcion-casilla"
 import type { Evento } from "@/lib/eventos"
-import { AHORA, HOY, normalizarNombreArchivo, nombreMes, sumarDias } from "@/lib/fecha"
+import { AHORA, hoy, nombreMes, normalizarNombreArchivo, sumarDias } from "@/lib/fecha"
 import { GRUPOS_HABITO, paginasBitacora, textoRango, type GrupoHabito, type Habito } from "@/lib/habitos"
 import { useMascotaActiva } from "@/lib/mascota-activa"
 import { hora12 } from "@/lib/medicamentos"
@@ -36,8 +36,8 @@ export function ExportarBitacora({ mascotas, habitos, eventos }: ExportarProps) 
   const registros = useBitacora(habitos, eventos, mascota.id)
   const [paso, setPaso] = useState<"contenido" | "previa" | "listo">("contenido")
   const [grupos, setGrupos] = useState<GrupoHabito[]>(["paseos", "sueno", "atipico"])
-  const [desde, setDesde] = useState(sumarDias(HOY, -60))
-  const [hasta, setHasta] = useState(HOY)
+  const [desde, setDesde] = useState(sumarDias(hoy(), -60))
+  const [hasta, setHasta] = useState(hoy())
   const [para, setPara] = useState<"veterinario" | "etologo">("veterinario")
   const [canal, setCanal] = useState<Canal>("whatsapp")
 

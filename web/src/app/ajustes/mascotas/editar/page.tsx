@@ -3,12 +3,13 @@ import { Suspense } from "react"
 
 import { EditarMascota } from "@/components/cuenta/editar-mascota"
 import { EmpezarDeCero } from "@/components/empezar-de-cero"
-import { obtenerMascotas } from "@/lib/datos"
+import { cargarDatos, obtenerMascotas } from "@/lib/datos"
 
 export const metadata: Metadata = { title: "Editar mascota · Balto" }
 
 /** M18 · Editar mascota y M13 · Archivar (/ajustes/mascotas/editar?id=m01). */
-export default function Pagina() {
+export default async function Pagina() {
+  await cargarDatos()
   return (
     <EmpezarDeCero>
       <Suspense>

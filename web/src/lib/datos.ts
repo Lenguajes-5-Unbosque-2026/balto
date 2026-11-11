@@ -1,22 +1,69 @@
 import fs from "node:fs"
 import path from "node:path"
 
+import { cacheLife, cacheTag } from "next/cache"
+import { connection } from "next/server"
+import { cache } from "react"
+
 import { DUENO_ACTUAL_ID } from "@/lib/cuenta-actual"
 import { parsearCsv } from "@/lib/csv"
+import { deSupabase, ETIQUETA_DATOS, TABLAS, type Fila, type Tabla } from "@/lib/esquema"
 import type { Evento, Soporte } from "@/lib/eventos"
 import { edad } from "@/lib/fecha"
 import type { Habito } from "@/lib/habitos"
 import type { Alerta, PerfilMascota } from "@/lib/perfil"
+import { supabaseServidor } from "@/lib/supabase"
 
 /**
- * Datos de prueba de data/mock/ (fuera de web/). Se leen en el servidor al
- * prerenderizar; la lectura sincrónica deja las páginas estáticas.
- * Cuando llegue Supabase, este archivo es el único que cambia.
+ * Los datos de la app salen de las 22 tablas de Supabase. Sin las variables
+ * NEXT_PUBLIC_SUPABASE_* (por ejemplo, en un computador sin .env.local) se
+ * usan los CSV de data/mock/, que tienen las mismas columnas.
+ *
+ * Cada página llama `await cargarDatos()` antes de usar las funciones
+ * `obtener…`; estas siguen siendo sincrónicas y leen lo que se cargó.
  */
 const CARPETA_MOCK = path.join(process.cwd(), "..", "data", "mock")
 
-function leer(archivo: string) {
-  return parsearCsv(fs.readFileSync(path.join(CARPETA_MOCK, `${archivo}.csv`), "utf8"))
+type Datos = Record<Tabla, Fila[]>
+
+async function traerDatos(): Promise<Datos> {
+  "use cache"
+  cacheTag(ETIQUETA_DATOS)
+  // Se refresca al guardar desde la app; los cambios hechos a mano en Supabase aparecen en un minuto.
+  cacheLife({ stale: 30, revalidate: 60, expire: 86_400 })
+
+  if (!supabaseServidor) {
+    return Object.fromEntries(
+      TABLAS.map((t) => [t, parsearCsv(fs.readFileSync(path.join(CARPETA_MOCK, `${t}.csv`), "utf8"))]),
+    ) as Datos
+  }
+  const cliente = supabaseServidor
+  const tablas = await Promise.all(
+    TABLAS.map(async (t) => {
+      const { data, error } = await cliente.from(t).select("*")
+      if (error) throw new Error(`No se pudo leer la tabla ${t} de Supabase: ${error.message}`)
+      return [t, data.map((fila) => deSupabase(t, fila))] as const
+    }),
+  )
+  return Object.fromEntries(tablas) as Datos
+}
+
+/** Lo cargado en esta solicitud (y lo último cargado, para generateStaticParams). */
+const deLaSolicitud = cache((): { datos?: Datos } => ({}))
+let ultimos: Datos | undefined
+
+export async function cargarDatos() {
+  // La página se arma en cada visita: así "hoy" (lib/fecha.ts) es el día en que se abre, no el de la compilación.
+  await connection()
+  const datos = await traerDatos()
+  deLaSolicitud().datos = datos
+  ultimos = datos
+}
+
+function leer(tabla: Tabla): Fila[] {
+  const datos = deLaSolicitud().datos ?? ultimos
+  if (!datos) throw new Error("Falta `await cargarDatos()` en la página antes de leer los datos.")
+  return datos[tabla]
 }
 
 export const DUENO_ACTUAL = DUENO_ACTUAL_ID

@@ -18,7 +18,7 @@ import { ICONOS_ALERTA, tituloAlertaVista } from "@/lib/alertas"
 import type { Cita, Veterinaria } from "@/lib/datos"
 import type { Evento } from "@/lib/eventos"
 import { veterinariaCorta } from "@/lib/eventos"
-import { HOY, fechaCorta, fechaLarga } from "@/lib/fecha"
+import { fechaCorta, fechaLarga, hoy } from "@/lib/fecha"
 import { hora12 } from "@/lib/medicamentos"
 import { archivoIcs, distanciaKm, iconoServicio, puntoDe, rutaMapa, textoKm } from "@/lib/proveedores"
 import { guardarCita, puntoReferencia, useCitas, useUbicacion } from "@/lib/usar-proveedores"
@@ -189,7 +189,7 @@ export function DetalleCita({ proveedores, mascotas, citas: base }: CitasProps) 
           ["Teléfono", v.telefono],
         ]}
       />
-      {activa && fecha >= HOY && (
+      {activa && fecha >= hoy() && (
         <>
           <FilaOpcion icono="edit_calendar" titulo="Reprogramar" detalle="Elegir otra fecha" href={`/veterinarias/agendar?cita=${c.id}`} />
           <FilaOpcion icono="cancel" titulo="Cancelar la cita" detalle="Te pedimos confirmarlo" onClick={() => setCancelar(true)} />
@@ -245,10 +245,10 @@ export function CalendarioCitas({ proveedores, mascotas, citas: base, recordator
   // ?fecha=AAAA-MM-DD (desde una alerta de J1) abre ese mes con el día elegido.
   const fecha = useSearchParams().get("fecha")
   const inicial = fecha && /^\d{4}-\d{2}-\d{2}$/.test(fecha) ? fecha : null
-  const [mes, setMes] = useState(`${(inicial ?? HOY).slice(0, 7)}-01`)
+  const [mes, setMes] = useState(`${(inicial ?? hoy()).slice(0, 7)}-01`)
   const [dia, setDia] = useState<string | null>(inicial)
   const marcados = new Set([...citas.map((c) => c.fecha_hora.slice(0, 10)), ...alertas.map((a) => a.fecha_vencimiento)])
-  const lista = dia ? citas.filter((c) => c.fecha_hora.startsWith(dia)) : citas.filter((c) => c.fecha_hora.slice(0, 10) >= HOY)
+  const lista = dia ? citas.filter((c) => c.fecha_hora.startsWith(dia)) : citas.filter((c) => c.fecha_hora.slice(0, 10) >= hoy())
   // Sin día elegido van todas las pendientes, también las vencidas.
   const avisos = dia ? alertas.filter((a) => a.fecha_vencimiento === dia) : alertas
 
@@ -259,7 +259,7 @@ export function CalendarioCitas({ proveedores, mascotas, citas: base, recordator
         izquierda={<BotonIcono icono="arrow_back" etiqueta="Volver" onClick={volver} />}
         derecha={<BotonIconoEnlace href="/veterinarias" icono="add" etiqueta="Agendar cita" />}
       />
-      <CalendarioMes mes={mes} onMes={setMes} seleccionado={dia ?? HOY} onElegir={(f) => setDia(f === dia ? null : f)} marcados={marcados} />
+      <CalendarioMes mes={mes} onMes={setMes} seleccionado={dia ?? hoy()} onElegir={(f) => setDia(f === dia ? null : f)} marcados={marcados} />
       <h2 className="texto-titulo-seccion text-texto">{dia ? `Citas del ${fechaCorta(dia)}` : "Próximas citas"}</h2>
       {lista.length === 0 ? (
         <div className="flex flex-col gap-4 pt-2">

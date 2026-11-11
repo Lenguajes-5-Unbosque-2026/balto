@@ -7,6 +7,7 @@ import { guardarEnMapa, useMapaLocal } from "@/lib/almacen-local"
 import type { Condicion } from "@/lib/datos"
 import type { Evento } from "@/lib/eventos"
 import { useMascotaActiva } from "@/lib/mascota-activa"
+import { enSupabase } from "@/lib/sincronizar"
 import { useEventos } from "@/lib/usar-eventos"
 
 /** La mascota activa de Inicio y sus eventos (con los cambios de este navegador). */
@@ -32,6 +33,14 @@ type SaludLocal = { alergias?: string[]; condiciones?: Condicion[] }
 
 export function guardarSalud(mascotaId: string, cambios: SaludLocal) {
   guardarEnMapa<SaludLocal>(CLAVE, mascotaId, cambios)
+  if (cambios.alergias)
+    enSupabase({
+      tipo: "reemplazar",
+      tabla: "alergias",
+      donde: { mascota_id: mascotaId },
+      filas: cambios.alergias.map((alergia, i) => ({ id: `${mascotaId}-al${i + 1}`, alergia })),
+    })
+  if (cambios.condiciones) enSupabase({ tipo: "reemplazar", tabla: "condiciones", donde: { mascota_id: mascotaId }, filas: cambios.condiciones })
 }
 
 /** Alergias y condiciones vigentes de la mascota: las de data/mock/ o las editadas en F6. */

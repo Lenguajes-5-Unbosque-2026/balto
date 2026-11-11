@@ -1,5 +1,5 @@
 import { veterinariaCorta, type Evento } from "@/lib/eventos"
-import { HOY, diasEntre, fechaCorta, mesesEntre, sumarDias } from "@/lib/fecha"
+import { diasEntre, fechaCorta, hoy, mesesEntre, sumarDias } from "@/lib/fecha"
 import { nombreVacuna, tituloAlerta, type Alerta } from "@/lib/perfil"
 
 /** Alerta lista para mostrar: con su evento de origen, la mascota y el grupo de J1. */
@@ -41,7 +41,7 @@ export function enCategoriaAlerta(tipo: Alerta["tipo"], categorias: CategoriaAle
 
 /** Grupo de J1 según los días que faltan (spec de J: 7 días o menos = esta semana). */
 export function grupoAlerta(fecha: string): AlertaVista["grupo"] {
-  const dias = diasEntre(HOY, fecha)
+  const dias = diasEntre(hoy(), fecha)
   if (dias < 0) return "vencida"
   return dias <= 7 ? "semana" : "adelante"
 }
@@ -54,7 +54,7 @@ const sinAnio = (iso: string) => fechaCorta(iso).replace(/ \d{4}$/, "")
 
 /** "VENCE EN 2 DÍAS · 25 SEP" o "VENCIÓ HACE 3 DÍAS · 25 SEP" (tarjetas grandes de J1). */
 export function rotuloVence(a: AlertaVista) {
-  const dias = diasEntre(HOY, a.fecha_vencimiento)
+  const dias = diasEntre(hoy(), a.fecha_vencimiento)
   const dia = sinAnio(a.fecha_vencimiento)
   if (dias < 0) return `Venció hace ${-dias} ${dias === -1 ? "día" : "días"} · ${dia}`
   if (dias === 0) return `Vence hoy · ${dia}`
@@ -64,9 +64,9 @@ export function rotuloVence(a: AlertaVista) {
 
 /** "EN 12 DÍAS · 5 OCT" o "EN 10 MESES · 12 SEP 2027" (tarjetas de "Más adelante"). */
 export function rotuloAdelante(a: AlertaVista) {
-  const dias = diasEntre(HOY, a.fecha_vencimiento)
+  const dias = diasEntre(hoy(), a.fecha_vencimiento)
   if (dias <= 60) return `En ${dias} días · ${sinAnio(a.fecha_vencimiento)}`
-  const meses = mesesEntre(HOY, a.fecha_vencimiento)
+  const meses = mesesEntre(hoy(), a.fecha_vencimiento)
   return `En ${meses} ${meses === 1 ? "mes" : "meses"} · ${fechaCorta(a.fecha_vencimiento)}`
 }
 
@@ -134,37 +134,81 @@ export function queSeRegistra(a: AlertaVista) {
   }
 }
 
-/**
- * "Marcar resuelta": el formulario de E del tipo con los datos llenos (spec de J).
- * El alimento no abre formulario: se marca como comprado ahí mismo.
- */
-export function rutaResolver(a: AlertaVista) {
+/** Qué evento registra "Marcar resuelta" y en qué campo va la próxima fecha. El alimento no registra evento. */
+const RESOLVER = {
+  refuerzo_vacuna: { tipo: "vacuna", proxima: "proximo_refuerzo", campos: ["vacuna", "veterinaria", "proveedor_id"] },
+  proxima_desparasitacion: { tipo: "desparasitacion", proxima: "proxima_dosis", campos: ["producto", "via", "veterinaria", "proveedor_id"] },
+  control_examen: { tipo: "examen", proxima: "proximo_control", campos: ["tipo_examen", "laboratorio", "solicitado_por", "veterinaria", "proveedor_id"] },
+  control_peso: { tipo: "peso", proxima: "", campos: [] },
+} as const satisfies Partial<Record<Alerta["tipo"], { tipo: Evento["tipo"]; proxima: string; campos: readonly (keyof Evento)[] }>>
+
+export type Resolucion = (typeof RESOLVER)[keyof typeof RESOLVER]
+
+export function resolucionDe(a: AlertaVista): Resolucion | null {
+  return a.tipo in RESOLVER ? RESOLVER[a.tipo as keyof typeof RESOLVER] : null
+}
+
+/** Lo que se repite de la vez anterior: la misma vacuna (con su marca), producto, veterinaria, laboratorio… El lote no. */
+export function datosConocidos(a: AlertaVista): Record<string, string> {
+  const r = resolucionDe(a)
+  if (!r || !a.evento) return {}
   const e = a.evento
-  const datos = new URLSearchParams({ alerta: a.id })
-  const con = (campo: string, valor?: string) => valor && datos.set(campo, valor)
-  // La próxima fecha se propone con el mismo intervalo de la vez anterior, contado desde hoy.
-  const siguiente = e && e.fecha < a.fecha_vencimiento ? sumarDias(HOY, diasEntre(e.fecha, a.fecha_vencimiento)) : ""
-  switch (a.tipo) {
-    case "refuerzo_vacuna":
-      con("vacuna", e && nombreVacuna(e))
-      con("veterinaria", e?.veterinaria)
-      con("proximo_refuerzo", siguiente)
-      return `/registrar/vacuna?${datos}`
-    case "proxima_desparasitacion":
-      con("producto", e?.producto)
-      con("via", e?.via)
-      con("proxima_dosis", siguiente)
-      return `/registrar/desparasitacion?${datos}`
-    case "control_examen":
-      con("tipo_examen", e?.tipo_examen)
-      con("laboratorio", e?.laboratorio)
-      con("proximo_control", siguiente)
-      return `/registrar/examen?${datos}`
-    case "control_peso":
-      return `/registrar/peso?${datos}`
-    case "alimento_por_acabarse":
-      return null
+  return Object.fromEntries(r.campos.flatMap((c) => (e[c] ? [[c, String(e[c])]] : [])))
+}
+
+/** Días entre la vez anterior y el vencimiento (el intervalo del refuerzo, la dosis o el control). */
+export function intervaloAnterior(a: AlertaVista) {
+  const e = a.evento
+  return e && e.fecha < a.fecha_vencimiento ? diasEntre(e.fecha, a.fecha_vencimiento) : 0
+}
+
+/** "En 1 año", "En 3 meses", "En 15 días". */
+export function textoIntervalo(dias: number) {
+  const anios = Math.round(dias / 365)
+  if (anios >= 1 && Math.abs(dias - anios * 365) <= 10) return anios === 1 ? "En 1 año" : `En ${anios} años`
+  const meses = Math.round(dias / 30.4)
+  if (meses >= 1 && Math.abs(dias - meses * 30.4) <= 5) return meses === 1 ? "En 1 mes" : `En ${meses} meses`
+  return `En ${dias} días`
+}
+
+/** Lo que el dueño elige al resolver: cuándo se hizo, la próxima fecha (o ninguna) y, en el peso, los kg. */
+export type DatosResolver = { fecha: string; proxima: string; peso_kg?: string }
+
+/** El evento que guarda "Registrar y resolver" (mismos campos que guardaría el formulario de E). */
+export function eventoAlResolver(a: AlertaVista, d: DatosResolver): Evento {
+  const r = resolucionDe(a)!
+  const evento: Evento = {
+    ...datosConocidos(a),
+    id: crypto.randomUUID(),
+    mascota_id: a.mascota_id,
+    tipo: r.tipo,
+    fecha: d.fecha,
+    origen: "registro",
+    recordatorio: String(!!(r.proxima && d.proxima)),
+    soportes: [],
+    fecha_creacion: hoy(),
   }
+  if (r.proxima && d.proxima) (evento as Record<string, unknown>)[r.proxima] = d.proxima
+  if (r.tipo === "peso") evento.peso_kg = (d.peso_kg ?? "").replace(",", ".")
+  return evento
+}
+
+/**
+ * "Ver todos los datos": el formulario de E del tipo con lo conocido y lo que
+ * ya se eligió en la hoja (spec de J). El alimento no tiene formulario.
+ */
+export function rutaResolver(a: AlertaVista, d?: Partial<DatosResolver>) {
+  const r = resolucionDe(a)
+  if (!r) return null
+  // "resuelve" es el título de la alerta, para la nota del formulario.
+  const datos = new URLSearchParams({ alerta: a.id, resuelve: tituloAlertaVista(a), ...datosConocidos(a) })
+  // Sin elegir, la próxima fecha se propone con el mismo intervalo de la vez anterior, contado desde hoy.
+  const intervalo = intervaloAnterior(a)
+  const proxima = d?.proxima ?? (intervalo ? sumarDias(d?.fecha ?? hoy(), intervalo) : "")
+  if (d?.fecha) datos.set("fecha", d.fecha)
+  if (r.proxima && proxima) datos.set(r.proxima, proxima)
+  if (d?.peso_kg) datos.set("peso_kg", d.peso_kg)
+  return `/registrar/${r.tipo}?${datos}`
 }
 
 /** Subtítulo de "Marcar resuelta" en J2 y J4. */

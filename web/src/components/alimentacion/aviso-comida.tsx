@@ -7,7 +7,7 @@ import { toast } from "sonner"
 import { BotonEnlace } from "@/components/boton"
 import { Icono } from "@/components/icono"
 import { estadoComida } from "@/lib/alimentacion"
-import { HOY, fechaLarga } from "@/lib/fecha"
+import { fechaLarga, hoy } from "@/lib/fecha"
 import { useMascotaActiva } from "@/lib/mascota-activa"
 import { servirComida, usePlanes, type DatosAlimentacion } from "@/lib/usar-alimentacion"
 
@@ -26,7 +26,7 @@ export function AvisoComida({ mascotas, ...datos }: AvisoComidaProps) {
       <BotonVolver respaldo="/alimentacion" />
       <div className="flex flex-col items-center gap-1 pb-6 text-superficie">
         <span className="texto-reloj">9:41</span>
-        <span className="texto-cuerpo text-sobre-oscuro-secundario">{fechaLarga(HOY)}</span>
+        <span className="texto-cuerpo text-sobre-oscuro-secundario">{fechaLarga(hoy())}</span>
       </div>
       {plan && comida ? (
         <article className="flex flex-col gap-3 rounded-lg bg-superficie p-4">

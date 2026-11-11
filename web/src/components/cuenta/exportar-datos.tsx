@@ -15,7 +15,7 @@ import { OpcionRadio } from "@/components/opcion-radio"
 import { Selector } from "@/components/selector"
 import type { Dueno } from "@/lib/datos"
 import type { Evento } from "@/lib/eventos"
-import { HOY, normalizarNombreArchivo } from "@/lib/fecha"
+import { hoy, normalizarNombreArchivo } from "@/lib/fecha"
 import { useMascotaActiva, useMascotas } from "@/lib/mascota-activa"
 import type { PerfilMascota } from "@/lib/perfil"
 import { useDueno } from "@/lib/usar-cuenta"
@@ -46,7 +46,7 @@ export function ExportarDatos({ dueno: duenoBase, mascotas: base, eventos: event
     }
     const ids = new Set(elegidas.map((m) => m.id))
     const contenido = {
-      exportado: HOY,
+      exportado: hoy(),
       dueno,
       mascotas: elegidas,
       eventos: eventos.filter((e) => ids.has(e.mascota_id)),

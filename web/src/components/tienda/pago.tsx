@@ -22,7 +22,7 @@ import { Totales } from "@/components/tienda/carrito"
 import { puedeVolver } from "@/lib/navegacion"
 import { DUENO_ACTUAL_ID } from "@/lib/cuenta-actual"
 import type { Direccion } from "@/lib/datos"
-import { AHORA, HOY, fechaCorta, sumarDias } from "@/lib/fecha"
+import { AHORA, fechaCorta, hoy, sumarDias } from "@/lib/fecha"
 import { BANCOS, TARJETA_RECHAZADA, precio } from "@/lib/tienda"
 import { guardarCita } from "@/lib/usar-proveedores"
 import { guardarDireccion, guardarMetodo, guardarPedido, guardarSeleccion, useTienda, vaciarCarrito } from "@/lib/usar-tienda"
@@ -73,8 +73,8 @@ export function Pago(datos: PropsTienda) {
       total: String(total),
       estado_pago: "aprobado",
       estado_entrega: conAlimento ? "preparacion" : "",
-      ventana_entrega: conAlimento ? `${fechaCorta(sumarDias(HOY, 1)).replace(/ \d{4}$/, "")} · 8 a. m.–12 m.` : "",
-      fecha: `${HOY} ${AHORA}`,
+      ventana_entrega: conAlimento ? `${fechaCorta(sumarDias(hoy(), 1)).replace(/ \d{4}$/, "")} · 8 a. m.–12 m.` : "",
+      fecha: `${hoy()} ${AHORA}`,
       items,
     })
     setPagado(true)

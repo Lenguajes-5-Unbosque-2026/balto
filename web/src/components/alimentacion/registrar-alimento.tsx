@@ -30,7 +30,7 @@ import {
 } from "@/lib/alimentacion"
 import { puedeVolver } from "@/lib/navegacion"
 import type { Evento } from "@/lib/eventos"
-import { HOY } from "@/lib/fecha"
+import { hoy } from "@/lib/fecha"
 import { useMascotaActiva } from "@/lib/mascota-activa"
 import { ultimoPeso, type PerfilMascota } from "@/lib/perfil"
 import { guardarEvento } from "@/lib/registro-local"
@@ -96,7 +96,7 @@ function Formulario({ mascotas, eventos: base, ...datos }: RegistrarProps) {
     }
     if (tipo === "snack") {
       // Un snack seguro no cambia el plan: queda como evento de alimentación.
-      guardarEvento({ id: crypto.randomUUID(), mascota_id: mascota.id, tipo: "alimentacion", fecha: HOY, que_cambio: `Snack: ${que.trim()}`, fecha_creacion: HOY })
+      guardarEvento({ id: crypto.randomUUID(), mascota_id: mascota.id, tipo: "alimentacion", fecha: hoy(), que_cambio: `Snack: ${que.trim()}`, fecha_creacion: hoy() })
       toast.success("Snack registrado")
       volver()
       return
@@ -126,7 +126,7 @@ function Formulario({ mascotas, eventos: base, ...datos }: RegistrarProps) {
       gramos_dia: comidas.reduce((s, c) => s + c.gramos, 0),
       actividad,
       // Balto asume que la bolsa se abrió hoy cuando cambia el alimento.
-      fecha_bolsa_abierta: actual && actual.marca === marca.trim() ? actual.fecha_bolsa_abierta : HOY,
+      fecha_bolsa_abierta: actual && actual.marca === marca.trim() ? actual.fecha_bolsa_abierta : hoy(),
       comidas,
       recordatorio,
     }
@@ -135,9 +135,9 @@ function Formulario({ mascotas, eventos: base, ...datos }: RegistrarProps) {
         id: crypto.randomUUID(),
         mascota_id: mascota.id,
         tipo: "alimentacion",
-        fecha: HOY,
+        fecha: hoy(),
         que_cambio: `Cambió de ${actual.marca} a ${plan.marca}`,
-        fecha_creacion: HOY,
+        fecha_creacion: hoy(),
       })
     }
     guardarPlan(mascota.id, plan)

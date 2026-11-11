@@ -31,7 +31,7 @@ import {
 import { puedeVolver } from "@/lib/navegacion"
 import type { Envio } from "@/lib/datos"
 import { enMinuscula, type Evento } from "@/lib/eventos"
-import { AHORA, HOY, fechaNumerica, fechaTarjeta, sumarDias } from "@/lib/fecha"
+import { AHORA, fechaNumerica, fechaTarjeta, hoy, sumarDias } from "@/lib/fecha"
 import { hora12 } from "@/lib/medicamentos"
 import { detalleMascota, medicacionVigente, microchipLegible, nombreVacuna, ultimasVacunas, type PerfilMascota } from "@/lib/perfil"
 import { guardarEnvio, useEnvios } from "@/lib/usar-envios"
@@ -61,8 +61,8 @@ export function CompartirPerfil({ mascotas, eventos: base, envios: enviosBase }:
   const [paso, setPaso] = useState<"contenido" | "previa" | "enlace" | "listo">("contenido")
   const [modo, setModo] = useState<"completo" | "filtrado">("filtrado")
   const [elegidas, setElegidas] = useState<Seccion[]>(() => seccionesIniciales(parametros.get("contenido")))
-  const [desde, setDesde] = useState(sumarDias(HOY, -365))
-  const [hasta, setHasta] = useState(HOY)
+  const [desde, setDesde] = useState(sumarDias(hoy(), -365))
+  const [hasta, setHasta] = useState(hoy())
   const [resultado, setResultado] = useState<Resultado | null>(null)
   const [enlace, setEnlace] = useState<{ id: string; token: string; vencimiento: Envio["vencimiento"] } | null>(null)
   const [pidiendoCorreo, setPidiendoCorreo] = useState(false)
@@ -93,7 +93,7 @@ export function CompartirPerfil({ mascotas, eventos: base, envios: enviosBase }:
       expira_en: "",
       activo: "",
       visitas: "0",
-      fecha: HOY,
+      fecha: hoy(),
     })
     setResultado({ canal, destinatario })
     setPaso("listo")
@@ -121,7 +121,7 @@ export function CompartirPerfil({ mascotas, eventos: base, envios: enviosBase }:
       expira_en: expiraEn("24_horas"),
       activo: "true",
       visitas: "0",
-      fecha: HOY,
+      fecha: hoy(),
     })
     setEnlace({ id, token, vencimiento: "24_horas" })
     setPaso("enlace")
@@ -178,7 +178,7 @@ export function CompartirPerfil({ mascotas, eventos: base, envios: enviosBase }:
 
   if (paso === "listo" && resultado) {
     const correo = resultado.canal === "correo"
-    const delMes = envios.filter((e) => e.mascota_id === mascota.id && e.fecha.slice(0, 7) === HOY.slice(0, 7)).length
+    const delMes = envios.filter((e) => e.mascota_id === mascota.id && e.fecha.slice(0, 7) === hoy().slice(0, 7)).length
     const archivo = `${mascota.nombre}_perfil_salud.pdf · ${paginasPdf(secciones)} ${paginasPdf(secciones) === 1 ? "página" : "páginas"}`
     const canales: Record<string, [string, string]> = {
       whatsapp: ["chat", "Enviado por WhatsApp"],
@@ -401,7 +401,7 @@ function PaginaPdf({ mascota, eventos, paginas }: { mascota: PerfilMascota; even
             <Icono nombre="pets" className="icono-xs" />
           </span>
           <span className="flex-1 texto-etiqueta-fuerte text-texto">Perfil de salud</span>
-          <span className="texto-micro text-texto-secundario">{fechaTarjeta(HOY)}</span>
+          <span className="texto-micro text-texto-secundario">{fechaTarjeta(hoy())}</span>
         </div>
         <div className="flex items-center gap-3">
           <FotoMascota nombre={mascota.nombre} imagen={mascota.imagen} className="size-16" />

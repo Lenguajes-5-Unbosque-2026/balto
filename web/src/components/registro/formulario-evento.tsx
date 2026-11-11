@@ -22,7 +22,7 @@ import { GraficaPeso } from "@/components/registro/grafica-peso"
 import type { MascotaBasica, Medicion } from "@/components/registro/tipos"
 import { puedeVolver } from "@/lib/navegacion"
 import { tipoEvento, type Evento, type TipoEvento } from "@/lib/eventos"
-import { HOY, fechaCorta, sumarDias } from "@/lib/fecha"
+import { fechaCorta, hoy, sumarDias } from "@/lib/fecha"
 import { useMascotaActiva } from "@/lib/mascota-activa"
 import { marcarPendiente } from "@/lib/conexion"
 import { guardarEvento } from "@/lib/registro-local"
@@ -47,9 +47,10 @@ const COMUNES = ["fecha", "que_cambio"]
 /** Columnas del evento que no son campos del formulario. */
 const NO_EDITABLES = ["id", "mascota_id", "tipo", "soportes", "recordatorio", "fecha_creacion", "fecha_edicion", "eliminado_en"]
 
-/** Campos que llegan llenos en la URL desde "Marcar resuelta" de una alerta (J). */
+/** Campos que llegan llenos en la URL desde "Marcar resuelta" de una alerta (J): lo de la vez anterior y lo elegido en la hoja. */
 const PRELLENABLES = [
-  "vacuna", "veterinaria", "producto", "via", "tipo_examen", "laboratorio", "proximo_refuerzo", "proxima_dosis", "proximo_control",
+  "vacuna", "veterinaria", "proveedor_id", "producto", "via", "tipo_examen", "laboratorio", "solicitado_por",
+  "proximo_refuerzo", "proxima_dosis", "proximo_control", "fecha", "peso_kg",
   // Desde H7 · "Registrar lo que pasó" (E11 lleno).
   "titulo", "lugar", "detalle",
 ]
@@ -78,13 +79,14 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
   const router = useRouter()
   const parametros = useSearchParams()
   const alertaId = original ? null : parametros.get("alerta")
+  const alertaTitulo = alertaId ? parametros.get("resuelve") : null
   const [activa, cambiarMascota] = useMascotaActiva(mascotas)
   const mascota = (original && mascotas.find((m) => m.id === original.mascota_id)) || activa
   const [tipo, setTipo] = useState<TipoEvento>(original?.tipo ?? tipoInicial)
   const [inicial] = useState(() => {
     const prellenado = Object.fromEntries(PRELLENABLES.flatMap((c) => (parametros.get(c) ? [[c, parametros.get(c)!]] : [])))
     return {
-      valores: original ? valoresDe(original) : { fecha: HOY, resultado: "normal", ...prellenado },
+      valores: original ? valoresDe(original) : { fecha: hoy(), resultado: "normal", ...prellenado },
       soportes: (original?.soportes ?? []) as Adjunto[],
       // Al resolver una alerta, el recordatorio de la siguiente queda encendido.
       recordatorio: original ? original.recordatorio === "true" : !!alertaId,
@@ -105,7 +107,7 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
       soportes !== inicial.soportes ||
       recordatorio !== inicial.recordatorio
     : soportes.length > 0 ||
-      Object.entries(valores).some(([k, val]) => val && !(k === "fecha" && val === HOY) && !(k === "resultado" && val === "normal"))
+      Object.entries(valores).some(([k, val]) => val && !(k === "fecha" && val === hoy()) && !(k === "resultado" && val === "normal"))
   const completo = OBLIGATORIOS[tipo].every((c) => v(c).trim() !== "")
 
   function cambiarTipo(nuevo: TipoEvento) {
@@ -134,7 +136,7 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
       id: original?.id ?? crypto.randomUUID(),
       mascota_id: mascota.id,
       tipo,
-      fecha: v("fecha") || original?.fecha || HOY,
+      fecha: v("fecha") || original?.fecha || hoy(),
       peso_kg: tipo === "peso" ? v("peso_kg").replace(",", ".") : undefined,
       recordatorio: String(recordatorio),
       // Las vistas previas locales (blob:) no sobreviven a la recarga; los archivos publicados conservan su url.
@@ -144,8 +146,8 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
         tamanoKb,
         ...(url?.startsWith("/") ? { url } : {}),
       })),
-      fecha_creacion: original?.fecha_creacion ?? HOY,
-      ...(original ? { fecha_edicion: HOY } : {}),
+      fecha_creacion: original?.fecha_creacion ?? hoy(),
+      ...(original ? { fecha_edicion: hoy() } : {}),
     }
     if (tipo !== "examen") delete evento.resultado
     guardarEvento(evento)
@@ -201,6 +203,13 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
         />
       ) : (
         <ChipsTipo actual={tipo} onCambio={cambiarTipo} />
+      )}
+
+      {alertaId && (
+        <Nota icono="task_alt" tono="exito">
+          {alertaTitulo ? <>Estás resolviendo la alerta <strong>{alertaTitulo}</strong>.</> : "Estás resolviendo una alerta."} Al guardar, queda resuelta y el
+          evento entra en la línea de tiempo.
+        </Nota>
       )}
 
       {tipo === "vacuna" && (
@@ -306,7 +315,7 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
         <>
           <Campo etiqueta="Peso (kg)" requerido icono="monitor_weight" inputMode="decimal" placeholder="0,0" valor={v("peso_kg")} onCambio={set("peso_kg")} />
           <Campo etiqueta="Fecha de la medición" type="date" icono="event" valor={v("fecha")} onCambio={set("fecha")} />
-          <GraficaPeso mediciones={mediciones.filter((m) => m.mascotaId === mascota.id && !(original && m.fecha === original.fecha))} nuevo={v("peso_kg")} fecha={v("fecha") || HOY} />
+          <GraficaPeso mediciones={mediciones.filter((m) => m.mascotaId === mascota.id && !(original && m.fecha === original.fecha))} nuevo={v("peso_kg")} fecha={v("fecha") || hoy()} />
         </>
       )}
 
@@ -338,7 +347,7 @@ export function FormularioEvento({ tipoInicial, mascotas, mediciones, veterinari
 
       <BarraAccion>
         <Boton disabled={!completo || (original && !tocado)} onClick={guardar}>
-          {original ? "Guardar cambios" : "Guardar evento"}
+          {original ? "Guardar cambios" : alertaId ? "Guardar y resolver" : "Guardar evento"}
           {original && <Icono nombre="check" className="icono-m" />}
         </Boton>
       </BarraAccion>

@@ -6,7 +6,7 @@ import { toast } from "sonner"
 import { BotonEnlace } from "@/components/boton"
 import { Estado } from "@/components/estado"
 import { PasoHorarios, type Horarios } from "@/components/medicamentos/paso-horarios"
-import { HOY, sumarDias } from "@/lib/fecha"
+import { hoy, sumarDias } from "@/lib/fecha"
 import { duracion } from "@/lib/medicamentos"
 import { guardarTratamiento, useMedicamentos, type DatosMedicamentos } from "@/lib/usar-medicamentos"
 import { useVolver } from "@/lib/usar-salud"
@@ -38,7 +38,7 @@ export function EditarHorarios(datos: DatosMedicamentos) {
       horas: h.horas,
       recordatorio: String(h.recordatorio),
       // Reactivar: empieza hoy con la misma duración (spec de G).
-      ...(reactivar ? { estado: "vigente", finalizado_antes: "false", fecha_inicio: HOY, fecha_fin: sumarDias(HOY, dur) } : {}),
+      ...(reactivar ? { estado: "vigente", finalizado_antes: "false", fecha_inicio: hoy(), fecha_fin: sumarDias(hoy(), dur) } : {}),
     })
     toast.success(reactivar ? "Tratamiento reactivado" : "Horarios guardados. Valen desde la próxima toma.")
     router.replace(`/medicamentos/detalle?id=${t!.id}`)

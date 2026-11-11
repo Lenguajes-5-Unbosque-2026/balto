@@ -21,7 +21,7 @@ import { Pasos } from "@/components/pasos"
 import { textoTamano } from "@/components/registro/bloque-soporte"
 import { TarjetaEvento } from "@/components/tarjeta-evento"
 import type { Evento, Soporte, TipoEvento } from "@/lib/eventos"
-import { HOY, diasEntre, fechaNumerica, sumarDias } from "@/lib/fecha"
+import { diasEntre, fechaNumerica, hoy, sumarDias } from "@/lib/fecha"
 import { useMascotaActiva, useMascotas } from "@/lib/mascota-activa"
 import { horasDesde } from "@/lib/medicamentos"
 import { guardarEvento, guardarMascotaActiva } from "@/lib/registro-local"
@@ -83,7 +83,7 @@ export function CargaInicial({ mascotas }: { mascotas: { id: string; nombre: str
   }
 
   function registrar(eventos: Omit<Evento, "id" | "mascota_id" | "fecha_creacion">[]) {
-    const nuevos = eventos.map((e) => ({ ...e, id: crypto.randomUUID(), mascota_id: mascota.id, fecha_creacion: HOY }) as Evento)
+    const nuevos = eventos.map((e) => ({ ...e, id: crypto.randomUUID(), mascota_id: mascota.id, origen: "carga_inicial", fecha_creacion: hoy() }) as Evento)
     for (const e of nuevos) guardarEvento(e)
     setGuardados((x) => [...x, ...nuevos])
     return nuevos
@@ -226,7 +226,7 @@ export function CargaInicial({ mascotas }: { mascotas: { id: string; nombre: str
               soportes: i === 0 && archivo ? [archivo] : [],
             })),
           )
-          setAlertas((x) => x + nuevos.filter((e) => (e.proximo_refuerzo || e.proxima_dosis) && (e.proximo_refuerzo || e.proxima_dosis)! >= HOY).length)
+          setAlertas((x) => x + nuevos.filter((e) => (e.proximo_refuerzo || e.proxima_dosis) && (e.proximo_refuerzo || e.proxima_dosis)! >= hoy()).length)
           siguiente()
         }}
       />
@@ -267,7 +267,7 @@ export function CargaInicial({ mascotas }: { mascotas: { id: string; nombre: str
           const frecuencia = [8, 12, 24].includes(d.cada) ? `cada_${d.cada}h` : d.cada ? `Cada ${d.cada} h` : ""
           const duracion = d.desde && d.hasta ? Math.max(diasEntre(d.desde, d.hasta), 1) : 7
           const [ev] = registrar([
-            { tipo: "tratamiento", fecha: d.desde || HOY, medicamento: d.medicamento, dosis: d.dosis, frecuencia, duracion_dias: String(duracion), soportes: archivo ? [archivo] : [] },
+            { tipo: "tratamiento", fecha: d.desde || hoy(), medicamento: d.medicamento, dosis: d.dosis, frecuencia, duracion_dias: String(duracion), soportes: archivo ? [archivo] : [] },
           ])
           if (d.recordatorio) {
             guardarTratamiento(crypto.randomUUID(), {
@@ -279,9 +279,9 @@ export function CargaInicial({ mascotas }: { mascotas: { id: string; nombre: str
               dosis: d.dosis,
               frecuencia: frecuencia.startsWith("cada_") ? frecuencia : "cada_24h",
               dias_semana: "",
-              fecha_inicio: d.desde || HOY,
+              fecha_inicio: d.desde || hoy(),
               duracion_dias: String(duracion),
-              fecha_fin: sumarDias(d.desde || HOY, duracion),
+              fecha_fin: sumarDias(d.desde || hoy(), duracion),
               prescrito_por: "",
               estado: "vigente",
               finalizado_antes: "false",
@@ -323,7 +323,7 @@ export function CargaInicial({ mascotas }: { mascotas: { id: string; nombre: str
       alergiasActuales={mascota.alergias ?? []}
       encabezado={encabezado("Carga inicial")}
       onGuardar={(peso, alergias) => {
-        registrar([{ tipo: "peso", fecha: HOY, peso_kg: String(peso) }])
+        registrar([{ tipo: "peso", fecha: hoy(), peso_kg: String(peso) }])
         guardarSalud(mascota.id, { alergias })
         siguiente()
       }}
@@ -491,7 +491,7 @@ function EditarVacuna({ inicial, onListo, onQuitar }: { inicial: Vacuna; onListo
     <div className="flex flex-col gap-3">
       <Campo etiqueta="Vacuna o desparasitación" requerido icono="vaccines" placeholder="Antirrábica" sugerencias={["Antirrábica", "Múltiple DHPPi+L", "Tos de las perreras", "Triple felina", "Desparasitación"]} valor={v.vacuna} onCambio={set("vacuna")} />
       <div className="grid movil-m:grid-cols-2 gap-3">
-        <Campo etiqueta="Fecha aplicada" type="date" max={HOY} valor={v.fecha} onCambio={set("fecha")} />
+        <Campo etiqueta="Fecha aplicada" type="date" max={hoy()} valor={v.fecha} onCambio={set("fecha")} />
         <Campo etiqueta="Próximo refuerzo" type="date" valor={v.proximo_refuerzo} onCambio={set("proximo_refuerzo")} />
       </div>
       <Campo etiqueta="Veterinaria" icono="local_hospital" placeholder="Opcional" valor={v.veterinaria} onCambio={set("veterinaria")} />
@@ -554,7 +554,7 @@ function PasoExamen(props: {
       )}
       {revisar && <Nota icono="edit_note">Si algún dato quedó mal leído, corrígelo aquí.</Nota>}
       <Campo etiqueta="Tipo de examen" icono="labs" placeholder="Hemograma completo" valor={d.tipo} onCambio={(v) => setD((x) => ({ ...x, tipo: v }))} />
-      <Campo etiqueta="Fecha" type="date" icono="event" max={HOY} valor={d.fecha} onCambio={(v) => setD((x) => ({ ...x, fecha: v }))} />
+      <Campo etiqueta="Fecha" type="date" icono="event" max={hoy()} valor={d.fecha} onCambio={(v) => setD((x) => ({ ...x, fecha: v }))} />
       <AreaTexto etiqueta="Resultado principal" placeholder="Valores dentro de rangos normales." valor={d.resultado} onCambio={(v) => setD((x) => ({ ...x, resultado: v }))} />
       <BarraAccion>
         {revisar ? (
@@ -589,7 +589,7 @@ function PasoFormula(props: {
   onCorregir: () => void
   onGuardar: (d: { medicamento: string; dosis: string; cada: number; desde: string; hasta: string; recordatorio: boolean }) => void
 }) {
-  const [d, setD] = useState({ medicamento: "", dosis: "", cada: "", desde: HOY, hasta: "", recordatorio: true })
+  const [d, setD] = useState({ medicamento: "", dosis: "", cada: "", desde: hoy(), hasta: "", recordatorio: true })
   const set = (k: "medicamento" | "dosis" | "cada" | "desde" | "hasta") => (v: string) => setD((x) => ({ ...x, [k]: v }))
   const revisar = props.fase === "revisar"
   const datos = { ...d, cada: Number.parseInt(d.cada, 10) || 0 }
@@ -653,7 +653,7 @@ function PasoHistorial(props: {
 }) {
   const [texto, setTexto] = useState("")
   const [tipo, setTipo] = useState<EventoTexto["tipo"]>("consulta")
-  const [fecha, setFecha] = useState(HOY)
+  const [fecha, setFecha] = useState(hoy())
   const [eventos, setEventos] = useState<EventoTexto[]>([])
 
   function detectar() {
@@ -707,7 +707,7 @@ function PasoHistorial(props: {
           <Chip key={c.tipo} texto={c.nombre} icono={c.icono} activo={tipo === c.tipo} onClick={() => setTipo(c.tipo)} />
         ))}
       </div>
-      <Campo etiqueta="Fecha del evento" type="date" icono="event" max={HOY} valor={fecha} onCambio={setFecha} />
+      <Campo etiqueta="Fecha del evento" type="date" icono="event" max={hoy()} valor={fecha} onCambio={setFecha} />
       <BarraAccion>
         <Boton disabled={!texto.trim()} onClick={detectar}>
           Agregar a la línea de tiempo

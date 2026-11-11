@@ -8,7 +8,7 @@ Registros inventados pero realistas (Bogotá, octubre de 2026). Primero alimenta
 - Booleanos `true` / `false`. Decimales con punto (`28.4`). Precios en pesos colombianos sin separador (`289900`).
 - Las listas dentro de una celda van separadas con `;` (por ejemplo, `servicios`).
 
-La fecha de referencia ("hoy") es el **27 de octubre de 2026**: las alertas, tomas y citas están calculadas contra ese día.
+La app usa la fecha real del día en que se abre (`hoy()` en `web/src/lib/fecha.ts`, en hora de Bogotá). Los datos de prueba están pensados alrededor del **10 de noviembre de 2026**: ese día se ven igual que en el diseño ("vence en 2 días"…) y con el paso de los días las alertas se van acercando y venciendo. Hasta el 10 nov la fecha era fija (27 oct); todas las fechas se movieron 14 días (en Supabase, con `supabase/mover-fechas-14-dias.sql`). Las fechas de nacimiento no se movieron.
 
 ## Archivos y relaciones
 

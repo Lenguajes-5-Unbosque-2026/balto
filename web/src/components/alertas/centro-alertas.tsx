@@ -13,7 +13,7 @@ import { FilaOpcion } from "@/components/fila-opcion"
 import { Selector } from "@/components/selector"
 import { enCategoriaAlerta, tituloAlertaVista, type AlertaVista } from "@/lib/alertas"
 import type { Evento } from "@/lib/eventos"
-import { HOY, diasEntre, fechaCorta } from "@/lib/fecha"
+import { diasEntre, fechaCorta, hoy } from "@/lib/fecha"
 import type { Alerta } from "@/lib/perfil"
 import { useAlertas, type MascotaAlerta } from "@/lib/usar-alertas"
 import { cn } from "@/lib/utils"
@@ -140,6 +140,7 @@ export function CentroAlertas({ alertas: base, eventos, mascotas, marcas }: Cent
         }}
       />
       <HojaPosponer alertaId={posponiendo} onCerrar={() => setPosponiendo(null)} />
+      {acciones.hojaResolver}
       <HojaCalendario alerta={alCalendario} onCerrar={() => setAlCalendario(null)} />
     </div>
   )
@@ -171,7 +172,7 @@ type SinPendientesProps = {
 function SinPendientes({ alertas, nombres, proxima, resueltas, onVerResueltas }: SinPendientesProps) {
   const quienes = nombres.length > 1 ? `${nombres.slice(0, -1).join(", ")} y ${nombres.at(-1)}` : (nombres[0] ?? "Tus mascotas")
   const verbo = nombres.length > 1 ? "no tienen" : "no tiene"
-  const anio = HOY.slice(0, 4)
+  const anio = hoy().slice(0, 4)
   const delAnio = alertas.filter((a) => a.grupo === "resuelta" && (a.fecha_resuelta ?? "").startsWith(anio)).length
   return (
     <div className="flex flex-col gap-3 pt-4">
@@ -187,7 +188,7 @@ function SinPendientes({ alertas, nombres, proxima, resueltas, onVerResueltas }:
           <FilaOpcion
             icono="event_upcoming"
             titulo={`Próxima: ${tituloAlertaVista(proxima).charAt(0).toLowerCase()}${tituloAlertaVista(proxima).slice(1)}`}
-            detalle={`${fechaCorta(proxima.fecha_vencimiento).replace(/ \d{4}$/, "")} · en ${diasEntre(HOY, proxima.fecha_vencimiento)} días`}
+            detalle={`${fechaCorta(proxima.fecha_vencimiento).replace(/ \d{4}$/, "")} · en ${diasEntre(hoy(), proxima.fecha_vencimiento)} días`}
             href={`/alertas/detalle?id=${proxima.id}`}
           />
         )}

@@ -28,6 +28,10 @@ export type Evento = {
   mascota_id: string
   tipo: TipoEvento
   fecha: string
+  /** "registro" (E) o "carga_inicial" (C). */
+  origen?: "registro" | "carga_inicial"
+  /** Veterinaria de data/mock/veterinarias.csv, si se eligió de la lista. */
+  proveedor_id?: string
   veterinaria?: string
   vacuna?: string
   lote?: string

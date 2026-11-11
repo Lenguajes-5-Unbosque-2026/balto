@@ -12,7 +12,7 @@ import { puedeVolver } from "@/lib/navegacion"
 import { estadoEnlace, seccionesDe } from "@/lib/compartir"
 import type { Envio } from "@/lib/datos"
 import type { Evento } from "@/lib/eventos"
-import { HOY, fechaCorta } from "@/lib/fecha"
+import { fechaCorta, hoy } from "@/lib/fecha"
 import type { PerfilMascota } from "@/lib/perfil"
 import { useDueno } from "@/lib/usar-cuenta"
 import { useEnvios } from "@/lib/usar-envios"
@@ -70,7 +70,7 @@ export function VistaPublica({ token, mascotas, eventos: base, envios, dueno: du
 
   return (
     <main className="flex flex-1 flex-col gap-4 px-pantalla pt-14 print:pt-4">
-      <CabeceraPublica detalle={`Solo lectura · ${fechaCorta(HOY)}`} />
+      <CabeceraPublica detalle={`Solo lectura · ${fechaCorta(hoy())}`} />
       <PerfilPublico
         mascota={mascota}
         eventos={eventos.filter((e) => e.mascota_id === mascota.id)}

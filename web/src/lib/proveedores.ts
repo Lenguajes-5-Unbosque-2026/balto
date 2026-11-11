@@ -1,5 +1,5 @@
 import type { Veterinaria } from "@/lib/datos"
-import { AHORA, HOY, diaSemana, sumarDias } from "@/lib/fecha"
+import { AHORA, diaSemana, hoy, sumarDias } from "@/lib/fecha"
 
 export type Punto = { lat: number; lng: number }
 
@@ -63,7 +63,7 @@ export function estadoHorario(v: Veterinaria) {
   if (h === null) return { abierto: true, texto: "Abierto 24 h" }
   if (!h) return { abierto: false, texto: v.horario }
   const ahora = minutos(AHORA)
-  if (!h.dias.has(diaSemana(HOY))) return { abierto: false, texto: "Cerrado hoy" }
+  if (!h.dias.has(diaSemana(hoy()))) return { abierto: false, texto: "Cerrado hoy" }
   if (ahora < h.abre) return { abierto: false, texto: `Abre ${hora12(h.abre)}` }
   if (ahora >= h.cierra) return { abierto: false, texto: "Cerrado" }
   return { abierto: true, texto: `Cierra ${hora12(h.cierra)}` }
@@ -148,7 +148,7 @@ function semilla(texto: string) {
  * habituales menos algunas ocupadas, y algunos días llenos. Nada en el pasado.
  */
 export function cuposDel(v: Veterinaria, fecha: string, ocupadas: string[] = []) {
-  if (fecha <= HOY || !abreEl(v, diaSemana(fecha))) return []
+  if (fecha <= hoy() || !abreEl(v, diaSemana(fecha))) return []
   const s = semilla(`${v.id}${fecha}`)
   if (s % 6 === 0) return []
   return HORAS_CITA.filter((h, i) => (s >> i) % 3 !== 0 && !ocupadas.includes(h))

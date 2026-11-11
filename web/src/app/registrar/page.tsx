@@ -2,12 +2,13 @@ import type { Metadata } from "next"
 
 import { EmpezarDeCero } from "@/components/empezar-de-cero"
 import { SelectorTipo } from "@/components/registro/selector-tipo"
-import { obtenerMascotasBasicas } from "@/lib/datos"
+import { cargarDatos, obtenerMascotasBasicas } from "@/lib/datos"
 
 export const metadata: Metadata = { title: "Registrar evento · Balto" }
 
 /** E1 · Selector de tipo de evento. Pantalla completa, sin barra inferior. */
-export default function RegistrarPage() {
+export default async function RegistrarPage() {
+  await cargarDatos()
   return (
     <EmpezarDeCero>
       <SelectorTipo mascotas={obtenerMascotasBasicas()} />
